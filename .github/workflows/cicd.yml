@@ -2,7 +2,7 @@ name: CI-CD
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     types:
       - edited
       - labeled
@@ -10,7 +10,7 @@ on:
       - reopened
       - synchronize
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths:
       - '../labels.yml'
   workflow_dispatch:
