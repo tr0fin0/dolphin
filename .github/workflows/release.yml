@@ -11,8 +11,6 @@ permissions:
 jobs:
   releaser:
     name: Create Release
-    needs:
-      - artifacts
     permissions:
       contents: write
       issues: write
