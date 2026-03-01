@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "debug.h"
 #include "pinout.h"
 #include "pwm/pwm.h"
 #include "radio.h"
@@ -74,6 +75,8 @@ static void IRAM_ATTR radio_isr(void* arg) {
 
 
 void radio_init() {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller started");
+
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
         pinMode(channels_pins[i], INPUT);
 
@@ -90,6 +93,8 @@ void radio_init() {
     }
 
     status = RADIO_CONNECTED_DISABLE;
+
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller finish");
 };
 
 
@@ -99,6 +104,13 @@ void radio_read_channels(pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS]) {
         pulses_us[i] = pulse_width[i];
     }
     interrupts();
+
+    for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_TRACE,
+            "channel %d receiving %d us", i, pulse_width[i]
+        );
+    }
 };
 
 
@@ -108,6 +120,11 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
     noInterrupts();
     pulse_us = pulse_width[channel];
     interrupts();
+
+    DEBUG_MSG(
+        DEBUG_LEVEL_TRACE,
+        "channel %d receiving %d us", channel, pulse_width[channel]
+    );
 
     return pulse_us;
 };
@@ -128,12 +145,21 @@ radio_status_t radio_status() {
         if (pulses_us[i] != (pwm_pulse_norm_t) PWM_NEUTRAL_US) {
             all_neutral = false;
 
+            DEBUG_MSG(
+                DEBUG_LEVEL_ERROR,
+                "channel %d receiving %d us when %d us expected",
+                i, pulse_width[i], PWM_NEUTRAL_US
+            );
+
             break;
         }
     }
     if (all_neutral) {
         status = RADIO_DISCONNECTED;
 
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "current Radio Controller status is %d", status
+        );
         return status;
     }
 

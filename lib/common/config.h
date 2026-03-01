@@ -2,6 +2,7 @@
 #define __CONFIG_H__
 
 #include <stdint.h>
+#include <debug.h>
 
 
 #ifdef __cplusplus
@@ -30,6 +31,12 @@ typedef enum {
 
 #define COUNTDOWN_MS        5000
 
+/**
+ * @brief System-wide Debug Threshold
+ * 
+ * Defines which debug messages will be displayed.
+ */
+#define SYSTEM_DEBUG_LEVEL  DEBUG_LEVEL_WARNING
 
 
 

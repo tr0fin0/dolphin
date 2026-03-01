@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "debug.h"
 #include <driver/mcpwm.h>
 #include "esc.h"
 #include "pinout.h"
@@ -8,6 +9,8 @@
 
 
 void esc_init() {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of ESC started");
+
     mcpwm_config_t pwm_config;
     pwm_config.frequency    = PWM_FREQUENCY_HZ;     // 50 Hz => 20 ms period
     pwm_config.cmpr_a       = PWM_DUTY_INITIAL;     // initial duty operator A
@@ -48,11 +51,17 @@ void esc_init() {
     }
 
     delay(500); // initialization stabilization
+
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of ESC finish");
 };
 
 
 void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
     pwm_pulse_norm_t pulse_norm_us = pwm_pulse_us_normalize(pulse_us);
+
+    DEBUG_MSG(
+        DEBUG_LEVEL_TRACE, "sending %d us to motor %d", pulse_norm_us, motor
+    );
 
     (void) mcpwm_set_duty_in_us(
         MCPWM_UNIT_0,

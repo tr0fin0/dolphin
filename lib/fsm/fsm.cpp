@@ -169,19 +169,39 @@ static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
 // -----------------------------------------------------------------------------
 
 void fsm_init(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine started");
+
     led_init();
     radio_init();
     esc_init();
 
     current_state = STATE_BOOT;
+
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine finish");
 }
 
 
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
     if (current_state == new_state || new_state >= NUMBER_OF_STATES) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_WARNING,
+            state_table[current_state].name,
+            (new_state < NUMBER_OF_STATES)
+                ? state_table[new_state].name
+                : "INVALID"
+        );
+
         return;
     }
+    DEBUG_MSG(
+        DEBUG_LEVEL_INFO,
+        "transition from current state %s to %s",
+        state_table[current_state].name,
+        (new_state < NUMBER_OF_STATES)
+            ? state_table[new_state].name
+            : "INVALID"
+    );
 
     // 1. execute Exit Action of current state
     if (state_table[current_state].on_exit != NULL) {
@@ -202,6 +222,11 @@ void fsm_step(void) {
     if (state_table[current_state].on_run != NULL) {
         return state_table[current_state].on_run();
     }
+
+    DEBUG_MSG(
+        DEBUG_LEVEL_CRITICAL,
+        "no on_run() function defined for current state %d", current_state
+    );
 }
 
 
@@ -209,6 +234,11 @@ const char* get_current_state_name(void) {
     if (state_table[current_state].name != NULL) {
         return state_table[current_state].name;
     }
+
+    DEBUG_MSG(
+        DEBUG_LEVEL_ERROR,
+        "no name defined for current state %d", current_state
+    );
 
     return "UNKNOWN";
 }
@@ -231,6 +261,11 @@ fsm_state_t get_current_state(void) {
  * condition.
  */
 static void stop_motors(void) {
+    DEBUG_MSG(
+        DEBUG_LEVEL_INFO,
+        "stopping motors"
+    );
+
     esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_L);
     esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_R);
 }
@@ -244,6 +279,8 @@ static void stop_motors(void) {
  * Sets visual indication upon entering `STATE_ATTACK`.
  */
 static void attack_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_ATTACK");
+
     led_set_color(LED_STATE, COLOR_SCARLET);
 
     // TODO: Set ESCs to full forward speed
@@ -256,9 +293,13 @@ static void attack_entry(void) {
  * authorization is lost.
  */
 static void attack_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_ATTACK");
+
     // Safety abort
     if (radio_status() != RADIO_CONNECTED_ENABLE) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
+
         return;
     }
 
@@ -276,6 +317,7 @@ static void attack_run(void) {
  * Sets visual indication upon entering `STATE_BOOT`.
  */
 static void boot_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_BOOT");
 
     led_set_color(LED_STATE, COLOR_WHITE);
 }
@@ -301,8 +343,12 @@ static void boot_run(void) {
  * for time-based transition.
  */
 static void countdown_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_COUNTDOWN");
+
     led_set_color(LED_STATE, COLOR_ORANGE_LIGHT);
     state_timer_ms = millis();
+
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "countdown initiated");
 }
 
 /**
@@ -312,8 +358,11 @@ static void countdown_entry(void) {
  * radio enable signal is lost, immediately transitions back to `STATE_SAFE`.
  */
 static void countdown_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_COUNTDOWN");
+
     // Safety abort
     if (radio_status() != RADIO_CONNECTED_ENABLE) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
         return;
@@ -321,6 +370,7 @@ static void countdown_run(void) {
 
     // 5-second Japanese sumo rule
     if (millis() - state_timer_ms >= COUNTDOWN_MS) {
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "countdown terminated");
         fsm_transition(STATE_SEARCH);
     }
 }
@@ -334,6 +384,8 @@ static void countdown_run(void) {
  * Sets visual indication upon entering `STATE_MANUAL`.
  */
 static void manual_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_MANUAL");
+
     led_set_color(LED_STATE, COLOR_GREEN);
 }
 
@@ -347,8 +399,10 @@ static void manual_entry(void) {
  * `STATE_SAFE` for safety.
  */
 static void manual_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_MANUAL");
 
     if (radio_status_pin() == RADIO_DISCONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "Radio signal lost (pulseIn timeout). Stopping motors.");
 
         fsm_transition(STATE_SAFE); 
         return;
@@ -356,6 +410,9 @@ static void manual_run(void) {
 
     pwm_pulse_norm_t steering_us = radio_read_pin(PIN_RADIO_CH1);
     pwm_pulse_norm_t throttle_us = radio_read_pin(PIN_RADIO_CH2);
+
+    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured steering: %d us", steering_us);
+    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured throttle: %d us", throttle_us);
 
     long left_us  = throttle_us + steering_us - PWM_NEUTRAL_US;
     long right_us = throttle_us - steering_us + PWM_NEUTRAL_US;
@@ -371,6 +428,8 @@ static void manual_run(void) {
  * preventing unintended motion during transition.
  */
 static void manual_exit(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "exiting of STATE_MANUAL");
+
     stop_motors();
 }
 
@@ -384,6 +443,8 @@ static void manual_exit(void) {
  * entering the safe state.
  */
 static void safe_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SAFE");
+
     led_set_color(LED_STATE, COLOR_YELLOW);
     led_set_brightness(BRIGHTNESS_MEDIUM);
 
@@ -397,15 +458,23 @@ static void safe_entry(void) {
  * enable signal is detected.
  */
 static void safe_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SAFE");
 
     if (radio_status_pin() == RADIO_CONNECTED_ENABLE) {
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "radio status is RADIO_CONNECTED_ENABLE");
 
         if (CONTROL_MODE == AUTONOMOUS) {
+            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is AUTONOMOUS");
+
             fsm_transition(STATE_COUNTDOWN);
         } else {
+            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is RADIO");
+
             fsm_transition(STATE_MANUAL);
         }
     }
+
+    DEBUG_MSG(DEBUG_LEVEL_WARNING, "radio status is RADIO_DISCONNECTED");
 }
 
 
@@ -417,6 +486,8 @@ static void safe_run(void) {
  * Sets visual indication upon entering `STATE_SEARCH`.
  */
 static void search_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SEARCH");
+
     led_set_color(LED_STATE, COLOR_BLUE);
 
     // TODO: Set ESCs to perform a slow spin or search pattern
@@ -429,8 +500,11 @@ static void search_entry(void) {
  * enable signal is lost.
  */
 static void search_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SEARCH");
+
     // Safety abort
     if (radio_status() != RADIO_CONNECTED_ENABLE) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
         return;
@@ -450,6 +524,8 @@ static void search_run(void) {
  * entry timestamp for time-based logic.
  */
 static void survive_entry(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SURVIVE");
+
     led_set_color(LED_STATE, COLOR_PURPLE);
 
     // TODO: Set ESCs to hard reverse
@@ -465,8 +541,11 @@ static void survive_entry(void) {
  * - After 500 ms from state entry, transitions to `STATE_SEARCH`.
  */
 static void survive_run(void) {
+    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SURVIVE");
+
     // Safety abort
     if (radio_status() != RADIO_CONNECTED_ENABLE) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
         return;
