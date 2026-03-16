@@ -78,55 +78,6 @@ static void survive_run(void);
 // FSM State Table Definition
 // -----------------------------------------------------------------------------
 
-/**
- * @brief Mermaid FSM Diagram
- *
-stateDiagram-v2
-    classDef autonomous fill:#900
-    classDef common     fill:#909
-    classDef radio      fill:#009
-    
-    class STATE_ATTACK, STATE_COUNTDOWN, STATE_SEARCH autonomous
-    class STATE_MANUAL radio
-    class STATE_SAFE, STATE_SURVIVE common
- 
-    
-    direction TB
-    state IF_SAFE <<choice>>
-
-
-    %% INITIALIZATION
-    [*] --> STATE_SAFE:                 fsm_init()
-    STATE_SAFE --> [*]
-
-
-    %% COMMON
-
-    STATE_SAFE --> IF_SAFE:             if radio_status() == RADIO_CONNECTED_ENABLE
-    IF_SAFE --> STATE_COUNTDOWN:        if CONTROL_MODE == AUTONOMOUS
-    IF_SAFE --> STATE_MANUAL:           if CONTROL_MODE == RADIO
-
-    %%STATE_SURVIVE --> STATE_MANUAL:     if edge_status() != EDGE_DETECTED
-    STATE_SURVIVE --> STATE_SEARCH:     if edge_status() != EDGE_DETECTED
-
-
-    %% AUTONOMOUS
-    STATE_ATTACK --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
-
-    STATE_COUNTDOWN --> STATE_SAFE:     if radio_status() != RADIO_CONNECTED_ENABLE
-    STATE_COUNTDOWN --> STATE_SEARCH:   if millis() - state_timer_ms >= 5000
-
-    STATE_SEARCH --> STATE_ATTACK:      if edge_status() != EDGE_DETECTED && if oponent_status() == OPONENT_DETECDED
-    STATE_SEARCH --> STATE_SAFE:        if radio_status() != RADIO_CONNECTED_ENABLE
-    STATE_SEARCH --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
-
-
-    %% RADIO CONTROLLED
-    STATE_MANUAL --> STATE_SAFE:        if radio_status() != RADIO_CONNECTED_ENABLE
-    %%STATE_MANUAL --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
- */
-
-
 static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
         .name     = "ATTACK",
