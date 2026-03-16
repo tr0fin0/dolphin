@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <stdio.h>
 #include "config.h"
 #include "esc/esc.h"
 #include "fsm.h"
@@ -33,6 +34,13 @@ static uint32_t state_timer_ms      = 0;
 
 
 
+static uint32_t opening_step        = 0;
+static uint32_t opening_strategy;
+
+static pwm_pulse_norm_t button_us   = 0;
+
+
+
 // -----------------------------------------------------------------------------
 // FSM State Functions
 // -----------------------------------------------------------------------------
@@ -49,6 +57,9 @@ static void countdown_run(void);
 static void manual_entry(void);
 static void manual_run(void);
 static void manual_exit(void);
+
+static void opening_entry(void);
+static void opening_run(void);
 
 static void search_entry(void);
 static void search_run(void);
@@ -141,6 +152,12 @@ static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
         .on_entry = manual_entry,
         .on_run   = manual_run,
         .on_exit  = manual_exit
+    },
+    [STATE_OPENING] = {
+        .name     = "OPENING",
+        .on_entry = opening_entry,
+        .on_run   = opening_run,
+        .on_exit  = NULL,
     },
     [STATE_SAFE] = {
         .name     = "SAFE",
@@ -428,9 +445,88 @@ static void manual_run(void) {
  * preventing unintended motion during transition.
  */
 static void manual_exit(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "exiting of STATE_MANUAL");
+// --- OPENING ---
 
-    stop_motors();
+/**
+ * @brief Opening state entry handler.
+ *
+ * Sets visual indication upon entering `STATE_OPENING`.
+ */
+static void opening_entry(void) {
+    led_set_color(LED_STATE, COLOR_PURPLE);
+
+    button_us = radio_read_channel(CHANNEL_THROTTLE);//TODO modify to CHANNEL_BUTTON
+}
+
+/**
+ * @brief Opening state run handler.
+ *
+ * Reads throttle value in 3 sequencial steps to determine the opening move
+ * requested among the defined below:
+ */
+static void opening_run(void) {
+    if (radio_status() == RADIO_DISCONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal.");
+
+        fsm_transition(STATE_SAFE);
+        return;
+    }
+
+    if (opening_step < OPENING_ITERATIONS) {
+        pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
+        radio_read_channels(pulses_us);
+
+        if (button_us != pulses_us[CHANNEL_THROTTLE]) {// TODO modify to CHANNEL_BUTTON
+            button_us = pulses_us[CHANNEL_THROTTLE];// TODO modify to CHANNEL_BUTTON
+
+            if (
+                pulses_us[CHANNEL_STEERING] <   // TODO modify to CHANNEL_THROTTLE
+                (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+            ) {
+                opening_strategy += 1 * pow10((double) opening_step);
+            } else if (
+                pulses_us[CHANNEL_STEERING] >   // TODO modify to CHANNEL_THROTTLE
+                (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
+            ) {
+                opening_strategy += 2 * pow10((double) opening_step);
+            } else {
+                opening_strategy += 0;
+            }
+
+            led_toggle(LED_STATE);
+            opening_step++;
+        }
+    } else {
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "opening_strategy is %d", opening_strategy);
+
+        switch (opening_strategy) {
+            case OPENING_STATIC:
+                break;
+
+            case OPENING_DRAW:
+                break;
+
+            case OPENING_NE:
+                break;
+
+            case OPENING_NN:
+                break;
+
+            case OPENING_NW:
+                break;
+
+            case OPENING_SE:
+                break;
+
+            case OPENING_SS:
+                break;
+
+            case OPENING_SW:
+                break;
+        }
+
+        fsm_transition(STATE_MANUAL);
+    }
 }
 
 
@@ -470,7 +566,11 @@ static void safe_run(void) {
         } else {
             DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is RADIO");
 
-            fsm_transition(STATE_MANUAL);
+            if (opening_step == OPENING_ITERATIONS) {
+                fsm_transition(STATE_MANUAL);
+            } else {
+                fsm_transition(STATE_OPENING);
+            }
         }
     }
 

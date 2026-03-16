@@ -38,6 +38,11 @@ typedef enum {
  */
 #define SYSTEM_DEBUG_LEVEL  DEBUG_LEVEL_WARNING
 
+/**
+ * 
+ */
+#define OPENING_ITERATIONS  3
+
 
 
 

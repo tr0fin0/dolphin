@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 
+#define TOGGLE_DURATION_MS 50
 
 /**
  * @brief Discrete LED brightness levels.
@@ -77,6 +78,9 @@ void led_set_color_all(uint8_t r, uint8_t g, uint8_t b);
  * @brief Set color of a single LED and update strip.
  */
 void led_set_color(led_t led, uint8_t r, uint8_t g, uint8_t b);
+
+
+void led_toggle(led_t led);
 
 
 void led_validate(void);
