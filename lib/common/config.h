@@ -21,7 +21,7 @@ extern "C" {
  * - `RADIO`:       radio receiver will decide on how to operate
  */
 typedef enum {
-    AUTONOMOUS,
+    AUTONOMOUS = 0,
     RADIO,
 } control_mode_t;
 
