@@ -70,7 +70,6 @@ static void safe_run(void);
 static void survive_entry(void);
 static void survive_run(void);
 
-static void stop_motors(void);
 
 
 
@@ -271,22 +270,6 @@ fsm_state_t get_current_state(void) {
 // State Behaviors
 // -----------------------------------------------------------------------------
 
-/**
- * @brief Stop both motors by commanding neutral PWM.
- *
- * Sets left and right ESC outputs to `PWM_NEUTRAL_US`, ensuring zero throttle
- * condition.
- */
-static void stop_motors(void) {
-    DEBUG_MSG(
-        DEBUG_LEVEL_INFO,
-        "stopping motors"
-    );
-
-    esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_R);
-}
-
 
 // --- ATTACK ---
 
@@ -445,6 +428,10 @@ static void manual_run(void) {
  * preventing unintended motion during transition.
  */
 static void manual_exit(void) {
+    esc_set_pwms_neutral();
+}
+
+
 // --- OPENING ---
 
 /**
@@ -544,7 +531,7 @@ static void safe_entry(void) {
     led_set_color(LED_STATE, COLOR_YELLOW);
     led_set_brightness(BRIGHTNESS_MEDIUM);
 
-    stop_motors();
+    esc_set_pwms_neutral();
 }
 
 /**

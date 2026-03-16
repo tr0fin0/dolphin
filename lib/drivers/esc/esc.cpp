@@ -72,6 +72,11 @@ void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
 };
 
 
+void esc_set_pwm_neutral(motor_t motor) {
+    esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, motor);
+}
+
+
 void esc_set_pwms(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]) {
     pwm_pulse_norm_t throttle_us = pulses_us[0];
     pwm_pulse_norm_t steering_us = pulses_us[1];
@@ -80,6 +85,11 @@ void esc_set_pwms(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]) {
     esc_set_pwm((pwm_pulse_t) throttle_us - steering_us + PWM_NEUTRAL_US, MOTOR_R);
 };
 
+
+void esc_set_pwms_neutral() {
+    esc_set_pwm_neutral(MOTOR_L);
+    esc_set_pwm_neutral(MOTOR_R);
+};
 
 void esc_validate() {
 

@@ -101,13 +101,21 @@ void esc_init(void);
 void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor);
 
 /**
+ * @brief Stop both motors by commanding neutral PWM.
+ *
+ * Sets left and right ESC outputs to `PWM_NEUTRAL_US`, ensuring zero throttle
+ * condition.
+ */
+void esc_set_pwm_neutral(motor_t motor);
+
+/**
  * @brief Apply differential drive mixing and update both motors.
  *
  * Implements skid-steering (tank drive) mixing:
  *
- * - `left ` = throttle + steering
+ * - `left  = throttle + steering - PWM_NEUTRAL_US`
  *
- * - `right` = throttle - steering
+ * - `right = throttle - steering + PWM_NEUTRAL_US`
  *
  * @param pulses_us Input array:
  *
@@ -116,6 +124,9 @@ void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor);
  *        - pulses_us[1]: Steering in microseconds
  */
 void esc_set_pwms(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]);
+
+// TODO add docs
+void esc_set_pwms_neutral();
 
 
 void esc_validate(void);
