@@ -533,6 +533,7 @@ static void safe_entry(void) {
  * enable signal is detected.
  */
 static void safe_run(void) {
+    // Safety lock
     if (radio_status() == RADIO_CONNECTED) {
         if (CONTROL_MODE == AUTONOMOUS) {
             DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is AUTONOMOUS");
