@@ -34,7 +34,8 @@ typedef enum {
 /**
  * @brief System-wide Debug Threshold
  * 
- * Defines which debug messages will be displayed.
+ * Defines which debug messages will be displayed with DEBUG_LEVEL_WARNING by
+ * default.
  */
 #define SYSTEM_DEBUG_LEVEL  DEBUG_LEVEL_WARNING
 
