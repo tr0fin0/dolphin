@@ -129,53 +129,28 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
 
 
 radio_status_t radio_status() {
-    pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
-    radio_read_channels(pulses_us);
+    uint disconnected_channels = 0;
 
-
-    bool all_neutral = true;
+    noInterrupts();
+    uint32_t now = micros();
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
-        if (pulses_us[i] != (pwm_pulse_norm_t) PWM_NEUTRAL_US) {
-            all_neutral = false;
-
-            DEBUG_MSG(
-                DEBUG_LEVEL_ERROR,
-                "channel %d receiving %d us when %d us expected",
-                i, pulse_width[i], PWM_NEUTRAL_US
-            );
-
-            break;
+        if (now - last_update[i] > RADIO_TIMEOUT_US) {
+            disconnected_channels++;
         }
     }
-    if (all_neutral) {
-        status = RADIO_DISCONNECTED;
+    interrupts();
 
-        DEBUG_MSG(
-            DEBUG_LEVEL_INFO, "current Radio Controller status is %d", status
-        );
-        return status;
+    if (disconnected_channels >= NUMBER_OF_CHANNELS - 1) {
+        status = RADIO_DISCONNECTED;
+    } else {
+        status = RADIO_CONNECTED;
     }
 
-
-    // if (pulses_us[CHANNEL_ENABLE] > (pwm_pulse_norm_t) (PWM_NEUTRAL_US + PWM_DEADBAND_US)) {
-    //     status = RADIO_CONNECTED_ENABLE;
-    // } else {
-    //     status = RADIO_CONNECTED_DISABLE;
-    // }
+    DEBUG_MSG(
+        DEBUG_LEVEL_INFO, "current Radio Controller status is %d", status
+    );
 
     return status;
-};
-
-
-radio_status_t radio_status_pin() {
-    pwm_pulse_t steering_us = radio_read_pin(PIN_RADIO_CH1);
-    pwm_pulse_t throttle_us = radio_read_pin(PIN_RADIO_CH2);
-
-    if (steering_us == 0 || throttle_us == 0) {
-        return RADIO_DISCONNECTED;
-    }
-
-    return RADIO_CONNECTED_ENABLE;
 };
 
 

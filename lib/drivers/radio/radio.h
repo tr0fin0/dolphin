@@ -20,6 +20,9 @@ extern "C" {
 
 
 
+#define RADIO_TIMEOUT_US    20000
+
+
 /**
  * @brief Logical indices for RC receiver channels.
  */
