@@ -76,19 +76,13 @@ void radio_read_channels(pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS]);
  */
 pwm_pulse_norm_t radio_read_channel(channel_t channel);
 
-
-pwm_pulse_t radio_read_pin(uint8_t pin);
-
-
-void radio_validate(void);
-
 /**
  * @brief Returns the current radio connection state.
  */
 radio_status_t radio_status(void);
 
 
-radio_status_t radio_status_pin();
+void radio_validate(void);
 
 
 

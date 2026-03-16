@@ -130,11 +130,6 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
 };
 
 
-pwm_pulse_t radio_read_pin(uint8_t pin) {
-    return pulseIn(pin, HIGH, 25000);
-};
-
-
 radio_status_t radio_status() {
     pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
     radio_read_channels(pulses_us);
