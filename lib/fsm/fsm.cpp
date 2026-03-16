@@ -395,29 +395,25 @@ static void manual_entry(void) {
  * @brief Manual state run handler.
  *
  * In `RADIO_CONNECTED_ENABLE` state, reads steering and throttle radio channels
- * and forwards them directly to the ESC outputs.
+ * and forwards them mixed in a tank combination to the ESC outputs.
  *
  * If the radio becomes disabled or disconnected, transitions immediately to
  * `STATE_SAFE` for safety.
  */
 static void manual_run(void) {
     if (radio_status() == RADIO_DISCONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal.");
 
-        fsm_transition(STATE_SAFE); 
+        fsm_transition(STATE_SAFE);
         return;
     }
 
-    pwm_pulse_norm_t steering_us = radio_read_pin(PIN_RADIO_CH1);
-    pwm_pulse_norm_t throttle_us = radio_read_pin(PIN_RADIO_CH2);
+    pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS] = {
+        radio_read_channel(CHANNEL_STEERING),
+        radio_read_channel(CHANNEL_THROTTLE)
+    };
 
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured steering: %d us", steering_us);
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured throttle: %d us", throttle_us);
-
-    long left_us  = throttle_us + steering_us - PWM_NEUTRAL_US;
-    long right_us = throttle_us - steering_us + PWM_NEUTRAL_US;
-
-    esc_set_pwm((pwm_pulse_t) left_us,  MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) right_us, MOTOR_R);
+    esc_set_pwms(pulses_us);
 }
 
 /**
