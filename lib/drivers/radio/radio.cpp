@@ -107,8 +107,7 @@ void radio_read_channels(pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS]) {
 
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
         DEBUG_MSG(
-            DEBUG_LEVEL_TRACE,
-            "channel %d receiving %d us", i, pulse_width[i]
+            DEBUG_LEVEL_TRACE, "channel %d receiving %d us", i, pulses_us[i]
         );
     }
 };
@@ -122,8 +121,7 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
     interrupts();
 
     DEBUG_MSG(
-        DEBUG_LEVEL_TRACE,
-        "channel %d receiving %d us", channel, pulse_width[channel]
+        DEBUG_LEVEL_TRACE, "channel %d receiving %d us", channel, pulse_us
     );
 
     return pulse_us;
