@@ -296,7 +296,7 @@ static void attack_run(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_ATTACK");
 
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -361,7 +361,7 @@ static void countdown_run(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_COUNTDOWN");
 
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -399,10 +399,7 @@ static void manual_entry(void) {
  * `STATE_SAFE` for safety.
  */
 static void manual_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_MANUAL");
-
-    if (radio_status_pin() == RADIO_DISCONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "Radio signal lost (pulseIn timeout). Stopping motors.");
+    if (radio_status() == RADIO_DISCONNECTED) {
 
         fsm_transition(STATE_SAFE); 
         return;
@@ -541,11 +538,7 @@ static void safe_entry(void) {
  * enable signal is detected.
  */
 static void safe_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SAFE");
-
-    if (radio_status_pin() == RADIO_CONNECTED_ENABLE) {
-        DEBUG_MSG(DEBUG_LEVEL_INFO, "radio status is RADIO_CONNECTED_ENABLE");
-
+    if (radio_status() == RADIO_CONNECTED) {
         if (CONTROL_MODE == AUTONOMOUS) {
             DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is AUTONOMOUS");
 
@@ -590,7 +583,7 @@ static void search_run(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SEARCH");
 
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -631,7 +624,7 @@ static void survive_run(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SURVIVE");
 
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 

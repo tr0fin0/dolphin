@@ -38,16 +38,13 @@ typedef enum {
  *
  * Represents the current operational state of the RC link:
  *
- * - `RADIO_CONNECTED_ENABLE`:  Valid signal present and enable switch active.
+ * - `RADIO_CONNECTED`:     Valid signal present and enable switch active.
  *
- * - `RADIO_CONNECTED_DISABLE`: Valid signal present but enable switch inactive.
- *
- * - `RADIO_DISCONNECTED`:      No valid signal detected.
+ * - `RADIO_DISCONNECTED`:  No valid signal detected.
  */
 typedef enum {
-    RADIO_CONNECTED_ENABLE,     /**< Valid signal present and enable switch active. */
-    RADIO_CONNECTED_DISABLE,    /**< Valid signal present but enable switch inactive. */
-    RADIO_DISCONNECTED          /**< No valid signal detected. */
+    RADIO_CONNECTED,    /**< Valid signal present and enable switch active. */
+    RADIO_DISCONNECTED  /**< No valid signal detected. */
 } radio_status_t;
 
 
