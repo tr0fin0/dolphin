@@ -188,6 +188,7 @@ void fsm_init(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine started");
 
     led_init();
+    led_set_brightness(BRIGHTNESS_MEDIUM);
     radio_init();
     esc_init();
 
@@ -526,7 +527,6 @@ static void safe_entry(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SAFE");
 
     led_set_color(LED_STATE, COLOR_YELLOW);
-    led_set_brightness(BRIGHTNESS_MEDIUM);
 
     esc_set_pwms_neutral();
 }
