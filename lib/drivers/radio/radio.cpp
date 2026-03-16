@@ -77,22 +77,23 @@ static void IRAM_ATTR radio_isr(void* arg) {
 void radio_init() {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller started");
 
+    uint32_t now = micros();
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
-        pinMode(channels_pins[i], INPUT);
+        pinMode(channels[i], INPUT);
 
         attachInterruptArg(
-            digitalPinToInterrupt(channels_pins[i]),
+            digitalPinToInterrupt(channels[i]),
             radio_isr,
             (void*)(uintptr_t) i,
             CHANGE
         );
 
-        rise_time[i]    = 0;
-        pulse_width[i]  = (pwm_pulse_norm_t) PWM_NEUTRAL_US;
-        last_update[i]  = 0;
+        rise_time[i]    = now;
+        pulse_width[i]  = (pwm_pulse_t) PWM_NEUTRAL_US;
+        last_update[i]  = now;
     }
 
-    status = RADIO_CONNECTED_DISABLE;
+    status = RADIO_DISCONNECTED;
 
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller finish");
 };
