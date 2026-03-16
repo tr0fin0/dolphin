@@ -26,10 +26,10 @@ extern "C" {
 typedef enum {
     CHANNEL_STEERING = 0,
     CHANNEL_THROTTLE,
-    // CHANNEL_3,
-    // CHANNEL_ENABLE,
-    // CHANNEL_5,
-    // CHANNEL_6,
+    CHANNEL_BUTTON,
+    CHANNEL_4,
+    CHANNEL_5,
+    CHANNEL_6,
     NUMBER_OF_CHANNELS
 } channel_t;
 
