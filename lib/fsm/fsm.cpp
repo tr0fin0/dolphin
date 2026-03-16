@@ -222,14 +222,26 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 1. execute Exit Action of current state
     if (state_table[current_state].on_exit != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "exiting of %s", state_table[current_state].name
+        );
+
         state_table[current_state].on_exit();
     }
 
     // 2. update state
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "entrying of %s", state_table[current_state].name
+        );
+
     current_state = new_state;
 
     // 3. execute Entry Action of new state
     if (state_table[current_state].on_entry != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "entrying of %s", state_table[current_state].name
+        );
+
         state_table[current_state].on_entry();
     }
 }
@@ -237,6 +249,10 @@ void fsm_transition(fsm_state_t new_state) {
 
 void fsm_step(void) {
     if (state_table[current_state].on_run != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "running of %s", state_table[current_state].name
+        );
+
         return state_table[current_state].on_run();
     }
 
@@ -253,8 +269,7 @@ const char* get_current_state_name(void) {
     }
 
     DEBUG_MSG(
-        DEBUG_LEVEL_ERROR,
-        "no name defined for current state %d", current_state
+        DEBUG_LEVEL_ERROR, "no name defined for current state %d", current_state
     );
 
     return "UNKNOWN";
@@ -280,8 +295,6 @@ fsm_state_t get_current_state(void) {
  * Sets visual indication upon entering `STATE_ATTACK`.
  */
 static void attack_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_ATTACK");
-
     led_set_color(LED_STATE, COLOR_SCARLET);
 
     // TODO: Set ESCs to full forward speed
@@ -294,8 +307,6 @@ static void attack_entry(void) {
  * authorization is lost.
  */
 static void attack_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_ATTACK");
-
     // Safety abort
     if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
@@ -318,8 +329,6 @@ static void attack_run(void) {
  * Sets visual indication upon entering `STATE_BOOT`.
  */
 static void boot_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_BOOT");
-
     led_set_color(LED_STATE, COLOR_WHITE);
 }
 
@@ -329,8 +338,6 @@ static void boot_entry(void) {
  * First .
  */
 static void boot_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_BOOT");
-
     fsm_transition(STATE_SAFE);
 }
 
@@ -344,8 +351,6 @@ static void boot_run(void) {
  * for time-based transition.
  */
 static void countdown_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_COUNTDOWN");
-
     led_set_color(LED_STATE, COLOR_ORANGE_LIGHT);
     state_timer_ms = millis();
 
@@ -359,8 +364,6 @@ static void countdown_entry(void) {
  * radio enable signal is lost, immediately transitions back to `STATE_SAFE`.
  */
 static void countdown_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_COUNTDOWN");
-
     // Safety abort
     if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
@@ -385,8 +388,6 @@ static void countdown_run(void) {
  * Sets visual indication upon entering `STATE_MANUAL`.
  */
 static void manual_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_MANUAL");
-
     led_set_color(LED_STATE, COLOR_GREEN);
 }
 
@@ -524,8 +525,6 @@ static void opening_run(void) {
  * entering the safe state.
  */
 static void safe_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SAFE");
-
     led_set_color(LED_STATE, COLOR_YELLOW);
 
     esc_set_pwms_neutral();
@@ -553,8 +552,6 @@ static void safe_run(void) {
             }
         }
     }
-
-    DEBUG_MSG(DEBUG_LEVEL_WARNING, "radio status is RADIO_DISCONNECTED");
 }
 
 
@@ -566,8 +563,6 @@ static void safe_run(void) {
  * Sets visual indication upon entering `STATE_SEARCH`.
  */
 static void search_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SEARCH");
-
     led_set_color(LED_STATE, COLOR_BLUE);
 
     // TODO: Set ESCs to perform a slow spin or search pattern
@@ -580,8 +575,6 @@ static void search_entry(void) {
  * enable signal is lost.
  */
 static void search_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SEARCH");
-
     // Safety abort
     if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
@@ -604,8 +597,6 @@ static void search_run(void) {
  * entry timestamp for time-based logic.
  */
 static void survive_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SURVIVE");
-
     led_set_color(LED_STATE, COLOR_PURPLE);
 
     // TODO: Set ESCs to hard reverse
@@ -621,8 +612,6 @@ static void survive_entry(void) {
  * - After 500 ms from state entry, transitions to `STATE_SEARCH`.
  */
 static void survive_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SURVIVE");
-
     // Safety abort
     if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
