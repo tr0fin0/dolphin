@@ -14,13 +14,13 @@ static volatile pwm_pulse_norm_t    pulse_width[NUMBER_OF_CHANNELS];
 static volatile uint32_t            last_update[NUMBER_OF_CHANNELS];
 static radio_status_t               status = RADIO_DISCONNECTED;
 
-static const uint8_t channels_pins[NUMBER_OF_CHANNELS] = {
+static const uint8_t channels[NUMBER_OF_CHANNELS] = {
     PIN_RADIO_CH1,
     PIN_RADIO_CH2,
-    // PIN_RADIO_CH3,
-    // PIN_RADIO_CH4,
-    // PIN_RADIO_CH5,
-    // PIN_RADIO_CH6
+    PIN_RADIO_CH3,
+    PIN_RADIO_CH4,
+    PIN_RADIO_CH5,
+    PIN_RADIO_CH6
 };
 
 
@@ -58,17 +58,20 @@ static const uint8_t channels_pins[NUMBER_OF_CHANNELS] = {
  *   and accessed atomically or within critical sections.
  */
 static void IRAM_ATTR radio_isr(void* arg) {
-    uint8_t channel = (uint8_t)(uintptr_t) arg; // portable cast
+    uint8_t i       = (uint8_t)(uintptr_t) arg; // portable cast
+
     uint32_t now    = micros();
-    uint32_t level  = (REG_READ(GPIO_IN_REG) >> channels_pins[channel]) & 0x1;
+    uint32_t level  = (REG_READ(GPIO_IN1_REG) >> (channels[i] - 32)) & 0x1;
 
     if (level) {    // rising edge
-        rise_time[channel] = now;
+        rise_time[i] = now;
     } else {        // falling edge
-        pwm_pulse_t pulse_us = (pwm_pulse_t) (now - rise_time[channel]);
+        if (rise_time[i] != 0) {
+            pwm_pulse_t pulse_us = (pwm_pulse_t) (now - rise_time[i]);
 
-        pulse_width[channel] = pwm_pulse_us_normalize(pulse_us);
-        last_update[channel] = millis();
+            pulse_width[i] = pwm_pulse_us_normalize(pulse_us);
+            last_update[i] = now;
+        }
     }
 }
 
