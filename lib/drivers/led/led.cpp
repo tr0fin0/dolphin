@@ -52,7 +52,7 @@ void led_set_brightness(brightness_t brightness) {
     FastLED.setBrightness(brightness);
     FastLED.show();
 
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "setting LEDs brigthness to %d", brightness);
+    DEBUG_MSG(DEBUG_LEVEL_TRACE, "setting LEDs brightness to %d", brightness);
 }
 
 
