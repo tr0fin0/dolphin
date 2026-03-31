@@ -390,7 +390,7 @@ static void manual_exit(void) {
 static void opening_entry(void) {
     led_set_color(LED_STATE, COLOR_PURPLE);
 
-    button_us = radio_read_channel(CHANNEL_THROTTLE);//TODO modify to CHANNEL_BUTTON
+    button_us = radio_read_channel(CHANNEL_BUTTON);
 }
 
 /**
@@ -411,22 +411,29 @@ static void opening_run(void) {
         pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
         radio_read_channels(pulses_us);
 
-        if (button_us != pulses_us[CHANNEL_THROTTLE]) {// TODO modify to CHANNEL_BUTTON
-            button_us = pulses_us[CHANNEL_THROTTLE];// TODO modify to CHANNEL_BUTTON
+        // ensure inital button value is not PWM_NEUTRAL_US
+        if (
+            button_us == PWM_NEUTRAL_US &&
+            pulses_us[CHANNEL_BUTTON] != PWM_NEUTRAL_US
+        ) {
+            button_us = pulses_us[CHANNEL_BUTTON];
+        }
 
-            if (
-                pulses_us[CHANNEL_STEERING] <   // TODO modify to CHANNEL_THROTTLE
-                (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
-            ) {
-                opening_strategy += 1 * pow10((double) opening_step);
-            } else if (
-                pulses_us[CHANNEL_STEERING] >   // TODO modify to CHANNEL_THROTTLE
-                (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
-            ) {
-                opening_strategy += 2 * pow10((double) opening_step);
+        if (button_us != pulses_us[CHANNEL_BUTTON]) {
+            button_us = pulses_us[CHANNEL_BUTTON];
+
+            uint32_t increase;
+            if (pulses_us[CHANNEL_THROTTLE] > PWM_THRESHOUD_75) {
+                increase = 2;
+            } else if (pulses_us[CHANNEL_THROTTLE] < PWM_THRESHOUD_25) {
+                increase = 1;
             } else {
-                opening_strategy += 0;
+                increase = 0;
             }
+            opening_strategy = 10 * opening_strategy + increase;
+            DEBUG_MSG(
+                DEBUG_LEVEL_WARNING, "opening_strategy: %d", opening_strategy
+            );
 
             led_toggle(LED_STATE);
             opening_step++;
