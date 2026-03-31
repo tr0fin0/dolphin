@@ -26,7 +26,7 @@ extern "C" {
  * @brief Defines debug logging levels.
  * 
  * Available levels are:
- * 
+ *
  * - `DEBUG_LEVEL_CRITICAL`:    System Failure
  *
  * - `DEBUG_LEVEL_ERROR`:       Recoverable Error
@@ -128,7 +128,7 @@ void debug_message(int level, const char *file, const char *func, int line, cons
  *
  * - `__LINE__`
  *
- * @param level `debug_level_t` bebug severity level.
+ * @param level `debug_level_t` debug severity level.
  * @param fmt   `string` printf-style message.
  * @param ...   Additional arguments corresponding to the format string.
  */

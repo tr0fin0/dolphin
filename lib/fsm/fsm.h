@@ -62,12 +62,13 @@ typedef void (*fsm_action_t)(void);
  *
  * - on_exit:  Executed once immediately before transitioning OUT of
  *             this state.
- *             Intedended for cleanup or safe shutdown actions.
+ *             Intended for cleanup or safe shutdown actions.
  *
  * Any callback may be `NULL` if not required.
  *
  * @note
  * - callbacks must be deterministic and non-blocking.
+ *
  * - transitions are managed by the FSM engine.
  */
 typedef struct {
