@@ -76,6 +76,15 @@ typedef uint32_t pwm_pulse_norm_t;
  */
 #define PWM_MINIMUM_US      1000U
 
+/**
+ * @brief 25% pulse threshold in microseconds.
+ */
+#define PWM_THRESHOUD_25    (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+
+/**
+ * @brief 75% pulse threshold in microseconds.
+ */
+#define PWM_THRESHOUD_75    (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
 
 
 /**
