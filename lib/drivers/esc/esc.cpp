@@ -50,11 +50,8 @@ void esc_init() {
         );
     }
 
-    delay(500); // initialization stabilization
-
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of ESC finish");
 };
-
 
 void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
     pwm_pulse_norm_t pulse_norm_us = pwm_pulse_us_normalize(pulse_us);

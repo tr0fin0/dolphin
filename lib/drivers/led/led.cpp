@@ -94,7 +94,5 @@ void led_validate() {
     for (size_t i = 0; i < COLORS_COUNT; i++) {
         led_set_color_all(COLORS[i][0], COLORS[i][1], COLORS[i][2]);
         FastLED.show();
-
-        delay(250);
     }
 }

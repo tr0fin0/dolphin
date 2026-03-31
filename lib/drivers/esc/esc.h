@@ -78,9 +78,6 @@ typedef enum {
  *
  * Configures MCPWM Unit 0 / Timer 0 for standard RC servo timing of 50 Hz, 20
  * ms period.
- *
- * @note
- * stabilization delay of 500 ms applied to allow ESC arming.
  */
 void esc_init(void);
 
