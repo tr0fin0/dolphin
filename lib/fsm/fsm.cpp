@@ -472,7 +472,7 @@ static void opening_run(void) {
  * entering the safe state.
  */
 static void safe_entry(void) {
-    led_set_color(LED_STATE, COLOR_YELLOW);
+    led_set_color(LED_STATE, COLOR_RED);
 
     esc_set_pwms_neutral();
 }
