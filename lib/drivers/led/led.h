@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 
-#define TOGGLE_DURATION_MS 50
+#define TOGGLE_DURATION_MS 100
 
 /**
  * @brief Discrete LED brightness levels.
