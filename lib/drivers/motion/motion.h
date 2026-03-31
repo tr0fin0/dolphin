@@ -9,7 +9,7 @@ extern "C"
 #endif
 
 /**
- * @brief Move rotation angle in degrees.
+ * @brief Angle of rotation in degrees.
  *
  * With:
  *
@@ -20,7 +20,7 @@ extern "C"
 typedef int16_t angle_t;
 
 /**
- * @brief Move distance angle in degrees.
+ * @brief Distance of translation in centimeters.
  *
  * With:
  *
@@ -31,14 +31,14 @@ typedef int16_t angle_t;
 typedef int16_t distance_t;
 
 /**
- * @brief Move motors so robot performs a rotation.
+ * @brief Perform in place rotation by an angle.
  *
  * @param angle rotation angle in degree.
  */
-void motion_rotate(angle_t angle);
+void motion_rotation(angle_t angle);
 
 /**
- * @brief Move motors so robot performs a translation.
+ * @brief Perform rectilinum translation by a distance.
  *
  * @param distance translation distance in centimeters.
  */

@@ -6,7 +6,7 @@
 
 
 
-void motion_rotate(angle_t angle) {
+void motion_rotation(angle_t angle) {
     if (angle == -45) {
         esc_set_pwm((pwm_pulse_norm_t) PWM_MINIMUM_US, MOTOR_L);
         esc_set_pwm((pwm_pulse_norm_t) PWM_MINIMUM_US, MOTOR_R);

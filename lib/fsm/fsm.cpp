@@ -446,14 +446,14 @@ static void opening_run(void) {
                 break;
 
             case OPENING_DRAW:
-                motion_rotate(+180);
+                motion_rotation(+180);
 
                 break;
 
             case OPENING_NE:
-                motion_rotate(+45);
+                motion_rotation(+45);
                 motion_translation(+50);
-                motion_rotate(-45);
+                motion_rotation(-45);
 
                 break;
 
@@ -463,26 +463,26 @@ static void opening_run(void) {
                 break;
 
             case OPENING_NW:
-                motion_rotate(-45);
+                motion_rotation(-45);
                 motion_translation(+50);
-                motion_rotate(+45);
+                motion_rotation(+45);
 
                 break;
 
             case OPENING_SE:
-                motion_rotate(-45);
+                motion_rotation(-45);
                 motion_translation(-50);
 
                 break;
 
             case OPENING_SS:
-                motion_rotate(-45);
+                motion_rotation(-45);
                 motion_translation(-50);
 
                 break;
 
             case OPENING_SW:
-                motion_rotate(+45);
+                motion_rotation(+45);
                 motion_translation(-50);
 
                 break;
@@ -510,8 +510,8 @@ static void safe_entry(void) {
 /**
  * @brief Safe state run handler.
  *
- * Monitors radio status and transitions to `STATE_COUNTDOWN` when a valid
- * enable signal is detected.
+ * Monitors radio status and transitions to `STATE_COUNTDOWN`, `STATE_MANUAL` or
+ * `STATE_OPENING` when a valid enable signal is detected.
  */
 static void safe_run(void) {
     // Safety lock
