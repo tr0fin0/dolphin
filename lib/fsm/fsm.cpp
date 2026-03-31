@@ -5,6 +5,7 @@
 #include "fsm.h"
 #include "led/colors.h"
 #include "led/led.h"
+#include "motor/motor.h"
 #include "radio/radio.h"
 #include "pinout.h"
 #include "pwm/pwm.h"
@@ -364,7 +365,7 @@ static void manual_run(void) {
         radio_read_channel(CHANNEL_THROTTLE)
     };
 
-    esc_set_pwms(pulses_us);
+    motors_set_pwm(pulses_us);
 }
 
 /**
@@ -374,7 +375,7 @@ static void manual_run(void) {
  * preventing unintended motion during transition.
  */
 static void manual_exit(void) {
-    esc_set_pwms_neutral();
+    motors_set_pwm_neutral();
 }
 
 
@@ -474,7 +475,7 @@ static void opening_run(void) {
 static void safe_entry(void) {
     led_set_color(LED_STATE, COLOR_RED);
 
-    esc_set_pwms_neutral();
+    motors_set_pwm_neutral();
 }
 
 /**
