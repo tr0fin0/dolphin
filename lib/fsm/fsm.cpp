@@ -355,7 +355,7 @@ static void manual_entry(void) {
  */
 static void manual_run(void) {
     if (radio_status() == RADIO_DISCONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal.");
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal");
 
         fsm_transition(STATE_SAFE);
         return;
@@ -401,7 +401,7 @@ static void opening_entry(void) {
  */
 static void opening_run(void) {
     if (radio_status() == RADIO_DISCONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal.");
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal");
 
         fsm_transition(STATE_SAFE);
         return;
@@ -439,7 +439,7 @@ static void opening_run(void) {
             opening_step++;
         }
     } else {
-        DEBUG_MSG(DEBUG_LEVEL_INFO, "opening_strategy is %d", opening_strategy);
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "opening_strategy: %d", opening_strategy);
 
         switch (opening_strategy) {
             case OPENING_STATIC:
@@ -516,13 +516,11 @@ static void safe_entry(void) {
 static void safe_run(void) {
     // Safety lock
     if (radio_status() == RADIO_CONNECTED) {
-        if (CONTROL_MODE == AUTONOMOUS) {
-            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is AUTONOMOUS");
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "control mode: %d", CONTROL_MODE);
 
+        if (CONTROL_MODE == AUTONOMOUS) {
             fsm_transition(STATE_COUNTDOWN);
         } else {
-            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is RADIO");
-
             if (opening_step == OPENING_ITERATIONS) {
                 fsm_transition(STATE_MANUAL);
             } else {
