@@ -5,6 +5,7 @@
 #include "fsm.h"
 #include "led/colors.h"
 #include "led/led.h"
+#include "motion/motion.h"
 #include "motor/motor.h"
 #include "radio/radio.h"
 #include "pinout.h"
@@ -438,24 +439,45 @@ static void opening_run(void) {
                 break;
 
             case OPENING_DRAW:
+                motion_rotate(+180);
+
                 break;
 
             case OPENING_NE:
+                motion_rotate(+45);
+                motion_translation(+50);
+                motion_rotate(-45);
+
                 break;
 
             case OPENING_NN:
+                motion_translation(+50);
+
                 break;
 
             case OPENING_NW:
+                motion_rotate(-45);
+                motion_translation(+50);
+                motion_rotate(+45);
+
                 break;
 
             case OPENING_SE:
+                motion_rotate(-45);
+                motion_translation(-50);
+
                 break;
 
             case OPENING_SS:
+                motion_rotate(-45);
+                motion_translation(-50);
+
                 break;
 
             case OPENING_SW:
+                motion_rotate(+45);
+                motion_translation(-50);
+
                 break;
         }
 
