@@ -133,7 +133,7 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
 
 
 radio_status_t radio_status() {
-    uint disconnected_channels = 0;
+    uint8_t disconnected_channels = 0;
 
     noInterrupts();
     uint32_t now = micros();
@@ -144,15 +144,18 @@ radio_status_t radio_status() {
     }
     interrupts();
 
+    static radio_status_t new_status;
     if (disconnected_channels >= NUMBER_OF_CHANNELS - 1) {
-        status = RADIO_DISCONNECTED;
+        new_status = RADIO_DISCONNECTED;
     } else {
-        status = RADIO_CONNECTED;
+        new_status = RADIO_CONNECTED;
     }
 
-    DEBUG_MSG(
-        DEBUG_LEVEL_INFO, "current Radio Controller status is %d", status
-    );
+    if (new_status != status) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "radio status: %d", new_status);
+
+        status = new_status;
+    }
 
     return status;
 };
