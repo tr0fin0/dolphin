@@ -16,8 +16,8 @@ void motors_set_pwm(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]) {
     pwm_pulse_norm_t throttle_us = pulses_us[1];
     DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured throttle: %d us", throttle_us);
 
-    esc_set_pwm((pwm_pulse_t) throttle_us + steering_us - PWM_NEUTRAL_US, MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) throttle_us - steering_us + PWM_NEUTRAL_US, MOTOR_R);
+    esc_set_pwm((pwm_pulse_t) steering_us + throttle_us - PWM_NEUTRAL_US, MOTOR_L);
+    esc_set_pwm((pwm_pulse_t) steering_us - throttle_us + PWM_NEUTRAL_US, MOTOR_R);
 };
 
 void motors_set_pwm_neutral() {
