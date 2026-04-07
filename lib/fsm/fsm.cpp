@@ -407,10 +407,10 @@ static void opening_run(void) {
         return;
     }
 
-    if (opening_step < OPENING_ITERATIONS) {
-        pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
-        radio_read_channels(pulses_us);
+    pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
+    radio_read_channels(pulses_us);
 
+    if (opening_step < OPENING_ITERATIONS) {
         // ensure inital button value is not PWM_NEUTRAL_US
         if (
             button_us == PWM_NEUTRAL_US &&
@@ -432,14 +432,18 @@ static void opening_run(void) {
             }
             opening_strategy = 10 * opening_strategy + increase;
             DEBUG_MSG(
-                DEBUG_LEVEL_WARNING, "opening_strategy: %d", opening_strategy
+                DEBUG_LEVEL_WARNING, "current opening: %d", opening_strategy
             );
 
             led_toggle(LED_STATE);
             opening_step++;
         }
-    } else {
-        DEBUG_MSG(DEBUG_LEVEL_INFO, "opening_strategy: %d", opening_strategy);
+    } else if (
+        opening_step == OPENING_ITERATIONS &&
+        button_us != pulses_us[CHANNEL_BUTTON]
+    ) {
+        button_us = pulses_us[CHANNEL_BUTTON];
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "running opening: %d", opening_strategy);
 
         switch (opening_strategy) {
             case OPENING_STATIC:
