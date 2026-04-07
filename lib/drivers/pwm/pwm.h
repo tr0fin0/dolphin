@@ -48,6 +48,9 @@ typedef uint32_t pwm_pulse_norm_t;
  *
  * Pulses within `PWM_DEADBAND_US` distance of `PWM_NEUTRAL_US` are forced to
  * `PWM_NEUTRAL_US`.
+ * 
+ * @note
+ * - button debounce requires at least 50.
  */
 #define PWM_DEADBAND_US       50U
 
