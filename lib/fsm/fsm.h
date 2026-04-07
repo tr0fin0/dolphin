@@ -34,14 +34,14 @@ typedef enum {
 } fsm_state_t;
 
 typedef enum {
-    OPENING_STATIC  = 000,
+    OPENING_STATIC  =   0,
     OPENING_DRAW    = 111,
     OPENING_NE      = 122,
-    OPENING_NN      = 020,
+    OPENING_NN      =  20,
     OPENING_NW      = 221,
-    OPENING_SE      = 011,
-    OPENING_SS      = 010,
-    OPENING_SW      = 012,
+    OPENING_SE      =  11,
+    OPENING_SS      =  10,
+    OPENING_SW      =  12,
 } opening_t;
 
 typedef void (*fsm_action_t)(void);
