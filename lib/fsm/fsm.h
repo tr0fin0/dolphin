@@ -35,13 +35,15 @@ typedef enum {
 
 typedef enum {
     OPENING_STATIC  =   0,
-    OPENING_DRAW    = 111,
-    OPENING_NE      = 122,
+    OPENING_DRAW    =   1,
+    OPENING_NE      = 221,
     OPENING_NN      =  20,
-    OPENING_NW      = 221,
-    OPENING_SE      =  11,
+    OPENING_NW      = 122,
+    OPENING_SEN     = 210,
+    OPENING_SE      = 212,
     OPENING_SS      =  10,
-    OPENING_SW      =  12,
+    OPENING_SW      = 111,
+    OPENING_SWN     = 110,
 } opening_t;
 
 typedef void (*fsm_action_t)(void);
