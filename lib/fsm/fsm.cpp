@@ -450,44 +450,162 @@ static void opening_run(void) {
                 break;
 
             case OPENING_DRAW:
-                motion_rotation(+180);
+                // rotation     +180
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(80);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_NE:
-                motion_rotation(+45);
-                motion_translation(+50);
-                motion_rotation(-45);
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(25);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     -090
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(65);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_NN:
-                motion_translation(+50);
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_NW:
-                motion_rotation(-45);
-                motion_translation(+50);
-                motion_rotation(+45);
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(25);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     +090
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(65);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_SE:
-                motion_rotation(-45);
-                motion_translation(-50);
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     +090
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(60);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SEN:
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_SS:
-                motion_rotation(-45);
-                motion_translation(-50);
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
 
             case OPENING_SW:
-                motion_rotation(+45);
-                motion_translation(-50);
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     -090
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(60);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SWN:
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(20);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
 
                 break;
         }
