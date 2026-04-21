@@ -20,7 +20,6 @@ static const char *file_basename(const char *path) {
 
 void debug_init(uint32_t baud_rate) {
     Serial.begin(baud_rate);
-    delay(10);
 }
 
 

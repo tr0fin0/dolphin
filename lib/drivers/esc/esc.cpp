@@ -2,6 +2,7 @@
 #include "debug.h"
 #include <driver/mcpwm.h>
 #include "esc.h"
+#include "motor/motor.h"
 #include "pinout.h"
 #include "pwm/pwm.h"
 #include "radio/radio.h"
@@ -50,11 +51,8 @@ void esc_init() {
         );
     }
 
-    delay(500); // initialization stabilization
-
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of ESC finish");
 };
-
 
 void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
     pwm_pulse_norm_t pulse_norm_us = pwm_pulse_us_normalize(pulse_us);
@@ -70,16 +68,6 @@ void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
         pulse_norm_us
     );
 };
-
-
-void esc_set_pwms(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]) {
-    pwm_pulse_norm_t throttle_us = pulses_us[0];
-    pwm_pulse_norm_t steering_us = pulses_us[1];
-
-    esc_set_pwm((pwm_pulse_t) throttle_us + steering_us - PWM_NEUTRAL_US, MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) throttle_us - steering_us + PWM_NEUTRAL_US, MOTOR_R);
-};
-
 
 void esc_validate() {
 

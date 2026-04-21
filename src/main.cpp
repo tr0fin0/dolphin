@@ -6,7 +6,6 @@
 
 void setup() {
     debug_init(115200);
-    delay(2500);
 
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization system start");
 
@@ -19,6 +18,4 @@ void setup() {
 
 void loop() {
     fsm_step();
-
-    // delay(100);
 }

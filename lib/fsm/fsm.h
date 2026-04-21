@@ -26,11 +26,25 @@ typedef enum {
     STATE_BOOT,
     STATE_COUNTDOWN,
     STATE_MANUAL,
+    STATE_OPENING,
     STATE_SAFE,
     STATE_SEARCH,
     STATE_SURVIVE,
     NUMBER_OF_STATES
 } fsm_state_t;
+
+typedef enum {
+    OPENING_STATIC  =   0,
+    OPENING_DRAW    =   1,
+    OPENING_NE      = 221,
+    OPENING_NN      =  20,
+    OPENING_NW      = 122,
+    OPENING_SEN     = 210,
+    OPENING_SE      = 212,
+    OPENING_SS      =  10,
+    OPENING_SW      = 111,
+    OPENING_SWN     = 110,
+} opening_t;
 
 typedef void (*fsm_action_t)(void);
 
@@ -50,12 +64,13 @@ typedef void (*fsm_action_t)(void);
  *
  * - on_exit:  Executed once immediately before transitioning OUT of
  *             this state.
- *             Intedended for cleanup or safe shutdown actions.
+ *             Intended for cleanup or safe shutdown actions.
  *
  * Any callback may be `NULL` if not required.
  *
  * @note
  * - callbacks must be deterministic and non-blocking.
+ *
  * - transitions are managed by the FSM engine.
  */
 typedef struct {

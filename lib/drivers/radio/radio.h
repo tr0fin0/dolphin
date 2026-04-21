@@ -20,16 +20,19 @@ extern "C" {
 
 
 
+#define RADIO_TIMEOUT_US    20000
+
+
 /**
  * @brief Logical indices for RC receiver channels.
  */
 typedef enum {
     CHANNEL_STEERING = 0,
     CHANNEL_THROTTLE,
-    // CHANNEL_3,
-    // CHANNEL_ENABLE,
-    // CHANNEL_5,
-    // CHANNEL_6,
+    CHANNEL_BUTTON,
+    CHANNEL_4,
+    CHANNEL_5,
+    CHANNEL_6,
     NUMBER_OF_CHANNELS
 } channel_t;
 
@@ -38,16 +41,13 @@ typedef enum {
  *
  * Represents the current operational state of the RC link:
  *
- * - `RADIO_CONNECTED_ENABLE`:  Valid signal present and enable switch active.
+ * - `RADIO_CONNECTED`:     Valid signal present and enable switch active.
  *
- * - `RADIO_CONNECTED_DISABLE`: Valid signal present but enable switch inactive.
- *
- * - `RADIO_DISCONNECTED`:      No valid signal detected.
+ * - `RADIO_DISCONNECTED`:  No valid signal detected.
  */
 typedef enum {
-    RADIO_CONNECTED_ENABLE,     /**< Valid signal present and enable switch active. */
-    RADIO_CONNECTED_DISABLE,    /**< Valid signal present but enable switch inactive. */
-    RADIO_DISCONNECTED          /**< No valid signal detected. */
+    RADIO_CONNECTED,    /**< Valid signal present and enable switch active. */
+    RADIO_DISCONNECTED  /**< No valid signal detected. */
 } radio_status_t;
 
 
@@ -76,19 +76,13 @@ void radio_read_channels(pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS]);
  */
 pwm_pulse_norm_t radio_read_channel(channel_t channel);
 
-
-pwm_pulse_t radio_read_pin(uint8_t pin);
-
-
-void radio_validate(void);
-
 /**
  * @brief Returns the current radio connection state.
  */
 radio_status_t radio_status(void);
 
 
-radio_status_t radio_status_pin();
+void radio_validate(void);
 
 
 

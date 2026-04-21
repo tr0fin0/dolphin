@@ -52,7 +52,7 @@ void led_set_brightness(brightness_t brightness) {
     FastLED.setBrightness(brightness);
     FastLED.show();
 
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "setting LEDs brigthness to %d", brightness);
+    DEBUG_MSG(DEBUG_LEVEL_TRACE, "setting LEDs brightness to %d", brightness);
 }
 
 
@@ -77,6 +77,16 @@ void led_set_color_all(uint8_t r, uint8_t g, uint8_t b) {
     );
 }
 
+void led_toggle(led_t led) {
+    brightness_t brightness = (brightness_t) FastLED.getBrightness();
+
+    led_set_brightness(
+        brightness >= BRIGHTNESS_MEDIUM ? BRIGHTNESS_OFF : BRIGHTNESS_MAX
+    );
+    delay(TOGGLE_DURATION_MS);
+    led_set_brightness(brightness);
+}
+
 
 void led_validate() {
     led_set_brightness(BRIGHTNESS_LOW);
@@ -84,7 +94,5 @@ void led_validate() {
     for (size_t i = 0; i < COLORS_COUNT; i++) {
         led_set_color_all(COLORS[i][0], COLORS[i][1], COLORS[i][2]);
         FastLED.show();
-
-        delay(250);
     }
 }

@@ -21,6 +21,10 @@ extern "C" {
 #endif
 
 
+/**
+ * TODO
+ */
+typedef int8_t percentage_t;
 
 /**
  * @typedef pwm_pulse_t
@@ -36,7 +40,6 @@ typedef int16_t pwm_pulse_t;
 typedef uint32_t pwm_pulse_norm_t;
 
 #ifndef IRAM_ATTR
-
 /**
  * @brief IRAM_ATTR is a macro used in ESP32 programming to place functions, particularly interrupt service routines (ISRs), in Instruction RAM (IRAM).
  */
@@ -48,6 +51,9 @@ typedef uint32_t pwm_pulse_norm_t;
  *
  * Pulses within `PWM_DEADBAND_US` distance of `PWM_NEUTRAL_US` are forced to
  * `PWM_NEUTRAL_US`.
+ * 
+ * @note
+ * - button debounce requires at least 50.
  */
 #define PWM_DEADBAND_US       50U
 
@@ -73,6 +79,15 @@ typedef uint32_t pwm_pulse_norm_t;
  */
 #define PWM_MINIMUM_US      1000U
 
+/**
+ * @brief 25% pulse threshold in microseconds.
+ */
+#define PWM_THRESHOUD_25    (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+
+/**
+ * @brief 75% pulse threshold in microseconds.
+ */
+#define PWM_THRESHOUD_75    (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
 
 
 /**
@@ -93,6 +108,11 @@ typedef uint32_t pwm_pulse_norm_t;
  */
 pwm_pulse_norm_t IRAM_ATTR pwm_pulse_us_normalize(pwm_pulse_t pulse_us);
 
+/**
+ * TODO
+ * @brief returns PWM pulse in us based on PWM percentage. forward is positive, reverse is negative.
+ */
+pwm_pulse_norm_t pwm_pulse_percentage(percentage_t percentage);
 
 
 #ifdef __cplusplus

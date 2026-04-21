@@ -1,9 +1,12 @@
 #include <Arduino.h>
+#include <stdio.h>
 #include "config.h"
 #include "esc/esc.h"
 #include "fsm.h"
 #include "led/colors.h"
 #include "led/led.h"
+#include "motion/motion.h"
+#include "motor/motor.h"
 #include "radio/radio.h"
 #include "pinout.h"
 #include "pwm/pwm.h"
@@ -33,6 +36,13 @@ static uint32_t state_timer_ms      = 0;
 
 
 
+static uint32_t opening_step        = 0;
+static uint32_t opening_strategy;
+
+static pwm_pulse_norm_t button_us   = 0;
+
+
+
 // -----------------------------------------------------------------------------
 // FSM State Functions
 // -----------------------------------------------------------------------------
@@ -50,6 +60,9 @@ static void manual_entry(void);
 static void manual_run(void);
 static void manual_exit(void);
 
+static void opening_entry(void);
+static void opening_run(void);
+
 static void search_entry(void);
 static void search_run(void);
 
@@ -59,7 +72,6 @@ static void safe_run(void);
 static void survive_entry(void);
 static void survive_run(void);
 
-static void stop_motors(void);
 
 
 
@@ -67,55 +79,6 @@ static void stop_motors(void);
 // -----------------------------------------------------------------------------
 // FSM State Table Definition
 // -----------------------------------------------------------------------------
-
-/**
- * @brief Mermaid FSM Diagram
- *
-stateDiagram-v2
-    classDef autonomous fill:#900
-    classDef common     fill:#909
-    classDef radio      fill:#009
-    
-    class STATE_ATTACK, STATE_COUNTDOWN, STATE_SEARCH autonomous
-    class STATE_MANUAL radio
-    class STATE_SAFE, STATE_SURVIVE common
- 
-    
-    direction TB
-    state IF_SAFE <<choice>>
-
-
-    %% INITIALIZATION
-    [*] --> STATE_SAFE:                 fsm_init()
-    STATE_SAFE --> [*]
-
-
-    %% COMMON
-
-    STATE_SAFE --> IF_SAFE:             if radio_status() == RADIO_CONNECTED_ENABLE
-    IF_SAFE --> STATE_COUNTDOWN:        if CONTROL_MODE == AUTONOMOUS
-    IF_SAFE --> STATE_MANUAL:           if CONTROL_MODE == RADIO
-
-    %%STATE_SURVIVE --> STATE_MANUAL:     if edge_status() != EDGE_DETECTED
-    STATE_SURVIVE --> STATE_SEARCH:     if edge_status() != EDGE_DETECTED
-
-
-    %% AUTONOMOUS
-    STATE_ATTACK --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
-
-    STATE_COUNTDOWN --> STATE_SAFE:     if radio_status() != RADIO_CONNECTED_ENABLE
-    STATE_COUNTDOWN --> STATE_SEARCH:   if millis() - state_timer_ms >= 5000
-
-    STATE_SEARCH --> STATE_ATTACK:      if edge_status() != EDGE_DETECTED && if oponent_status() == OPONENT_DETECDED
-    STATE_SEARCH --> STATE_SAFE:        if radio_status() != RADIO_CONNECTED_ENABLE
-    STATE_SEARCH --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
-
-
-    %% RADIO CONTROLLED
-    STATE_MANUAL --> STATE_SAFE:        if radio_status() != RADIO_CONNECTED_ENABLE
-    %%STATE_MANUAL --> STATE_SURVIVE:     if edge_status() == EDGE_DETECTED
- */
-
 
 static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
@@ -141,6 +104,12 @@ static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
         .on_entry = manual_entry,
         .on_run   = manual_run,
         .on_exit  = manual_exit
+    },
+    [STATE_OPENING] = {
+        .name     = "OPENING",
+        .on_entry = opening_entry,
+        .on_run   = opening_run,
+        .on_exit  = NULL,
     },
     [STATE_SAFE] = {
         .name     = "SAFE",
@@ -172,6 +141,7 @@ void fsm_init(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine started");
 
     led_init();
+    led_set_brightness(BRIGHTNESS_MEDIUM);
     radio_init();
     esc_init();
 
@@ -205,14 +175,26 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 1. execute Exit Action of current state
     if (state_table[current_state].on_exit != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "exiting of %s", state_table[current_state].name
+        );
+
         state_table[current_state].on_exit();
     }
 
     // 2. update state
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "entrying of %s", state_table[current_state].name
+        );
+
     current_state = new_state;
 
     // 3. execute Entry Action of new state
     if (state_table[current_state].on_entry != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "entrying of %s", state_table[current_state].name
+        );
+
         state_table[current_state].on_entry();
     }
 }
@@ -220,6 +202,10 @@ void fsm_transition(fsm_state_t new_state) {
 
 void fsm_step(void) {
     if (state_table[current_state].on_run != NULL) {
+        DEBUG_MSG(
+            DEBUG_LEVEL_INFO, "running of %s", state_table[current_state].name
+        );
+
         return state_table[current_state].on_run();
     }
 
@@ -236,8 +222,7 @@ const char* get_current_state_name(void) {
     }
 
     DEBUG_MSG(
-        DEBUG_LEVEL_ERROR,
-        "no name defined for current state %d", current_state
+        DEBUG_LEVEL_ERROR, "no name defined for current state %d", current_state
     );
 
     return "UNKNOWN";
@@ -254,22 +239,6 @@ fsm_state_t get_current_state(void) {
 // State Behaviors
 // -----------------------------------------------------------------------------
 
-/**
- * @brief Stop both motors by commanding neutral PWM.
- *
- * Sets left and right ESC outputs to `PWM_NEUTRAL_US`, ensuring zero throttle
- * condition.
- */
-static void stop_motors(void) {
-    DEBUG_MSG(
-        DEBUG_LEVEL_INFO,
-        "stopping motors"
-    );
-
-    esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) PWM_NEUTRAL_US, MOTOR_R);
-}
-
 
 // --- ATTACK ---
 
@@ -279,8 +248,6 @@ static void stop_motors(void) {
  * Sets visual indication upon entering `STATE_ATTACK`.
  */
 static void attack_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_ATTACK");
-
     led_set_color(LED_STATE, COLOR_SCARLET);
 
     // TODO: Set ESCs to full forward speed
@@ -293,10 +260,8 @@ static void attack_entry(void) {
  * authorization is lost.
  */
 static void attack_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_ATTACK");
-
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -317,8 +282,6 @@ static void attack_run(void) {
  * Sets visual indication upon entering `STATE_BOOT`.
  */
 static void boot_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_BOOT");
-
     led_set_color(LED_STATE, COLOR_WHITE);
 }
 
@@ -328,8 +291,6 @@ static void boot_entry(void) {
  * First .
  */
 static void boot_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_BOOT");
-
     fsm_transition(STATE_SAFE);
 }
 
@@ -343,8 +304,6 @@ static void boot_run(void) {
  * for time-based transition.
  */
 static void countdown_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_COUNTDOWN");
-
     led_set_color(LED_STATE, COLOR_ORANGE_LIGHT);
     state_timer_ms = millis();
 
@@ -358,10 +317,8 @@ static void countdown_entry(void) {
  * radio enable signal is lost, immediately transitions back to `STATE_SAFE`.
  */
 static void countdown_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_COUNTDOWN");
-
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -384,8 +341,6 @@ static void countdown_run(void) {
  * Sets visual indication upon entering `STATE_MANUAL`.
  */
 static void manual_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entrying of STATE_MANUAL");
-
     led_set_color(LED_STATE, COLOR_GREEN);
 }
 
@@ -393,32 +348,25 @@ static void manual_entry(void) {
  * @brief Manual state run handler.
  *
  * In `RADIO_CONNECTED_ENABLE` state, reads steering and throttle radio channels
- * and forwards them directly to the ESC outputs.
+ * and forwards them mixed in a tank combination to the ESC outputs.
  *
  * If the radio becomes disabled or disconnected, transitions immediately to
  * `STATE_SAFE` for safety.
  */
 static void manual_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_MANUAL");
+    if (radio_status() == RADIO_DISCONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal");
 
-    if (radio_status_pin() == RADIO_DISCONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "Radio signal lost (pulseIn timeout). Stopping motors.");
-
-        fsm_transition(STATE_SAFE); 
+        fsm_transition(STATE_SAFE);
         return;
     }
 
-    pwm_pulse_norm_t steering_us = radio_read_pin(PIN_RADIO_CH1);
-    pwm_pulse_norm_t throttle_us = radio_read_pin(PIN_RADIO_CH2);
+    pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS] = {
+        radio_read_channel(CHANNEL_STEERING),
+        radio_read_channel(CHANNEL_THROTTLE)
+    };
 
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured steering: %d us", steering_us);
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured throttle: %d us", throttle_us);
-
-    long left_us  = throttle_us + steering_us - PWM_NEUTRAL_US;
-    long right_us = throttle_us - steering_us + PWM_NEUTRAL_US;
-
-    esc_set_pwm((pwm_pulse_t) left_us,  MOTOR_L);
-    esc_set_pwm((pwm_pulse_t) right_us, MOTOR_R);
+    motors_set_pwm(pulses_us);
 }
 
 /**
@@ -428,9 +376,242 @@ static void manual_run(void) {
  * preventing unintended motion during transition.
  */
 static void manual_exit(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "exiting of STATE_MANUAL");
+    motors_set_pwm_neutral();
+}
 
-    stop_motors();
+
+// --- OPENING ---
+
+/**
+ * @brief Opening state entry handler.
+ *
+ * Sets visual indication upon entering `STATE_OPENING`.
+ */
+static void opening_entry(void) {
+    led_set_color(LED_STATE, COLOR_PURPLE);
+
+    button_us = radio_read_channel(CHANNEL_BUTTON);
+}
+
+/**
+ * @brief Opening state run handler.
+ *
+ * Reads throttle value in 3 sequencial steps to determine the opening move
+ * requested among the defined below:
+ */
+static void opening_run(void) {
+    if (radio_status() == RADIO_DISCONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal");
+
+        fsm_transition(STATE_SAFE);
+        return;
+    }
+
+    pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS];
+    radio_read_channels(pulses_us);
+
+    if (opening_step < OPENING_ITERATIONS) {
+        // ensure inital button value is not PWM_NEUTRAL_US
+        if (
+            button_us == PWM_NEUTRAL_US &&
+            pulses_us[CHANNEL_BUTTON] != PWM_NEUTRAL_US
+        ) {
+            button_us = pulses_us[CHANNEL_BUTTON];
+        }
+
+        if (button_us != pulses_us[CHANNEL_BUTTON]) {
+            button_us = pulses_us[CHANNEL_BUTTON];
+
+            uint32_t increase;
+            if (pulses_us[CHANNEL_THROTTLE] > PWM_THRESHOUD_75) {
+                increase = 2;
+            } else if (pulses_us[CHANNEL_THROTTLE] < PWM_THRESHOUD_25) {
+                increase = 1;
+            } else {
+                increase = 0;
+            }
+            opening_strategy = 10 * opening_strategy + increase;
+            DEBUG_MSG(
+                DEBUG_LEVEL_WARNING, "current opening: %d", opening_strategy
+            );
+
+            led_toggle(LED_STATE);
+            opening_step++;
+        }
+    } else if (
+        opening_step == OPENING_ITERATIONS &&
+        button_us != pulses_us[CHANNEL_BUTTON]
+    ) {
+        button_us = pulses_us[CHANNEL_BUTTON];
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "running opening: %d", opening_strategy);
+
+        switch (opening_strategy) {
+            case OPENING_STATIC:
+                break;
+
+            case OPENING_DRAW:
+                // rotation     +180
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(80);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_NE:
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(25);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     -090
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(65);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_NN:
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_NW:
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(25);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  +50
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(140);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     +090
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(65);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SE:
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     +090
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(60);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SEN:
+                // rotation     -045
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SS:
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SW:
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(30);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // rotation     -090
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_R);
+                delay(60);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+
+            case OPENING_SWN:
+                // rotation     +045
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(20);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                // translation  -50
+                esc_set_pwm(pwm_pulse_percentage(-90), MOTOR_L);
+                esc_set_pwm(pwm_pulse_percentage(+90), MOTOR_R);
+                delay(120);
+                motors_set_pwm_neutral();
+                delay(1);
+
+                break;
+        }
+
+        fsm_transition(STATE_MANUAL);
+    }
 }
 
 
@@ -443,38 +624,32 @@ static void manual_exit(void) {
  * entering the safe state.
  */
 static void safe_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SAFE");
+    led_set_color(LED_STATE, COLOR_RED);
 
-    led_set_color(LED_STATE, COLOR_YELLOW);
-    led_set_brightness(BRIGHTNESS_MEDIUM);
-
-    stop_motors();
+    motors_set_pwm_neutral();
 }
 
 /**
  * @brief Safe state run handler.
  *
- * Monitors radio status and transitions to `STATE_COUNTDOWN` when a valid
- * enable signal is detected.
+ * Monitors radio status and transitions to `STATE_COUNTDOWN`, `STATE_MANUAL` or
+ * `STATE_OPENING` when a valid enable signal is detected.
  */
 static void safe_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SAFE");
-
-    if (radio_status_pin() == RADIO_CONNECTED_ENABLE) {
-        DEBUG_MSG(DEBUG_LEVEL_INFO, "radio status is RADIO_CONNECTED_ENABLE");
+    // Safety lock
+    if (radio_status() == RADIO_CONNECTED) {
+        DEBUG_MSG(DEBUG_LEVEL_INFO, "control mode: %d", CONTROL_MODE);
 
         if (CONTROL_MODE == AUTONOMOUS) {
-            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is AUTONOMOUS");
-
             fsm_transition(STATE_COUNTDOWN);
         } else {
-            DEBUG_MSG(DEBUG_LEVEL_INFO, "current control mode is RADIO");
-
-            fsm_transition(STATE_MANUAL);
+            if (opening_step == OPENING_ITERATIONS) {
+                fsm_transition(STATE_MANUAL);
+            } else {
+                fsm_transition(STATE_OPENING);
+            }
         }
     }
-
-    DEBUG_MSG(DEBUG_LEVEL_WARNING, "radio status is RADIO_DISCONNECTED");
 }
 
 
@@ -486,8 +661,6 @@ static void safe_run(void) {
  * Sets visual indication upon entering `STATE_SEARCH`.
  */
 static void search_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SEARCH");
-
     led_set_color(LED_STATE, COLOR_BLUE);
 
     // TODO: Set ESCs to perform a slow spin or search pattern
@@ -500,10 +673,8 @@ static void search_entry(void) {
  * enable signal is lost.
  */
 static void search_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SEARCH");
-
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 
@@ -524,8 +695,6 @@ static void search_run(void) {
  * entry timestamp for time-based logic.
  */
 static void survive_entry(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "entring of STATE_SURVIVE");
-
     led_set_color(LED_STATE, COLOR_PURPLE);
 
     // TODO: Set ESCs to hard reverse
@@ -541,10 +710,8 @@ static void survive_entry(void) {
  * - After 500 ms from state entry, transitions to `STATE_SEARCH`.
  */
 static void survive_run(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "running of STATE_SURVIVE");
-
     // Safety abort
-    if (radio_status() != RADIO_CONNECTED_ENABLE) {
+    if (radio_status() != RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_WARNING, "unable to connect with radio");
         fsm_transition(STATE_SAFE);
 

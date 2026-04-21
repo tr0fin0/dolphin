@@ -21,7 +21,7 @@ extern "C" {
  * - `RADIO`:       radio receiver will decide on how to operate
  */
 typedef enum {
-    AUTONOMOUS,
+    AUTONOMOUS = 0,
     RADIO,
 } control_mode_t;
 
@@ -34,9 +34,15 @@ typedef enum {
 /**
  * @brief System-wide Debug Threshold
  * 
- * Defines which debug messages will be displayed.
+ * Defines which debug messages will be displayed with DEBUG_LEVEL_WARNING by
+ * default.
  */
 #define SYSTEM_DEBUG_LEVEL  DEBUG_LEVEL_WARNING
+
+/**
+ * 
+ */
+#define OPENING_ITERATIONS  3
 
 
 
