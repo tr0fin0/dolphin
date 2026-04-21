@@ -28,16 +28,18 @@ typedef int8_t percentage_t;
 
 /**
  * @typedef pwm_pulse_t
+ *
  * @brief PWM pulse width in microseconds.
  */
 typedef int16_t pwm_pulse_t;
 
 /**
  * @typedef pwm_pulse_norm_t
+ *
  * @brief Normalized PWM pulse width in microseconds between `PWM_MINIMAL` and
  * `PWM_MAXIMAL` microseconds.
  */
-typedef uint32_t pwm_pulse_norm_t;
+typedef uint16_t pwm_pulse_norm_t;
 
 #ifndef IRAM_ATTR
 /**

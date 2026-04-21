@@ -10,7 +10,7 @@
 #define __RADIO_H__
 
 #include <stdint.h>
-#include "pwm/pwm.h"
+#include "pwm.h"
 
 
 

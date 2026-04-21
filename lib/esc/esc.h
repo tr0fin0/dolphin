@@ -2,8 +2,8 @@
 #define __ESC_H__
 
 #include <stdio.h>
-#include "motor/motor.h"
-#include "pwm/pwm.h"
+#include "motor.h"
+#include "pwm.h"
 
 
 

@@ -1,0 +1,42 @@
+name: PlatformIO
+
+on:
+    pull_request:
+        branches: [ "main" ]
+        types:
+          - opened
+          - synchronize
+    workflow_dispatch:
+
+jobs:
+    compilation-firmware:
+        name: Verify Firmware Compilation
+        permissions:
+            contents: read
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout
+            uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
+
+          - name: Cache Data
+            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae #v5.0.5
+            with:
+                path: |
+                    ~/.cache/pip
+                    ~/.platformio/.cache
+                key: ${{ runner.os }}-pio
+
+          - name: Setup Python
+            uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 #v6.2.0
+            with:
+                python-version: '3.11'
+
+          - name: PlatformIO Installation
+            run: pip install --upgrade platformio
+
+          - name: Verify Firmware Compilation
+            run: pio run -e development
+
+          - name: Verify Firmware Unit Tests
+            run: pio test -e validation

@@ -1,8 +1,8 @@
 #include <Arduino.h>
-#include "esc/esc.h"
+#include "esc.h"
 #include "motion.h"
-#include "motor/motor.h"
-#include "pwm/pwm.h"
+#include "motor.h"
+#include "pwm.h"
 
 int8_t offset = 50;
 

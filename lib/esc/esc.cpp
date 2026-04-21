@@ -2,10 +2,10 @@
 #include "debug.h"
 #include <driver/mcpwm.h>
 #include "esc.h"
-#include "motor/motor.h"
+#include "motor.h"
 #include "pinout.h"
-#include "pwm/pwm.h"
-#include "radio/radio.h"
+#include "pwm.h"
+#include "radio.h"
 
 
 
