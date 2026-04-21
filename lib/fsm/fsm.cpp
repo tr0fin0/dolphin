@@ -1,15 +1,15 @@
 #include <Arduino.h>
 #include <stdio.h>
 #include "config.h"
-#include "esc/esc.h"
+#include "esc.h"
 #include "fsm.h"
-#include "led/colors.h"
-#include "led/led.h"
-#include "motion/motion.h"
-#include "motor/motor.h"
-#include "radio/radio.h"
+#include "colors.h"
+#include "led.h"
+#include "motion.h"
+#include "motor.h"
+#include "radio.h"
 #include "pinout.h"
-#include "pwm/pwm.h"
+#include "pwm.h"
 
 
 

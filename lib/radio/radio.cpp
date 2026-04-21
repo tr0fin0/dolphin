@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include "debug.h"
 #include "pinout.h"
-#include "pwm/pwm.h"
+#include "pwm.h"
 #include "radio.h"
 #include "soc/gpio_reg.h"
 

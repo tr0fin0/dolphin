@@ -83,7 +83,7 @@ void led_toggle(led_t led) {
     led_set_brightness(
         brightness >= BRIGHTNESS_MEDIUM ? BRIGHTNESS_OFF : BRIGHTNESS_MAX
     );
-    delay(TOGGLE_DURATION_MS);
+    delay(TOGGLE_DURATION_MS); // ! remove DELAY
     led_set_brightness(brightness);
 }
 

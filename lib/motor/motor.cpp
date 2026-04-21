@@ -1,7 +1,7 @@
 #include "debug.h"
-#include "esc/esc.h"
+#include "esc.h"
 #include "motor.h"
-#include "pwm/pwm.h"
+#include "pwm.h"
 
 
 

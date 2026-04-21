@@ -2,7 +2,7 @@
 #define __MOTOR_H__
 
 #include <stdint.h>
-#include "pwm/pwm.h"
+#include "pwm.h"
 
 #ifdef __cplusplus
 extern "C"
