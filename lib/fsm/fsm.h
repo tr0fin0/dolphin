@@ -12,10 +12,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 
 /**
@@ -109,9 +105,5 @@ const char* get_current_state_name(void);
 fsm_state_t get_current_state(void);
 
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* __FSM_H__ */
