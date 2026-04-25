@@ -111,13 +111,7 @@ void fsm_init(void) {
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
     if (current_state == new_state || new_state >= NUMBER_OF_STATES) {
-        DEBUG_MSG(
-            DEBUG_LEVEL_WARNING,
-            state_table[current_state].name,
-            (new_state < NUMBER_OF_STATES)
-                ? state_table[new_state].name
-                : "INVALID"
-        );
+        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unkown state %d", new_state);
 
         return;
     }
