@@ -13,15 +13,11 @@
 /**
  * @brief Defines Control Approach
  *
- * Available options are:
- *
- * - `AUTONOMOUS`:  algorithm will decide on how to operate
- *
- * - `RADIO`:       radio receiver will decide on how to operate
+ * @note Available options are: `AUTONOMOUS` and `RADIO`.
  */
 typedef enum {
-    AUTONOMOUS = 0,
-    RADIO,
+    AUTONOMOUS = 0, /** Algorithm autonomous decides the behavior. */
+    RADIO,          /** Radio Controller signals decide the behavior. */
 } control_mode_t;
 
 #define PROJECT_NAME        "dolphin"
