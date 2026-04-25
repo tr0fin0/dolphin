@@ -93,9 +93,11 @@ void fsm_step(void);
 void fsm_transition(fsm_state_t new_state);
 
 /**
- * @brief Get current state name as a null-terminated string.
+ * @brief Get the FSM state name as a null-terminated string.
+ *
+ * @param state A FSM state.
  */
-const char* get_current_state_name(void);
+const char *fsm_get_state_name(fsm_state_t state);
 
 /**
  * @brief Get the current FSM state.
