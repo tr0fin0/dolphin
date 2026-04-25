@@ -3,13 +3,6 @@
 #include <stdint.h>
 #include <debug.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-
 /**
  * @brief Defines Control Approach
  *
@@ -42,11 +35,3 @@ typedef enum {
  * 
  */
 #define OPENING_ITERATIONS  3
-
-
-
-
-#ifdef __cplusplus
-}
-#endif
-

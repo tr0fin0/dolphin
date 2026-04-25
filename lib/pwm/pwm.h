@@ -13,13 +13,6 @@
 
 #include <stdint.h>
 
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /**
  * TODO
  */
@@ -114,9 +107,3 @@ pwm_pulse_norm_t IRAM_ATTR pwm_pulse_us_normalize(pwm_pulse_t pulse_us);
  * @brief returns PWM pulse in us based on PWM percentage. forward is positive, reverse is negative.
  */
 pwm_pulse_norm_t pwm_pulse_percentage(percentage_t percentage);
-
-
-#ifdef __cplusplus
-}
-#endif
-
