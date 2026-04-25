@@ -9,17 +9,25 @@
 #pragma once
 
 /**
- * @brief Safe state entry handler.
+ * @brief Entry handler for `STATE_SAFE`.
  *
- * Activates visual warning indication and ensures all motors are stopped upon
- * entering the safe state.
+ * Set `LED_STATE` to `COLOR_RED` and ensures both motors are driven to neutral
+ * PWM.
  */
 void safe_entry(void);
 
 /**
- * @brief Safe state run handler.
+ * @brief Run handler for `STATE_SAFE`.
  *
- * Monitors radio status and transitions to `STATE_COUNTDOWN`, `STATE_MANUAL` or
- * `STATE_OPENING` when a valid enable signal is detected.
+ * When Radio Controller is connected, transition to `STATE_COUNTDOWN` if in
+ * autonomous control and to `STATE_MANUAL` or `STATE_OPENING` if in radio
+ * control.
+ *
+ * @note
+ * - If Radio Controller is disconnected during opening selection, 
+ * `opening_step` remains unchanged.
+ *
+ * - Once an opening is executed, the `STATE_OPENING` stays unreachable
+ * until system reset.
  */
 void safe_run(void);

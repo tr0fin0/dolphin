@@ -9,27 +9,26 @@
 #pragma once
 
 /**
- * @brief Manual state entry handler.
+ * @brief Entry handler for `STATE_MANUAL`.
  *
- * Sets visual indication upon entering `STATE_MANUAL`.
+ * Set `LED_STATE` to `COLOR_GREEN`.
  */
 void manual_entry(void);
 
 /**
- * @brief Manual state run handler.
+ * @brief Run handler for `STATE_MANUAL`.
  *
- * In `RADIO_CONNECTED_ENABLE` state, reads steering and throttle radio channels
- * and forwards them mixed in a tank combination to the ESC outputs.
+ * While the Radio Controller is connected, reads the steering and throttle
+ * channels and forwards them to the motor controllers.
  *
- * If the radio becomes disabled or disconnected, transitions immediately to
- * `STATE_SAFE` for safety.
+ * @note Transition to `STATE_SAFE` if the Radio Controller is disconnected.
  */
 void manual_run(void);
 
 /**
- * @brief Manual state exit handler.
+ * @brief Exit handler for `STATE_MANUAL`.
  *
- * Ensures both motors are driven to neutral PWM when leaving `STATE_MANUAL`,
- * preventing unintended motion during transition.
+ * Ensures both motors are driven to neutral PWM, preventing unintended motion
+ * during transition.
  */
 void manual_exit(void);

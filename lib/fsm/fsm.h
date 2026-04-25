@@ -11,21 +11,35 @@
 #include <stdbool.h>
 
 /**
- * @brief Define the core states of the sumo robot.
+ * @brief FSM possible states.
+ *
+ * Each state handler callback functions are defined in an independent `.c` and
+ * `.h` files under the states folder.
  */
 typedef enum {
+    /** In the Autonomous Control, attacks adversary. */
     STATE_ATTACK = 0,
+    /** Entry point of the FSM. */
     STATE_BOOT,
+    /** In the Autonomous Control, waits 5 seconds. */
     STATE_COUNTDOWN,
+    /** In the Radio Control, receives radio signals and control motors. */
     STATE_MANUAL,
+    /** In the Radio Control, selects and execute an opening move. */
     STATE_OPENING,
+    /** In the either control, freezes the system for safety handle. */
     STATE_SAFE,
+    /** In the Autonomous Control, aligns with adversary. */
     STATE_SEARCH,
+    /** In the Autonomous Control, avoid leaving the dojo. */
     STATE_SURVIVE,
+    /** Quantity of states currently implemented in the FSM. */
     NUMBER_OF_STATES
 } fsm_state_t;
 
-
+/**
+ * @brief FSM function pointer.
+ */
 typedef void (*fsm_action_t)(void);
 
 /**
@@ -35,31 +49,22 @@ typedef void (*fsm_action_t)(void);
  * lifecycle callbacks:
  *
  * - on_entry: Executed once immediately after a transition INTO this state.
- *             Intended for initialization logic (e.g., reset counters,
- *             configure peripherals, set LEDs).
  *
  * - on_run:   Executed repeatedly while the FSM remains in this state.
- *             This function must be non-blocking and return quickly,
- *             as it is typically called from the main control loop.
  *
- * - on_exit:  Executed once immediately before transitioning OUT of
- *             this state.
- *             Intended for cleanup or safe shutdown actions.
+ * - on_exit:  Executed once immediately before a transition OUT this state.
  *
  * Any callback may be `NULL` if not required.
  *
  * @note
  * - callbacks must be deterministic and non-blocking.
- *
- * - transitions are managed by the FSM engine.
  */
 typedef struct {
-    const char* name;       /**< Human-readable state name (null-terminated). */
-    fsm_action_t on_entry;  /**< Called once when entering the state. */
-    fsm_action_t on_run;    /**< Called repeatedly while active. */
-    fsm_action_t on_exit;   /**< Called once when leaving the state. */
-} fsm_state_table_t;
-
+    const char *name;      /**< Human-readable null-terminated state name. */
+    fsm_action_t on_entry; /**< Called once when entering the state. */
+    fsm_action_t on_run;   /**< Called repeatedly while active. */
+    fsm_action_t on_exit;  /**< Called once when leaving the state. */
+} fsm_table_t;
 
 /**
  * @brief Initialize the FSM and underlying hardware abstractions.
@@ -72,7 +77,7 @@ void fsm_init(void);
 void fsm_step(void);
 
 /**
- * @brief Force a transition to a new FSM state.
+ * @brief Transition from current FSM state to a new FSM state.
  *
  * @param new_state The state to transition into.
  */

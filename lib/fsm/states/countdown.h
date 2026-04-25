@@ -11,17 +11,18 @@
 #define COUNTDOWN_MS 5000
 
 /**
- * @brief Countdown state entry handler.
+ * @brief Entry handler for `STATE_COUNTDOWN`.
  *
- * Sets visual indication for countdown phase and captures the entry timestamp
- * for time-based transition.
+ * Set `LED_STATE` to `COLOR_ORANGE_LIGHT` and captures current timestamp.
  */
 void countdown_entry(void);
 
 /**
- * @brief Countdown state run handler.
+ * @brief Run handler for `STATE_COUNTDOWN`.
  *
- * Transitions to `STATE_SEARCH` after a 5-second delay from state entry. If the
- * radio enable signal is lost, immediately transitions back to `STATE_SAFE`.
+ * Transitions to `STATE_SEARCH` after a 5-second delay from state entry.
+ *
+ * @note If the Radio Controller is disconnected, transitions to `STATE_SAFE`
+ * reseting the countdown.
  */
 void countdown_run(void);

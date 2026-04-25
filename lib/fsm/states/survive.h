@@ -9,20 +9,22 @@
 #pragma once
 
 /**
- * @brief Survive state entry handler.
+ * @brief Entry handler for `STATE_SURVIVE`.
  *
- * Sets visual indication once upon entering `STATE_SURVIVE` and captures the
- * entry timestamp for time-based logic.
+ * Set `LED_STATE` to `COLOR_PURPLE`.
  */
 void survive_entry(void);
 
 /**
- * @brief Survive state run handler.
+ * @brief Run handler for `STATE_SURVIVE`.
  *
- * Maintains safety monitoring and executes a timed maneuver:
+ * While the Radio Controller is connected, autonomous avoid leaving the dojo.
  *
- * - Immediately transitions to `STATE_SAFE` if radio enable is lost.
+ * @note
+ * - Transition to `STATE_ATTACK` if the adversary is aligned with the front.
  *
- * - After 500 ms from state entry, transitions to `STATE_SEARCH`.
+ * - Transition to `STATE_SAFE` if the Radio Controller is disconnected.
+ *
+ * - Transition to `STATE_SEARCH` if the adversary is lost.
  */
 void survive_run(void);

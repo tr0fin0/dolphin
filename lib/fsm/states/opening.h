@@ -38,13 +38,26 @@ typedef enum {
     OPENING_SW     = 111, /** From the initial position goes to south-west. */
     OPENING_SWN    = 110, /** From the initial position goes to south-west with neutral rotation. */
 } opening_t;
+
+/**
+ * @brief Entry handler for `STATE_OPENING`.
+ *
+ * Set `LED_STATE` to `COLOR_PURPLE` and captures current Radio Controller
+ * button value.
  */
 void opening_entry(void);
 
 /**
- * @brief Opening state run handler.
+ * @brief Run handler for `STATE_OPENING`.
  *
- * Reads throttle value in 3 sequencial steps to determine the opening move
- * requested among the defined below:
+ * While Radio Controller is connected, 3 sequencial reads of the throttle
+ * channel are used to determine the opening move.
+ *
+ * @note
+ * - `2` if throttle is more than `PWM_PERCENTAGE_P50`.
+ *
+ * - `0` if throttle is between `PWM_PERCENTAGE_M50` and `PWM_PERCENTAGE_P50`.
+ *
+ * - `1` if throttle is less than `PWM_PERCENTAGE_M50`.
  */
 void opening_run(void);

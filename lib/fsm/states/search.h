@@ -9,16 +9,22 @@
 #pragma once
 
 /**
- * @brief Search state entry handler.
+ * @brief Entry handler for `STATE_SEARCH`.
  *
- * Sets visual indication upon entering `STATE_SEARCH`.
+ * Set `LED_STATE` to `COLOR_BLUE`.
  */
 void search_entry(void);
 
 /**
- * @brief Search state run handler.
+ * @brief Run handler for `STATE_SEARCH`.
  *
- * Continuously monitors radio status and transitions to `STATE_SAFE` if the
- * enable signal is lost.
+ * While the Raio Controller is connected, autonomous align with the adversary.
+ *
+ * @note
+ * - Transition to `STATE_ATTACK` if the adversary is aligned with the front.
+ *
+ * - Transition to `STATE_SAFE` if the Radio Controller is disconnected.
+ *
+ * - Transition to `STATE_SURVIVE` if the dojo edge is detected.
  */
 void search_run(void);
