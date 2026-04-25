@@ -15,10 +15,6 @@
 
 
 
-// -----------------------------------------------------------------------------
-// FSM State Variables
-// -----------------------------------------------------------------------------
-
 /**
  * @brief Currently active FSM state.
  *
@@ -29,13 +25,7 @@
  *
  * - modified only by the FSM transition logic.
  */
-static fsm_state_t  current_state   = STATE_BOOT;
-
-
-
-// -----------------------------------------------------------------------------
-// FSM State Table Definition
-// -----------------------------------------------------------------------------
+static fsm_state_t current_state = STATE_BOOT;
 
 static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
@@ -88,12 +78,6 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     }
 };
 
-
-
-// -----------------------------------------------------------------------------
-// Public API
-// -----------------------------------------------------------------------------
-
 void fsm_init(void) {
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine started");
 
@@ -106,7 +90,6 @@ void fsm_init(void) {
 
     DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine finish");
 }
-
 
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions

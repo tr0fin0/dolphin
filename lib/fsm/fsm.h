@@ -10,8 +10,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-
-
 /**
  * @brief Define the core states of the sumo robot.
  */

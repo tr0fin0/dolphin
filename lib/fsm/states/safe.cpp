@@ -2,12 +2,11 @@
 #include "fsm.h"
 #include "led.h"
 #include "motor.h"
+#include "opening.h"
 #include "radio.h"
+#include "safe.h"
 
-
-
-extern uint32_t opening_step;
-
+extern uint8_t opening_step;
 
 void safe_entry(void) {
     led_set_color(LED_STATE, COLOR_RED);
@@ -15,9 +14,7 @@ void safe_entry(void) {
     motors_set_pwm_neutral();
 }
 
-
 void safe_run(void) {
-    // Safety lock
     if (radio_status() == RADIO_CONNECTED) {
         DEBUG_MSG(DEBUG_LEVEL_INFO, "control mode: %d", CONTROL_MODE);
 

@@ -1,22 +1,17 @@
-#include "debug.h"
 #include "fsm.h"
 #include "led.h"
+#include "manual.h"
 #include "motor.h"
-#include "pwm.h"
 #include "radio.h"
-
-
 
 void manual_entry(void) {
     led_set_color(LED_STATE, COLOR_GREEN);
 }
 
-
 void manual_run(void) {
     if (radio_status() == RADIO_DISCONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "lost radio signal");
-
         fsm_transition(STATE_SAFE);
+
         return;
     }
 
@@ -27,7 +22,6 @@ void manual_run(void) {
 
     motors_set_pwm(pulses_us);
 }
-
 
 void manual_exit(void) {
     motors_set_pwm_neutral();
