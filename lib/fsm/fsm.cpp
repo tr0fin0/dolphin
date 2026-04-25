@@ -37,7 +37,7 @@ static fsm_state_t  current_state   = STATE_BOOT;
 // FSM State Table Definition
 // -----------------------------------------------------------------------------
 
-static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
+static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
         .name     = "ATTACK",
         .on_entry = attack_entry,
@@ -131,35 +131,35 @@ void fsm_transition(fsm_state_t new_state) {
     );
 
     // 1. execute Exit Action of current state
-    if (state_table[current_state].on_exit != NULL) {
+    if (fsm_table[current_state].on_exit != NULL) {
         DEBUG_MSG(
             DEBUG_LEVEL_INFO, "exiting of %s", state_table[current_state].name
         );
 
-        state_table[current_state].on_exit();
+        fsm_table[current_state].on_exit();
     }
 
     // 2. update state
     current_state = new_state;
 
     // 3. execute Entry Action of new state
-    if (state_table[current_state].on_entry != NULL) {
+    if (fsm_table[current_state].on_entry != NULL) {
         DEBUG_MSG(
             DEBUG_LEVEL_INFO, "entrying of %s", state_table[current_state].name
         );
 
-        state_table[current_state].on_entry();
+        fsm_table[current_state].on_entry();
     }
 }
 
 
 void fsm_step(void) {
-    if (state_table[current_state].on_run != NULL) {
+    if (fsm_table[current_state].on_run != NULL) {
         DEBUG_MSG(
             DEBUG_LEVEL_INFO, "running of %s", state_table[current_state].name
         );
 
-        return state_table[current_state].on_run();
+        return fsm_table[current_state].on_run();
     }
 
     DEBUG_MSG(
