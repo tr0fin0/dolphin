@@ -1,3 +1,4 @@
+#pragma once
 
 /**
  * @brief Attack state entry handler.

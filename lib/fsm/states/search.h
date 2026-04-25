@@ -1,7 +1,4 @@
-#ifndef __SEARCH_H__
-#define __SEARCH_H__
-
-
+#pragma once
 
 /**
  * @brief Search state entry handler.
@@ -17,7 +14,3 @@ void search_entry(void);
  * enable signal is lost.
  */
 void search_run(void);
-
-
-
-#endif  /* __SEARCH_H__ */

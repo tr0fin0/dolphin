@@ -1,5 +1,4 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#pragma once
 
 #include <stdint.h>
 #include <debug.h>
@@ -51,4 +50,3 @@ typedef enum {
 }
 #endif
 
-#endif /* __CONFIG_H__ */

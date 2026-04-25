@@ -1,7 +1,4 @@
-#ifndef __COUNTDOWN_H__
-#define __COUNTDOWN_H__
-
-
+#pragma once
 
 /**
  * @brief Countdown state entry handler.
@@ -18,7 +15,3 @@ void countdown_entry(void);
  * radio enable signal is lost, immediately transitions back to `STATE_SAFE`.
  */
 void countdown_run(void);
-
-
-
-#endif  /* __COUNTDOWN_H__ */

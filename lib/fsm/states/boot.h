@@ -1,7 +1,4 @@
-#ifndef __BOOT_H__
-#define __BOOT_H__
-
-
+#pragma once
 
 /**
  * @brief Boot state entry handler.
@@ -16,7 +13,3 @@ void boot_entry(void);
  * First .
  */
 void boot_run(void);
-
-
-
-#endif  /* __BOOT_H__ */

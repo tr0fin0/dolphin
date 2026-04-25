@@ -6,8 +6,7 @@
  * for strict state management and safety interlocks.
  */
 
-#ifndef __FSM_H__
-#define __FSM_H__
+#pragma once
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -103,7 +102,3 @@ const char* get_current_state_name(void);
  * @brief Get the current FSM state.
  */
 fsm_state_t get_current_state(void);
-
-
-
-#endif /* __FSM_H__ */

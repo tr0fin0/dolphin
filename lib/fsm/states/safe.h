@@ -1,7 +1,4 @@
-#ifndef __SAFE_H__
-#define __SAFE_H__
-
-
+#pragma once
 
 /**
  * @brief Safe state entry handler.
@@ -18,7 +15,3 @@ void safe_entry(void);
  * `STATE_OPENING` when a valid enable signal is detected.
  */
 void safe_run(void);
-
-
-
-#endif  /* __SAFE_H__ */

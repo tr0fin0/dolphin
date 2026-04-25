@@ -1,6 +1,4 @@
-#ifndef __MANUAL_H__
-#define __MANUAL_H__
-
+#pragma once
 
 /**
  * @brief Manual state entry handler.
@@ -27,7 +25,3 @@ void manual_run(void);
  * preventing unintended motion during transition.
  */
 void manual_exit(void);
-
-
-
-#endif  /* __MANUAL_H__ */

@@ -9,8 +9,7 @@
  * Designed for ISR-safe usage (IRAM compatible).
  */
 
-#ifndef __PWM_H__
-#define __PWM_H__
+#pragma once
 
 #include <stdint.h>
 
@@ -121,4 +120,3 @@ pwm_pulse_norm_t pwm_pulse_percentage(percentage_t percentage);
 }
 #endif
 
-#endif /* __PWM_H__ */

@@ -1,7 +1,4 @@
-#ifndef __SURVIVE_H__
-#define __SURVIVE_H__
-
-
+#pragma once
 
 /**
  * @brief Survive state entry handler.
@@ -21,7 +18,3 @@ void survive_entry(void);
  * - After 500 ms from state entry, transitions to `STATE_SEARCH`.
  */
 void survive_run(void);
-
-
-
-#endif  /* __SURVIVE_H__ */
