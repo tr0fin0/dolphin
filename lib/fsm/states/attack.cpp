@@ -1,6 +1,7 @@
 #include "attack.h"
 #include "fsm.h"
 #include "led.h"
+#include "motor.h"
 #include "radio.h"
 
 void attack_entry(void) {
@@ -13,4 +14,8 @@ void attack_run(void) {
 
         return;
     }
+}
+
+void attack_exit(void) {
+    motors_set_pwm_neutral();
 }

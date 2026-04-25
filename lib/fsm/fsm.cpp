@@ -42,7 +42,7 @@ static const fsm_state_table_t state_table[NUMBER_OF_STATES] = {
         .name     = "ATTACK",
         .on_entry = attack_entry,
         .on_run   = attack_run,
-        .on_exit  = NULL
+        .on_exit  = attack_exit
     },
     [STATE_BOOT] = {
         .name     = "BOOT",
