@@ -8,6 +8,8 @@
 
 #pragma once
 
+#define COUNTDOWN_MS 5000
+
 /**
  * @brief Countdown state entry handler.
  *

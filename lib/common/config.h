@@ -24,8 +24,6 @@ typedef enum {
 
 #define CONTROL_MODE        RADIO
 
-#define COUNTDOWN_MS        5000
-
 /**
  * @brief System-wide Debug Threshold
  * 
