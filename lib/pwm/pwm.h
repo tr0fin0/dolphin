@@ -1,12 +1,8 @@
 /**
  * @file pwm.h
- * @brief RC PWM pulse normalization utilities.
+ * @brief PWM utilities.
  *
- * Provides utilities for:
- * - Saturating pulse widths to valid servo range.
- * - Applying neutral deadband filtering.
- *
- * Designed for ISR-safe usage (IRAM compatible).
+ * @author Guilherme Nunes Trofino
  */
 
 #pragma once

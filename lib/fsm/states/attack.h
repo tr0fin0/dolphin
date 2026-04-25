@@ -1,3 +1,11 @@
+/**
+ * @file attack.h
+ * @brief `STATE_ATTACK` definition of the FSM callback functions `on_entry()`,
+ * `on_exit()` and `on_run()`.
+ *
+ * @author Guilherme Nunes Trofino
+ */
+
 #pragma once
 
 /**

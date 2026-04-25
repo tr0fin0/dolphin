@@ -1,3 +1,11 @@
+/**
+ * @file countdown.h
+ * @brief `STATE_COUNTDOWN` definition of the FSM callback functions
+ * `on_entry()` and `on_run()`.
+ *
+ * @author Guilherme Nunes Trofino
+ */
+
 #pragma once
 
 /**

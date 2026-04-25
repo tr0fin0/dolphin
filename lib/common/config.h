@@ -1,3 +1,10 @@
+/**
+ * @file config.h
+ * @brief Project configurations.
+ *
+ * @author Guilherme Nunes Trofino
+ */
+
 #pragma once
 
 #include <stdint.h>

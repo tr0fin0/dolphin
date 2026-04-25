@@ -1,9 +1,8 @@
 /**
  * @file fsm.h
- * @brief Table-driven finite-state machine API for sumo robot control.
+ * @brief Finite State Machine API definition.
  *
- * Provides a robust architecture with Entry, Run, and Exit actions
- * for strict state management and safety interlocks.
+ * @author Guilherme Nunes Trofino
  */
 
 #pragma once
