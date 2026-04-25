@@ -9,16 +9,30 @@
 #pragma once
 
 /**
- * @brief Attack state entry handler.
+ * @brief Entry handler for `STATE_ATTACK`.
  *
- * Sets visual indication upon entering `STATE_ATTACK`.
+ * Set `LED_STATE` to `COLOR_SCARLET`.
  */
 void attack_entry(void);
 
 /**
- * @brief Attack state run handler.
+ * @brief Run handler for `STATE_ATTACK`.
  *
- * Monitors radio enable signal and transitions to `STATE_SAFE` if control
- * authorization is lost.
+ * While the Radio Controller is connected, autonomously push the adversary.
+ *
+ * @note
+ * - Transition to `STATE_SEARCH` if the adversary is lost.
+ *
+ * - Transition to `STATE_SAFE` if the Radio Controller is disconnected.
+ *
+ * - Transition to `STATE_SURVIVE` if the dojo edge is detected.
  */
 void attack_run(void);
+
+/**
+ * @brief Exit handler for `STATE_ATTACK`.
+ *
+ * Ensures both motors are driven to neutral PWM, preventing unintended motion
+ * during transition.
+ */
+void attack_exit(void);
