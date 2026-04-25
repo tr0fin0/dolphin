@@ -9,6 +9,11 @@
 #pragma once
 
 /**
+ * @brief Defines quantity of iterations required to select the opening strategy
+ * in the Radio Controlled mode.
+ */
+#define OPENING_ITERATIONS 3
+
 /**
  * @brief Radio Controlled possible opening moves.
  *
