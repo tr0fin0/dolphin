@@ -100,6 +100,6 @@ void fsm_transition(fsm_state_t new_state);
 const char *fsm_get_state_name(fsm_state_t state);
 
 /**
- * @brief Get the current FSM state.
+ * @brief Get current FSM state as a enumerate value.
  */
-fsm_state_t get_current_state(void);
+fsm_state_t fsm_get_state(void);

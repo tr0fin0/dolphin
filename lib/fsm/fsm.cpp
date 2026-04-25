@@ -180,7 +180,6 @@ const char *fsm_get_state_name(fsm_state_t state) {
     return "UNKNOWN";
 }
 
-
-fsm_state_t get_current_state(void) {
+fsm_state_t fsm_get_state(void) {
     return current_state;
 }
