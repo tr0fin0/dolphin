@@ -1,35 +1,28 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+/**
+ * @file config.h
+ * @brief Project configurations.
+ *
+ * @author Guilherme Nunes Trofino
+ */
+
+#pragma once
 
 #include <stdint.h>
 #include <debug.h>
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-
 /**
  * @brief Defines Control Approach
  *
- * Available options are:
- *
- * - `AUTONOMOUS`:  algorithm will decide on how to operate
- *
- * - `RADIO`:       radio receiver will decide on how to operate
+ * @note Available options are: `AUTONOMOUS` and `RADIO`.
  */
 typedef enum {
-    AUTONOMOUS = 0,
-    RADIO,
+    AUTONOMOUS = 0, /** Algorithm autonomous decides the behavior. */
+    RADIO,          /** Radio Controller signals decide the behavior. */
 } control_mode_t;
 
 #define PROJECT_NAME        "dolphin"
 
 #define CONTROL_MODE        RADIO
-
-#define COUNTDOWN_MS        5000
 
 /**
  * @brief System-wide Debug Threshold
@@ -43,12 +36,3 @@ typedef enum {
  * 
  */
 #define OPENING_ITERATIONS  3
-
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __CONFIG_H__ */

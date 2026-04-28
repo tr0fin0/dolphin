@@ -1,41 +1,25 @@
 /**
  * @file pwm.h
- * @brief RC PWM pulse normalization utilities.
+ * @brief PWM utilities.
  *
- * Provides utilities for:
- * - Saturating pulse widths to valid servo range.
- * - Applying neutral deadband filtering.
- *
- * Designed for ISR-safe usage (IRAM compatible).
+ * @author Guilherme Nunes Trofino
  */
 
-#ifndef __PWM_H__
-#define __PWM_H__
+#pragma once
 
 #include <stdint.h>
 
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /**
- * TODO
+ * @brief PWM pulse width in percentage with 0% begin `PWM_NEUTRAL_US`.
  */
 typedef int8_t percentage_t;
 
 /**
- * @typedef pwm_pulse_t
- *
  * @brief PWM pulse width in microseconds.
  */
 typedef int16_t pwm_pulse_t;
 
 /**
- * @typedef pwm_pulse_norm_t
- *
  * @brief Normalized PWM pulse width in microseconds between `PWM_MINIMAL` and
  * `PWM_MAXIMAL` microseconds.
  */
@@ -53,7 +37,7 @@ typedef uint16_t pwm_pulse_norm_t;
  *
  * Pulses within `PWM_DEADBAND_US` distance of `PWM_NEUTRAL_US` are forced to
  * `PWM_NEUTRAL_US`.
- * 
+ *
  * @note
  * - button debounce requires at least 50.
  */
@@ -82,15 +66,14 @@ typedef uint16_t pwm_pulse_norm_t;
 #define PWM_MINIMUM_US      1000U
 
 /**
- * @brief 25% pulse threshold in microseconds.
+ * @brief 50% of the negative part of the pulse in microseconds.
  */
-#define PWM_THRESHOUD_25    (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+#define PWM_PERCENTAGE_M50 (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
 
 /**
- * @brief 75% pulse threshold in microseconds.
+ * @brief 50% of the positive part of the pulse in microseconds.
  */
-#define PWM_THRESHOUD_75    (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
-
+#define PWM_PERCENTAGE_P50 (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
 
 /**
  * @brief Normalize raw RC pulse width in microseconds.
@@ -111,14 +94,19 @@ typedef uint16_t pwm_pulse_norm_t;
 pwm_pulse_norm_t IRAM_ATTR pwm_pulse_us_normalize(pwm_pulse_t pulse_us);
 
 /**
- * TODO
- * @brief returns PWM pulse in us based on PWM percentage. forward is positive, reverse is negative.
+ * @brief Converts PWM pulse percentage to a normalized pulse width in
+ * microseconds.
+ * 
+ * The following equation converts PWM pulse percentage into pulse width:
+ * 
+ *  1. `PWM_PULSE_US = PWM_NEUTRAL_US + 5 * percentage`
+ *
+ * For example:
+ *
+ * - `PWM_MINIMUM_US` is -100%
+ *
+ * - `PWM_DEADBAND_US` is 0%
+ *
+ * - `PWM_MAXIMUM_US` is +100%.
  */
 pwm_pulse_norm_t pwm_pulse_percentage(percentage_t percentage);
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __PWM_H__ */

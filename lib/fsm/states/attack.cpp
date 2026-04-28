@@ -1,0 +1,21 @@
+#include "attack.h"
+#include "fsm.h"
+#include "led.h"
+#include "motor.h"
+#include "radio.h"
+
+void attack_entry(void) {
+    led_set_color(LED_STATE, COLOR_SCARLET);
+}
+
+void attack_run(void) {
+    if (radio_status() != RADIO_CONNECTED) {
+        fsm_transition(STATE_SAFE);
+
+        return;
+    }
+}
+
+void attack_exit(void) {
+    motors_set_pwm_neutral();
+}
