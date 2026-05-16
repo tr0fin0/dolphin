@@ -44,7 +44,7 @@ static esp_err_t led_strip_rmt_set_pixel(led_strip_t *strip, uint32_t index, uin
     uint8_t *pixel_buf = rmt_strip->pixel_buf;
     uint8_t pos_bytes = format.bytes_per_color;
 
-    for (uint8_t i = 0; i < format.bytes_per_color; i++) {
+    for (uint32_t i = 0; i < format.bytes_per_color; i++) {
         uint8_t color_shift = 8 * (format.bytes_per_color - 1 - i);
         pixel_buf[start + format.r_pos * pos_bytes + i] = (red >> color_shift) & 0xFF;
         pixel_buf[start + format.g_pos * pos_bytes + i] = (green >> color_shift) & 0xFF;
@@ -67,7 +67,7 @@ static esp_err_t led_strip_rmt_set_pixel_rgbw(led_strip_t *strip, uint32_t index
     uint8_t *pixel_buf = rmt_strip->pixel_buf;
     uint8_t pos_bytes = format.bytes_per_color;
 
-    for (uint8_t i = 0; i < format.bytes_per_color; i++) {
+    for (uint32_t i = 0; i < format.bytes_per_color; i++) {
         uint8_t color_shift = 8 * (format.bytes_per_color - 1 - i);
         pixel_buf[start + format.r_pos * pos_bytes + i] = (red >> color_shift) & 0xFF;
         pixel_buf[start + format.g_pos * pos_bytes + i] = (green >> color_shift) & 0xFF;
