@@ -79,7 +79,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
 };
 
 void fsm_init(void) {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine started");
+    LOG_I("initialization Finite State Machine started");
 
     led_init();
     led_set_brightness(BRIGHTNESS_MEDIUM);
@@ -88,18 +88,17 @@ void fsm_init(void) {
 
     current_state = STATE_BOOT;
 
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization Finite State Machine finish");
+    LOG_I("initialization Finite State Machine finish");
 }
 
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
     if (current_state == new_state || new_state >= NUMBER_OF_STATES) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "unkown state %d", new_state);
+        LOG_W("unkown state %d", new_state);
 
         return;
     }
-    DEBUG_MSG(
-        DEBUG_LEVEL_INFO,
+    LOG_I(
         "transition from current state %s to %s",
         fsm_get_state_name(current_state),
         fsm_get_state_name(new_state)
@@ -107,10 +106,7 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 1. execute Exit Action of current state
     if (fsm_table[current_state].on_exit != NULL) {
-        DEBUG_MSG(
-            DEBUG_LEVEL_INFO,
-            "exiting of %s", fsm_get_state_name(current_state)
-        );
+        LOG_I("exiting of %s", fsm_get_state_name(current_state));
 
         fsm_table[current_state].on_exit();
     }
@@ -120,10 +116,7 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 3. execute Entry Action of new state
     if (fsm_table[current_state].on_entry != NULL) {
-        DEBUG_MSG(
-            DEBUG_LEVEL_INFO,
-            "entrying of %s", fsm_get_state_name(current_state)
-        );
+        LOG_I("entrying of %s", fsm_get_state_name(current_state));
 
         fsm_table[current_state].on_entry();
     }
@@ -131,16 +124,12 @@ void fsm_transition(fsm_state_t new_state) {
 
 void fsm_step(void) {
     if (fsm_table[current_state].on_run != NULL) {
-        DEBUG_MSG(
-            DEBUG_LEVEL_INFO,
-            "running of %s", fsm_get_state_name(current_state)
-        );
+        LOG_I("running of %s", fsm_get_state_name(current_state));
 
         return fsm_table[current_state].on_run();
     }
 
-    DEBUG_MSG(
-        DEBUG_LEVEL_CRITICAL,
+    LOG_E(
         "no on_run() function defined for %s", fsm_get_state_name(current_state)
     );
 }
@@ -150,9 +139,7 @@ const char *fsm_get_state_name(fsm_state_t state) {
         return fsm_table[state].name;
     }
 
-    DEBUG_MSG(
-        DEBUG_LEVEL_ERROR, "no name defined for state %d", state
-    );
+    LOG_W("no name defined for state %d", state);
 
     return "UNKNOWN";
 }

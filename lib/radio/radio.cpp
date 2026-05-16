@@ -78,7 +78,7 @@ static void IRAM_ATTR radio_isr(void* arg) {
 
 
 void radio_init() {
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller started");
+    LOG_I("initialization of Radio Controller started");
 
     uint32_t now = micros();
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
@@ -98,7 +98,7 @@ void radio_init() {
 
     status = RADIO_DISCONNECTED;
 
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization of Radio Controller finish");
+    LOG_I("initialization of Radio Controller finish");
 };
 
 
@@ -110,9 +110,7 @@ void radio_read_channels(pwm_pulse_norm_t pulses_us[NUMBER_OF_CHANNELS]) {
     interrupts();
 
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
-        DEBUG_MSG(
-            DEBUG_LEVEL_TRACE, "channel %d receiving %d us", i, pulses_us[i]
-        );
+        LOG_V("channel %d receiving %d us", i, pulses_us[i]);
     }
 };
 
@@ -124,9 +122,7 @@ pwm_pulse_norm_t radio_read_channel(channel_t channel) {
     pulse_us = pulse_width[channel];
     interrupts();
 
-    DEBUG_MSG(
-        DEBUG_LEVEL_TRACE, "channel %d receiving %d us", channel, pulse_us
-    );
+    LOG_V("channel %d receiving %d us", channel, pulse_us);
 
     return pulse_us;
 };
@@ -152,7 +148,7 @@ radio_status_t radio_status() {
     }
 
     if (new_status != status) {
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "radio status: %d", new_status);
+        LOG_W("radio status: %d", new_status);
 
         status = new_status;
     }

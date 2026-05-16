@@ -16,7 +16,7 @@ void safe_entry(void) {
 
 void safe_run(void) {
     if (radio_status() == RADIO_CONNECTED) {
-        DEBUG_MSG(DEBUG_LEVEL_INFO, "control mode: %d", CONTROL_MODE);
+        LOG_I("control mode: %d", CONTROL_MODE);
 
         if (CONTROL_MODE == AUTONOMOUS) {
             fsm_transition(STATE_COUNTDOWN);

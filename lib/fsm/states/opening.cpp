@@ -55,9 +55,7 @@ void opening_run(void) {
         }
 
         opening_strategy = (opening_t) (10 * opening_strategy + increase);
-        DEBUG_MSG(
-            DEBUG_LEVEL_WARNING, "current opening: %d", opening_strategy
-        );
+        LOG_W("current opening: %d", opening_strategy);
 
         led_toggle(LED_STATE);
         opening_step++;
@@ -67,7 +65,7 @@ void opening_run(void) {
     ) {
         // opening execution
         button_us = pulses_us[CHANNEL_BUTTON];
-        DEBUG_MSG(DEBUG_LEVEL_WARNING, "running opening: %d", opening_strategy);
+        LOG_W("running opening: %d", opening_strategy);
 
         switch (opening_strategy) {
             case OPENING_STATIC:
