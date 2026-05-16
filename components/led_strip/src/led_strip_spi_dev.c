@@ -59,7 +59,7 @@ static esp_err_t led_strip_spi_set_pixel(led_strip_t *strip, uint32_t index, uin
     memset(pixel_buf + start, 0, spi_strip->bytes_per_pixel * SPI_BYTES_PER_COLOR_BYTE);
 
     uint8_t pos_bytes = format.bytes_per_color;
-    for (uint8_t i = 0; i < format.bytes_per_color; i++) {
+    for (uint32_t i = 0; i < format.bytes_per_color; i++) {
         uint8_t color_shift = 8 * (format.bytes_per_color - 1 - i);
         __led_strip_spi_bit((red >> color_shift) & 0xFF, &pixel_buf[start + SPI_BYTES_PER_COLOR_BYTE * (format.r_pos * pos_bytes + i)]);
         __led_strip_spi_bit((green >> color_shift) & 0xFF, &pixel_buf[start + SPI_BYTES_PER_COLOR_BYTE * (format.g_pos * pos_bytes + i)]);
