@@ -11,10 +11,10 @@ void motor_set_pwm_neutral(motor_t motor) {
 
 void motors_set_pwm(pwm_pulse_norm_t pulses_us[NUMBER_OF_MOTORS]) {
     pwm_pulse_norm_t steering_us = pulses_us[0];
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured steering: %d us", steering_us);
+    LOG_V("measured steering: %d us", steering_us);
 
     pwm_pulse_norm_t throttle_us = pulses_us[1];
-    DEBUG_MSG(DEBUG_LEVEL_TRACE, "measured throttle: %d us", throttle_us);
+    LOG_V("measured throttle: %d us", throttle_us);
 
     esc_set_pwm((pwm_pulse_t) steering_us + throttle_us - PWM_NEUTRAL_US, MOTOR_L);
     esc_set_pwm((pwm_pulse_t) steering_us - throttle_us + PWM_NEUTRAL_US, MOTOR_R);
