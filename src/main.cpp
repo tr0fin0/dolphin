@@ -7,11 +7,11 @@
 void setup() {
     debug_init(115200);
 
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization system start");
+    LOG_I("initialization system start");
 
     fsm_init();
 
-    DEBUG_MSG(DEBUG_LEVEL_INFO, "initialization system finish");
+    LOG_I(I, "initialization system finish");
 }
 
 
