@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "log.h"
+#include "debug.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/message_buffer.h"
