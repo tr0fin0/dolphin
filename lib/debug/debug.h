@@ -10,6 +10,9 @@
 
 #include "esp_log.h"
 
+#define LOG_BUFFER_SIZE     256
+#define LOG_MESSAGE_SIZE    4096
+
 #if (LOG_DEFAULT_LEVEL <= LOG_DEFAULT_LEVEL_ERROR)
 /**
  * @brief Log message with error severity.
@@ -60,3 +63,10 @@
 #define LOG_V(msg, ...) {}
 #endif
 
+/**
+ * @brief Initializes asynchronous dual-core logging.
+ *
+ * Routes all logging calls through a message buffer to a dedicated task on
+ * Core 0.
+ */
+void log_init_async(void);
