@@ -57,7 +57,7 @@ void esc_init() {
 void esc_set_pwm(pwm_pulse_t pulse_us, motor_t motor) {
     pwm_pulse_norm_t pulse_norm_us = pwm_pulse_us_normalize(pulse_us);
 
-    LOG_T("sending %d us to motor %d", pulse_norm_us, motor);
+    LOG_V("sending %d us to motor %d", pulse_norm_us, motor);
 
     (void) mcpwm_set_duty_in_us(
         MCPWM_UNIT_0,
