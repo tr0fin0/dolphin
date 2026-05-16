@@ -5,7 +5,7 @@
 
 
 void setup() {
-    debug_init(115200);
+    log_init_async();
 
     LOG_I("initialization system start");
 
