@@ -1,94 +1,124 @@
-#ifndef __LED_H__
-#define __LED_H__
+/**
+ * @file led.h
+ * @brief Addressable RGB LEDs controller.
+ *
+ * @author Guilherme Nunes Trofino
+ * @date 2026-05-12
+ */
 
-#include <stdio.h>
+#pragma once
+
+#include <stdint.h>
 #include "colors.h"
+#include "led_strip.h"
+#include "pinout.h"
 
+#define LED_BRIGHTNESS_MIN  0
+#define LED_BRIGHTNESS_MED  50
+#define LED_BRIGHTNESS_MAX  100
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-#define TOGGLE_DURATION_MS 100
-
-/**
- * @brief Discrete LED brightness levels.
- *
- * Defines predefined intensity values between 0 and 255 used with
- * `FastLED.setBrightness()`.
- */
-typedef enum {
-    BRIGHTNESS_OFF      =   0,
-    BRIGHTNESS_LOW      =  64,
-    BRIGHTNESS_MEDIUM   = 128,
-    BRIGHTNESS_HIGH     = 192,
-    BRIGHTNESS_MAX      = 255,
-} brightness_t;
+#define LED_RESOLUTION_HZ   10000000
 
 /**
- * @brief Logical LED indices.
+ * @brief LED brightness in percentage.
  *
- * Defines the ordered mapping of physical LEDs in the system.
+ * Where:
  *
- * - `LED_STATE`:   system state indicator.
+ * - minimal brightness with 0%.
  *
- * - `LED_EXTRA`:   auxiliary indicator.
+ * - maximal brightness with 100%.
+ */
+typedef uint8_t led_brightness_t;
+
+/**
+ * @brief LED operation state.
+ *
+ * Available values are:
+ *
+ * - `LED_STATE_IDLE`
+ *
+ * - `LED_STATE_TOGGLE`
  */
 typedef enum {
-    LED_STATE,      /**< system state indicator. */
-    LED_EXTRA,      /**< auxiliary indicator. */
+    LED_STATE_IDLE = 0, /** Default operation state. */
+    LED_STATE_TOGGLE,   /** Brightness inverted for an interval in ms. */
+} led_state_t;
+
+/**
+ * @brief LED name.
+ *
+ * Available values are:
+ *
+ * - `LED_STATE`
+ *
+ * - `LED_EXTRA`
+ */
+typedef enum {
+    LED_STATE = 0,  /** LED used for the system state. */
+    LED_EXTRA,      /** LED used for debugging. */
     NUMBER_OF_LEDS
 } led_t;
 
-
+/**
+ * @brief LED strip configuration.
+ */
+typedef struct {
+    const char *name;
+    pin_t pin;
+    led_strip_handle_t strip;
+    led_brightness_t brightness[NUMBER_OF_LEDS];
+    led_color_t colors[NUMBER_OF_LEDS];
+    led_state_t states[NUMBER_OF_LEDS];
+    uint32_t intervals_ms[NUMBER_OF_LEDS];
+    uint32_t timestamps_us[NUMBER_OF_LEDS];
+} led_config_t;
 
 /**
- * @brief Initialize hardware driver for LED.
- *
- * After initialization, LEDs start at `BRIGHTNESS_OFF`.
+ * @brief Initialization of all individual LEDs on the strip.
  */
 void led_init(void);
 
 /**
- * @brief Clear internal LED buffer and update strip.
+ * @brief Set the brightness of a LED on the strip.
  *
- * `FastLED.clear(true)` is used; this will call `show()` internally.
+ * @param led LED name.
+ * @param brightness Brightness in percentage.
  */
-void led_clear(void);
+void led_set_brightness(led_t led, led_brightness_t brightness);
 
 /**
- * @brief Set global brightness (0..255) and update strip.
+ * @brief Set the brightness of all LEDs on the strip.
  *
- * This will call `FastLED.show()` to apply immediately.
- *
- * @note To reduce refreshes, use `led_set_brightness()` once and
- * perform many `led_set_color_*()` calls.
+ * @param brightness Brightness in percentage.
  */
-void led_set_brightness(brightness_t brightness);
+void led_set_brightness_all(led_brightness_t brightness);
 
 /**
- * @brief Set color of all LEDs and update strip.
+ * @brief Set the RGB color of a LED on the strip.
  *
- * This performs a bulk fill and issues a single `FastLED.show()`.
+ * @param led LED name.
+ * @param color RGB color.
  */
-void led_set_color_all(uint8_t r, uint8_t g, uint8_t b);
+void led_set_color(led_t led, led_color_t color);
 
 /**
- * @brief Set color of a single LED and update strip.
+ * @brief Set the RGB color of all LEDs on the strip.
+ *
+ * @param color RGB color.
  */
-void led_set_color(led_t led, uint8_t r, uint8_t g, uint8_t b);
+void led_set_color_all(led_color_t color);
 
+/**
+ * @brief Set a brightness toggle of a LED on the strip.
+ * 
+ * Brightness toggle is an inversion with respect to the medium value.
+ *
+ * @param led LED name.
+ * @param interval_ms Toggle interval in miliseconds.
+ */
+void led_set_toggle(led_t led, uint32_t interval_ms);
 
-void led_toggle(led_t led);
-
-
-void led_validate(void);
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __LED_H__ */
+/**
+ * @brief Update individual LED values with respect to their states.
+ */
+void led_step(void);

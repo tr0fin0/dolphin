@@ -1,42 +1,73 @@
 /**
- * @brief Predefined RGB color macros for convenience.
+ * @file colors.h
+ * @brief RGB LED colors.
  *
- * Use `COLORS[][]` and `COLORS_COUNT` for iteration in tests.
+ * @author Guilherme Nunes Trofino
+ * @date 2026-05-13
  */
 
-#ifndef __COLORS_H__
-#define __COLORS_H__
+#pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdint.h>
 
+/**
+ * @brief LED RGB color.
+ * 
+ * Available values are:
+ * 
+ *
+ * - `LED_COLOR_BLACK`
+ * 
+ * - `LED_COLOR_BLUE`
+ * 
+ * - `LED_COLOR_BLUE_LIGHT`
+ * 
+ * - `LED_COLOR_CYAN`
+ * 
+ * - `LED_COLOR_EMERALD`
+ * 
+ * - `LED_COLOR_GREEN`
+ * 
+ * - `LED_COLOR_GREEN_LIGHT`
+ * 
+ * - `LED_COLOR_GREEN_LIME`
+ * 
+ * - `LED_COLOR_ORANGE_DARK`
+ * 
+ * - `LED_COLOR_ORANGE_LIGHT`
+ * 
+ * - `LED_COLOR_PINK`
+ * 
+ * - `LED_COLOR_PURPLE`
+ * 
+ * - `LED_COLOR_RED`
+ * 
+ * - `LED_COLOR_SCARLET`
+ * 
+ * - `LED_COLOR_WHITE`
+ * 
+ * - `LED_COLOR_YELLOW`
+ * 
+ */
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} led_color_t;
 
-
-#define COLOR_RED           255,   0,   0
-#define COLOR_ORANGE_DARK   254,  23,   0
-#define COLOR_ORANGE_LIGHT  255,  48,   0
-#define COLOR_YELLOW        255, 115,   0
-#define COLOR_GREEN_LIME    163, 251,   0
-#define COLOR_GREEN_LIGHT     0, 220,  20
-#define COLOR_GREEN           0, 230,   0
-#define COLOR_EMERALD         0, 250,  40
-#define COLOR_CIAN            0, 255, 255
-#define COLOR_BLUE_LIGHT      0,  90, 255
-#define COLOR_BLUE            0,   0, 255
-#define COLOR_PURPLE        252,   3, 232
-#define COLOR_PINK          240,   0,  80
-#define COLOR_SCARLET       255,   0,   6
-#define COLOR_WHITE         200, 200, 200
-#define COLOR_OFF             0,   0,   0
-
-extern const uint8_t COLORS[][3];
-extern const size_t COLORS_COUNT;
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* __COLORS_H__ */
+#define LED_COLOR_BLACK         (led_color_t) {.r=  0, .g=  0, .b=   0}
+#define LED_COLOR_BLUE          (led_color_t) {.r=  0, .g=  0, .b= 255}
+#define LED_COLOR_BLUE_LIGHT    (led_color_t) {.r=  0, .g= 90, .b= 255}
+#define LED_COLOR_CYAN          (led_color_t) {.r=  0, .g=255, .b= 255}
+#define LED_COLOR_EMERALD       (led_color_t) {.r=  0, .g=250, .b=  40}
+#define LED_COLOR_GREEN         (led_color_t) {.r=  0, .g=230, .b=   0}
+#define LED_COLOR_GREEN_LIGHT   (led_color_t) {.r=  0, .g=220, .b=  20}
+#define LED_COLOR_GREEN_LIME    (led_color_t) {.r=163, .g=251, .b=   0}
+#define LED_COLOR_ORANGE_DARK   (led_color_t) {.r=254, .g= 23, .b=   0}
+#define LED_COLOR_ORANGE_LIGHT  (led_color_t) {.r=255, .g= 48, .b=   0}
+#define LED_COLOR_PINK          (led_color_t) {.r=240, .g=  0, .b=  80}
+#define LED_COLOR_PURPLE        (led_color_t) {.r=252, .g=  3, .b= 232}
+#define LED_COLOR_RED           (led_color_t) {.r=255, .g=  0, .b=   0}
+#define LED_COLOR_SCARLET       (led_color_t) {.r=255, .g=  0, .b=   6}
+#define LED_COLOR_WHITE         (led_color_t) {.r=255, .g=255, .b= 255}
+#define LED_COLOR_YELLOW        (led_color_t) {.r=255, .g=115, .b=   0}
