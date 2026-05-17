@@ -6,7 +6,8 @@ static esc_config_t controllers[NUMBER_OF_ESCS] = {
     [ESC_L] = {
         .name       = "ESC_L",
         .pin        = PIN_ESC_L,
-        .comparator = NULL},
+        .comparator = NULL
+    },
     [ESC_R] = {
         .name       = "ESC_R",
         .pin        = PIN_ESC_R,
@@ -176,8 +177,8 @@ void esc_set_pwm_mix(pwm_norm_t pwms[NUMBER_OF_ESCS]) {
     pwm_norm_t steering_us = pwms[0];
     pwm_norm_t throttle_us = pwms[1];
 
-    esc_set_pwm(ESC_L, (pwm_t)steering_us + throttle_us - PWM_NEUTRAL_US);
-    esc_set_pwm(ESC_R, (pwm_t)steering_us - throttle_us + PWM_NEUTRAL_US);
+    esc_set_pwm(ESC_L, (pwm_t) steering_us + throttle_us - PWM_NEUTRAL_US);
+    esc_set_pwm(ESC_R, (pwm_t) steering_us - throttle_us + PWM_NEUTRAL_US);
 };
 
 void esc_set_pwm_mix_neutral() {
