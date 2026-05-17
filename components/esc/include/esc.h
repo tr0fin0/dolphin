@@ -12,9 +12,9 @@
 #include "pwm.h"
 #include "pinout.h"
 
-#define ESC_GROUP_ID 0 /** MCPWM Timer Group ID */
+#define ESC_GROUP_ID            0 /** MCPWM Timer Group ID */
 #define ESC_RESOLUTION_HZ 1000000 /** MCPWM Timer Resolution of 1 MHz */
-#define ESC_PERIOD_US 20000 /** MCPWM Timer Period of 20ms */
+#define ESC_PERIOD_US       20000 /** MCPWM Timer Period of 20ms */
 
 /**
  * @brief ESC configuration.
