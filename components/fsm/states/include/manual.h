@@ -10,13 +10,6 @@
 #pragma once
 
 /**
- * @brief Entry handler for `STATE_MANUAL`.
- *
- * Set `LED_STATE` to `COLOR_GREEN`.
- */
-void manual_entry(void);
-
-/**
  * @brief Run handler for `STATE_MANUAL`.
  *
  * While the Radio Controller is connected, reads the steering and throttle

@@ -1,8 +1,6 @@
-#include "colors.h"
 #include "config.h"
 #include "esc.h"
 #include "fsm.h"
-#include "led.h"
 #include "logging.h"
 #include "opening.h"
 #include "pwm.h"
@@ -14,8 +12,6 @@ static pwm_norm_t button_us = 0;
 uint8_t opening_step = 0;
 
 void opening_entry(void) {
-    led_set_color(LED_STATE, LED_COLOR_PURPLE);
-
     button_us = radio_read_channel(CHANNEL_BUTTON);
 }
 

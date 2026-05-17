@@ -10,13 +10,6 @@
 #pragma once
 
 /**
- * @brief Entry handler for `STATE_SURVIVE`.
- *
- * Set `LED_STATE` to `COLOR_PURPLE`.
- */
-void survive_entry(void);
-
-/**
  * @brief Run handler for `STATE_SURVIVE`.
  *
  * While the Radio Controller is connected, autonomous avoid leaving the dojo.

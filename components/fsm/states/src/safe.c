@@ -1,8 +1,6 @@
-#include "colors.h"
 #include "config.h"
 #include "esc.h"
 #include "fsm.h"
-#include "led.h"
 #include "opening.h"
 #include "radio.h"
 #include "safe.h"
@@ -10,8 +8,6 @@
 extern uint8_t opening_step;
 
 void safe_entry(void) {
-    led_set_color(LED_STATE, LED_COLOR_RED);
-
     esc_set_pwm_mix_neutral();
 }
 

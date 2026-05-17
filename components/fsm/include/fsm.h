@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "led.h"
 
 /**
  * @brief FSM possible states.
@@ -61,10 +62,11 @@ typedef void (*fsm_action_t)(void);
  * - callbacks must be deterministic and non-blocking.
  */
 typedef struct {
-    const char *name;      /**< Human-readable null-terminated state name. */
-    fsm_action_t on_entry; /**< Called once when entering the state. */
-    fsm_action_t on_run;   /**< Called repeatedly while active. */
-    fsm_action_t on_exit;  /**< Called once when leaving the state. */
+    const char *name;       /**< Human-readable null-terminated state name. */
+    led_color_t color;      /**< LED color set upon entering the state. */
+    fsm_action_t on_entry;  /**< Called once when entering the state. */
+    fsm_action_t on_run;    /**< Called repeatedly while active. */
+    fsm_action_t on_exit;   /**< Called once when leaving the state. */
 } fsm_table_t;
 
 /**

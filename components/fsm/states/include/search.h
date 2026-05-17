@@ -10,13 +10,6 @@
 #pragma once
 
 /**
- * @brief Entry handler for `STATE_SEARCH`.
- *
- * Set `LED_STATE` to `COLOR_BLUE`.
- */
-void search_entry(void);
-
-/**
  * @brief Run handler for `STATE_SEARCH`.
  *
  * While the Raio Controller is connected, autonomous align with the adversary.

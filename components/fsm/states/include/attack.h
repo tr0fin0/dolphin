@@ -10,13 +10,6 @@
 #pragma once
 
 /**
- * @brief Entry handler for `STATE_ATTACK`.
- *
- * Set `LED_STATE` to `COLOR_SCARLET`.
- */
-void attack_entry(void);
-
-/**
  * @brief Run handler for `STATE_ATTACK`.
  *
  * While the Radio Controller is connected, autonomously push the adversary.

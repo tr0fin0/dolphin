@@ -1,3 +1,4 @@
+#include "colors.h"
 #include "config.h"
 #include "esc.h"
 #include "fsm.h"
@@ -29,49 +30,57 @@ static fsm_state_t current_state = STATE_BOOT;
 static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
         .name       = "ATTACK",
-        .on_entry   = attack_entry,
+        .color      = LED_COLOR_SCARLET,
+        .on_entry   = NULL,
         .on_run     = attack_run,
         .on_exit    = attack_exit
     },
     [STATE_BOOT] = {
         .name       = "BOOT",
-        .on_entry   = boot_entry,
+        .color      = LED_COLOR_WHITE,
+        .on_entry   = NULL,
         .on_run     = boot_run,
         .on_exit    = NULL
     },
     [STATE_COUNTDOWN] = {
         .name       = "COUNTDOWN",
-        .on_entry   = countdown_entry,
+        .color      = LED_COLOR_ORANGE_LIGHT,
+        .on_entry   = NULL,
         .on_run     = countdown_run,
         .on_exit    = NULL
     },
     [STATE_MANUAL] = {
         .name       = "MANUAL",
-        .on_entry   = manual_entry,
+        .color      = LED_COLOR_GREEN,
+        .on_entry   = NULL,
         .on_run     = manual_run,
         .on_exit    = manual_exit
     },
     [STATE_OPENING] = {
         .name       = "OPENING",
+        .color      = LED_COLOR_PURPLE,
         .on_entry   = opening_entry,
         .on_run     = opening_run,
         .on_exit    = NULL,
     },
     [STATE_SAFE] = {
         .name       = "SAFE",
+        .color      = LED_COLOR_RED,
         .on_entry   = safe_entry,
         .on_run     = safe_run,
         .on_exit    = NULL
     },
     [STATE_SEARCH] = {
         .name       = "SEARCH",
-        .on_entry   = search_entry,
+        .color      = LED_COLOR_BLUE,
+        .on_entry   = NULL,
         .on_run     = search_run,
         .on_exit    = NULL
     },
     [STATE_SURVIVE] = {
         .name       = "SURVIVE",
-        .on_entry   = survive_entry,
+        .color      = LED_COLOR_CYAN,
+        .on_entry   = NULL,
         .on_run     = survive_run,
         .on_exit    = NULL
     }
@@ -99,7 +108,7 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 1. execute Exit Action of current state
     if (fsm_table[current_state].on_exit != NULL) {
-        LOG_V("exiting of %s", fsm_get_state_name(current_state));
+        LOG_D("exiting of %s", fsm_get_state_name(current_state));
 
         fsm_table[current_state].on_exit();
     }
@@ -109,7 +118,9 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 3. execute Entry Action of new state
     if (fsm_table[current_state].on_entry != NULL) {
-        LOG_V("entrying of %s", fsm_get_state_name(current_state));
+        led_set_color(LED_STATE, fsm_table[current_state].color);
+
+        LOG_D("entrying of %s", fsm_get_state_name(current_state));
 
         fsm_table[current_state].on_entry();
     }

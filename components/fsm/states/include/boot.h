@@ -10,13 +10,6 @@
 #pragma once
 
 /**
- * @brief Entry handler for `STATE_BOOT`.
- *
- * Set `LED_STATE` to `COLOR_WHITE`.
- */
-void boot_entry(void);
-
-/**
  * @brief Run handler for `STATE_BOOT`.
  *
  * Unconditionally transitions to `STATE_SAFE`.

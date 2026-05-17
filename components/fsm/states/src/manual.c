@@ -1,13 +1,7 @@
-#include "colors.h"
 #include "esc.h"
 #include "fsm.h"
-#include "led.h"
 #include "manual.h"
 #include "radio.h"
-
-void manual_entry(void) {
-    led_set_color(LED_STATE, LED_COLOR_GREEN);
-}
 
 void manual_run(void) {
     if (radio_status() == RADIO_DISCONNECTED) {
