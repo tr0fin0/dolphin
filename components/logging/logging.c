@@ -18,10 +18,11 @@ static void vLogTask(void *pvParameters) {
             log_message_buffer,
             rx_buffer,
             sizeof(rx_buffer),
-            portMAX_DELAY);
+            portMAX_DELAY
+        );
 
         if (received_bytes > 0) {
-            printf("%.*s", (int)received_bytes, rx_buffer);
+            printf("%.*s", (int) received_bytes, rx_buffer);
         }
     }
 }
@@ -55,7 +56,8 @@ void log_init_async(void) {
             NULL,
             1,
             NULL,
-            0);
+            0
+        );
 
         esp_log_set_vprintf(async_log_vprintf);
     }
