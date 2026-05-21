@@ -1,5 +1,5 @@
 /**
- * @file log.h
+ * @file logging.h
  * @brief Logging macro wrappers of `esp_log.h` macro functions.
  *
  * @author Guilherme Nunes Trofino
