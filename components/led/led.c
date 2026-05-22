@@ -60,8 +60,8 @@ void led_init(void) {
         leds.brightness[i]      = led_brightness_rescale(LED_BRIGHTNESS_MED);
         leds.colors[i]          = LED_COLOR_WHITE;
         leds.states[i]          = LED_STATE_IDLE;
-        leds.intervals_ms[i]    = 0;
-        leds.timestamps_us[i]   = 0;
+        leds.intervals_us[i]    = 0;
+        leds.last_time_us[i]    = 0;
     };
 
     led_strip_config_t strip_config = {
@@ -125,8 +125,8 @@ void led_set_toggle(led_t led, uint32_t interval_ms) {
     leds.brightness[led] = LED_BRIGHTNESS_MAX - brightness;
 
     leds.states[led]        = LED_STATE_TOGGLE;
-    leds.intervals_ms[led]  = interval_ms;
-    leds.timestamps_us[led] = (uint32_t)esp_timer_get_time();
+    leds.intervals_us[led]  = interval_ms * 1000;
+    leds.last_time_us[led]  = esp_timer_get_time();
 
     led_refresh();
 };
@@ -138,16 +138,15 @@ void led_step(void) {
                 break;
 
             case LED_STATE_TOGGLE:
-                uint32_t instant_us = (uint32_t)esp_timer_get_time();
-                uint32_t interval_us = leds.intervals_ms[i] * 1000;
+                int64_t now_us = esp_timer_get_time();
 
-                if ((instant_us - leds.timestamps_us[i]) > interval_us) {
+                if (now_us > leds.last_time_us[i] + leds.intervals_us[i]) {
                     led_brightness_t brightness = leds.brightness[i];
                     leds.brightness[i] = LED_BRIGHTNESS_MAX - brightness;
 
                     leds.states[i]        = LED_STATE_IDLE;
-                    leds.intervals_ms[i]  = 0;
-                    leds.timestamps_us[i] = 0;
+                    leds.intervals_us[i]  = 0;
+                    leds.last_time_us[i]  = 0;
 
                     led_refresh();
                 }

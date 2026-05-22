@@ -69,8 +69,8 @@ typedef struct {
     led_brightness_t brightness[NUMBER_OF_LEDS];
     led_color_t colors[NUMBER_OF_LEDS];
     led_state_t states[NUMBER_OF_LEDS];
-    uint32_t intervals_ms[NUMBER_OF_LEDS];
-    uint32_t timestamps_us[NUMBER_OF_LEDS];
+    int64_t intervals_us[NUMBER_OF_LEDS];
+    int64_t last_time_us[NUMBER_OF_LEDS];
 } led_config_t;
 
 /**
