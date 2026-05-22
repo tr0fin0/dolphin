@@ -118,12 +118,13 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 3. execute Entry Action of new state
     if (fsm_table[current_state].on_entry != NULL) {
-        led_set_color(LED_STATE, fsm_table[current_state].color);
-
         LOG_D("entrying of %s", fsm_get_state_name(current_state));
 
         fsm_table[current_state].on_entry();
     }
+
+    // 4. set state color
+    led_set_color(LED_STATE, fsm_table[current_state].color);
 };
 
 void fsm_step(void) {
