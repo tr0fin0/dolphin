@@ -57,7 +57,7 @@ void led_init(void) {
     esp_err_t ret;
 
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
-        leds.brightness[i]      = led_brightness_rescale(LED_BRIGHTNESS_MED);
+        leds.brightness[i]      = LED_BRIGHTNESS_MAX;
         leds.colors[i]          = LED_COLOR_WHITE;
         leds.states[i]          = LED_STATE_IDLE;
         leds.intervals_us[i]    = 0;
