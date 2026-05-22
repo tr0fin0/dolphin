@@ -7,7 +7,8 @@
 
 static led_config_t leds = {
     .name = "WS2812B",
-    .pin = PIN_RGB_LEDS};
+    .pin = PIN_RGB_LEDS
+};
 
 /**
  * @brief Rescales brightness percentage value from 0 to 255.
@@ -21,7 +22,7 @@ static uint8_t led_brightness_rescale(led_brightness_t brightness) {
         brightness = LED_BRIGHTNESS_MAX;
     }
 
-    return (uint8_t)brightness * 255 / 100;
+    return (uint8_t) brightness * 255 / 100;
 };
 
 /**
