@@ -12,7 +12,7 @@
 #include "pwm.h"
 #include "pinout.h"
 
-#define RADIO_TIMEOUT_US 50000
+#define RADIO_TIMEOUT_US 25000
 
 /**
  * @brief Radio Controller receiver channels.
