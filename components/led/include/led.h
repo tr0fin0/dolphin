@@ -13,12 +13,6 @@
 #include "led_strip.h"
 #include "pinout.h"
 
-#define LED_BRIGHTNESS_MIN  0
-#define LED_BRIGHTNESS_MED  50
-#define LED_BRIGHTNESS_MAX  100
-
-#define LED_RESOLUTION_HZ   10000000
-
 /**
  * @brief LED brightness in percentage.
  *
@@ -72,6 +66,12 @@ typedef struct led_config {
     int64_t intervals_us[NUMBER_OF_LEDS];
     int64_t last_time_us[NUMBER_OF_LEDS];
 } led_config_t;
+
+#define LED_BRIGHTNESS_MIN  0
+#define LED_BRIGHTNESS_MED  50
+#define LED_BRIGHTNESS_MAX  100
+
+#define LED_RESOLUTION_HZ   10000000
 
 /**
  * @brief Initialization of all individual LEDs on the strip.

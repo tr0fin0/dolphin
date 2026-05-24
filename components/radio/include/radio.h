@@ -12,8 +12,6 @@
 #include "pwm.h"
 #include "pinout.h"
 
-#define RADIO_TIMEOUT_US 25000
-
 /**
  * @brief Radio Controller receiver channels.
  * 
@@ -66,6 +64,8 @@ typedef struct radio {
     uint32_t rise_times_us[NUMBER_OF_CHANNELS];
     uint32_t last_times_us[NUMBER_OF_CHANNELS];
 } radio_t;
+
+#define RADIO_TIMEOUT_US 25000
 
 /**
  * @brief Initialize Radio Controller interrupts.
