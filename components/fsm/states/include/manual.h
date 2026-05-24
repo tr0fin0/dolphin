@@ -1,7 +1,7 @@
 /**
  * @file manual.h
- * @brief `STATE_MANUAL` definition of the FSM callback functions `on_entry()`,
- * `on_exit()` and `on_run()`.
+ * @brief `STATE_MANUAL` definition of the FSM callback functions `on_exit()`
+ * and `on_run()`.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
