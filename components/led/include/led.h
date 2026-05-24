@@ -109,7 +109,7 @@ void led_set_color_all(led_color_t color);
 
 /**
  * @brief Set a brightness toggle of a LED on the strip.
- * 
+ *
  * Brightness toggle is an inversion with respect to the medium value.
  *
  * @param led LED name.

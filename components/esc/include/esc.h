@@ -1,7 +1,7 @@
 /**
  * @file esc.h
  * @brief Electronic Speed Controller for Brushless Direct Current motors.
- * 
+ *
  * @author Guilherme Nunes Trofino
  * @date 2026-04-28
  */

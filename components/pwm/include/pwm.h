@@ -104,9 +104,9 @@ pwm_norm_t IRAM_ATTR pwm_normalize(pwm_t pwm);
 /**
  * @brief PWM pulse percentage convertion to normalized PWM pulse width in
  * microseconds.
- * 
+ *
  * The following equation converts PWM pulse percentage into PWM pulse width:
- * 
+ *
  *  1. `PWM_PULSE_US = PWM_NEUTRAL_US + 5 * percentage`
  *
  * For example:

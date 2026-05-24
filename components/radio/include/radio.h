@@ -14,7 +14,7 @@
 
 /**
  * @brief Radio Receiver receiver channels.
- * 
+ *
  * Available values are:
  *
  * - `CHANNEL_STEERING`
