@@ -39,7 +39,7 @@ typedef uint8_t led_brightness_t;
  *
  * - `LED_STATE_TOGGLE`
  */
-typedef enum {
+typedef enum led_state {
     LED_STATE_IDLE = 0, /** Default operation state. */
     LED_STATE_TOGGLE,   /** Brightness inverted for an interval in ms. */
 } led_state_t;
@@ -53,7 +53,7 @@ typedef enum {
  *
  * - `LED_EXTRA`
  */
-typedef enum {
+typedef enum led {
     LED_STATE = 0,  /** LED used for the system state. */
     LED_EXTRA,      /** LED used for debugging. */
     NUMBER_OF_LEDS
@@ -62,7 +62,7 @@ typedef enum {
 /**
  * @brief LED strip configuration.
  */
-typedef struct {
+typedef struct led_config {
     const char *name;
     pin_t pin;
     led_strip_handle_t strip;

@@ -19,7 +19,7 @@
 /**
  * @brief ESC configuration.
  */
-typedef struct {
+typedef struct esc_config {
     const char *name;
     pin_t pin;
     mcpwm_cmpr_handle_t comparator;
@@ -34,7 +34,7 @@ typedef struct {
  *
  * - `ESC_R`
  */
-typedef enum {
+typedef enum esc {
     ESC_L = 0,      /** ESC connected to the left motor*/
     ESC_R,          /** ESC connected to the right motor*/
     NUMBER_OF_ESCS

@@ -18,7 +18,7 @@
  * Each state handler callback functions are defined in an independent `.c` and
  * `.h` files under the states folder.
  */
-typedef enum {
+typedef enum fsm_state {
     /** In the Autonomous Control, attacks adversary. */
     STATE_ATTACK = 0,
     /** Entry point of the FSM. */
@@ -61,7 +61,7 @@ typedef void (*fsm_action_t)(void);
  * @note
  * - callbacks must be deterministic and non-blocking.
  */
-typedef struct {
+typedef struct fsm_table {
     const char *name;       /**< Human-readable null-terminated state name. */
     led_color_t color;      /**< LED color set upon entering the state. */
     fsm_action_t on_entry;  /**< Called once when entering the state. */

@@ -31,7 +31,7 @@
  *
  * - `CHANNEL_6`
  */
-typedef enum {
+typedef enum radio_channel {
     CHANNEL_STEERING = 0,
     CHANNEL_THROTTLE,
     CHANNEL_BUTTON,
@@ -50,7 +50,7 @@ typedef enum {
  *
  * - `RADIO_DISCONNECTED`
  */
-typedef enum {
+typedef enum radio_status {
     RADIO_DISCONNECTED = 0, /**< Radio Controller disconnected after timeout. */
     RADIO_CONNECTED         /**< Radio Controller connected. */
 } radio_status_t;
@@ -58,7 +58,7 @@ typedef enum {
 /**
  * @brief Radio Controller PWM pulse width capture via interruptions.
  */
-typedef struct {
+typedef struct radio {
     const char *name;
     radio_status_t status;
     pin_t pins[NUMBER_OF_CHANNELS];
