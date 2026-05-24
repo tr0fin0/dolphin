@@ -30,16 +30,15 @@ static uint8_t led_brightness_rescale(led_brightness_t brightness) {
  */
 static void led_refresh(void) {
     esp_err_t ret;
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
 
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
-        r = (leds.colors[i].r * led_brightness_rescale(leds.brightness[i])) >> 8;
-        g = (leds.colors[i].g * led_brightness_rescale(leds.brightness[i])) >> 8;
-        b = (leds.colors[i].b * led_brightness_rescale(leds.brightness[i])) >> 8;
-
-        ret = led_strip_set_pixel(leds.strip, i, r, g, b);
+        ret = led_strip_set_pixel(
+            leds.strip,
+            i,
+            (leds.colors[i].r * led_brightness_rescale(leds.brightness[i])) >> 8,
+            (leds.colors[i].g * led_brightness_rescale(leds.brightness[i])) >> 8,
+            (leds.colors[i].b * led_brightness_rescale(leds.brightness[i])) >> 8
+        );
         if (ret != ESP_OK) {
             LOG_E(
                 "LED %d refresh failed with error %s.", i, esp_err_to_name(ret)
