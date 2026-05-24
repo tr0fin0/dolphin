@@ -40,7 +40,7 @@ static void IRAM_ATTR radio_isr(void *arg) {
 
     uint32_t level = (REG_READ(GPIO_IN1_REG) >> (radio.pins[channel] - 32)) & 0x1;
 
-    uint32_t now = (uint32_t) esp_timer_get_time();
+    int64_t now = esp_timer_get_time();
     if (level) { // rising edge
         radio.rise_times_us[channel] = now;
     } else { // falling edge
@@ -66,7 +66,7 @@ void radio_init() {
         return;
     }
 
-    uint32_t now = (uint32_t)esp_timer_get_time();
+    int64_t now = esp_timer_get_time();
     for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
         gpio_config_t pin_config = {
             .pin_bit_mask   = (1ULL << radio.pins[i]),
@@ -132,7 +132,7 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
 
 radio_status_t radio_status() {
     portDISABLE_INTERRUPTS();
-    uint32_t now = (uint32_t)esp_timer_get_time();
+    int64_t now = esp_timer_get_time();
 
     bool steering_dead = (now - radio.last_times_us[CHANNEL_STEERING]) > RADIO_TIMEOUT_US;
     bool throttle_dead = (now - radio.last_times_us[CHANNEL_THROTTLE]) > RADIO_TIMEOUT_US;

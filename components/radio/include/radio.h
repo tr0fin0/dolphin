@@ -61,8 +61,8 @@ typedef struct radio {
     radio_status_t status;
     pin_t pins[NUMBER_OF_CHANNELS];
     pwm_norm_t pwms[NUMBER_OF_CHANNELS];
-    uint32_t rise_times_us[NUMBER_OF_CHANNELS];
-    uint32_t last_times_us[NUMBER_OF_CHANNELS];
+    int64_t rise_times_us[NUMBER_OF_CHANNELS];
+    int64_t last_times_us[NUMBER_OF_CHANNELS];
 } radio_t;
 
 #define RADIO_TIMEOUT_US 25000
