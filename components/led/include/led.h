@@ -113,7 +113,7 @@ void led_set_color_all(led_color_t color);
  * Brightness toggle is an inversion with respect to the medium value.
  *
  * @param led LED name.
- * @param interval_ms Toggle interval in miliseconds.
+ * @param interval_ms Toggle interval in milliseconds.
  */
 void led_set_toggle(led_t led, uint32_t interval_ms);
 

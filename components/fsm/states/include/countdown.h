@@ -16,6 +16,6 @@
  * Transitions to `STATE_SEARCH` after a 5-second delay from state entry.
  *
  * @note If the Radio Controller is disconnected, transitions to `STATE_SAFE`
- * reseting the countdown.
+ * resetting the countdown.
  */
 void countdown_run(void);

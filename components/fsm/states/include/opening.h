@@ -51,7 +51,7 @@ void opening_entry(void);
 /**
  * @brief Run handler for `STATE_OPENING`.
  *
- * While Radio Controller is connected, 3 sequencial reads of the throttle
+ * While Radio Controller is connected, 3 sequential reads of the throttle
  * channel are used to determine the opening move.
  *
  * @note

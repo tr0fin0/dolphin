@@ -102,7 +102,7 @@ typedef int8_t pwm_percentage_t;
 pwm_norm_t IRAM_ATTR pwm_normalize(pwm_t pwm);
 
 /**
- * @brief PWM pulse percentage convertion to normalized PWM pulse width in
+ * @brief PWM pulse percentage conversion to normalized PWM pulse width in
  * microseconds.
  *
  * The following equation converts PWM pulse percentage into PWM pulse width:

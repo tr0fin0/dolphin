@@ -25,7 +25,7 @@ void opening_run(void) {
     pwm_norm_t pulses_us[NUMBER_OF_CHANNELS];
     radio_read_channels(pulses_us);
 
-    // ensure inital button value is not PWM_NEUTRAL_US
+    // ensure initial button value is not PWM_NEUTRAL_US
     if (
         button_us == PWM_NEUTRAL_US &&
         pulses_us[CHANNEL_BUTTON] != PWM_NEUTRAL_US
