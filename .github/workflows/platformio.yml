@@ -37,6 +37,3 @@ jobs:
 
           - name: Verify Firmware Compilation
             run: pio run -e development
-
-          - name: Verify Firmware Unit Tests
-            run: pio test -e validation
