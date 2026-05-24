@@ -23,7 +23,7 @@ static uint8_t led_brightness_rescale(led_brightness_t brightness) {
     }
 
     return (uint8_t) brightness * 255 / 100;
-};
+}
 
 /**
  * @brief Refreshes all LEDs on strip.
@@ -51,7 +51,7 @@ static void led_refresh(void) {
     if (ret != ESP_OK) {
         LOG_E("LED refresh failed with error %s.", esp_err_to_name(ret));
     };
-};
+}
 
 void led_init(void) {
     esp_err_t ret;
@@ -90,13 +90,13 @@ void led_init(void) {
     };
 
     LOG_I("%d LEDs initialized on pin %d.", NUMBER_OF_LEDS, leds.pin);
-};
+}
 
 void led_set_brightness(led_t led, led_brightness_t brightness) {
     leds.brightness[led] = brightness;
 
     led_refresh();
-};
+}
 
 void led_set_brightness_all(led_brightness_t brightness) {
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
@@ -104,13 +104,13 @@ void led_set_brightness_all(led_brightness_t brightness) {
     };
 
     led_refresh();
-};
+}
 
 void led_set_color(led_t led, led_color_t colors) {
     leds.colors[led] = colors;
 
     led_refresh();
-};
+}
 
 void led_set_color_all(led_color_t colors) {
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
@@ -118,7 +118,7 @@ void led_set_color_all(led_color_t colors) {
     };
 
     led_refresh();
-};
+}
 
 void led_set_toggle(led_t led, uint32_t interval_ms) {
     led_brightness_t brightness = leds.brightness[led];
@@ -129,7 +129,7 @@ void led_set_toggle(led_t led, uint32_t interval_ms) {
     leds.last_time_us[led]  = esp_timer_get_time();
 
     led_refresh();
-};
+}
 
 void led_step(void) {
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
@@ -156,4 +156,4 @@ void led_step(void) {
                 break;
         }
     }
-};
+}

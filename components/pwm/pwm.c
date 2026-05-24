@@ -18,7 +18,7 @@ pwm_norm_t pwm_normalize(pwm_t pwm) {
     }
 
     return (pwm_norm_t) pwm;
-};
+}
 
 pwm_norm_t pwm_percentage(pwm_percentage_t pwm_percentage) {
     return pwm_normalize((pwm_t) PWM_NEUTRAL_US + 5 * pwm_percentage);

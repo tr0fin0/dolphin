@@ -26,7 +26,6 @@ void esc_init() {
         .period_ticks   = ESC_PERIOD_US,
         .resolution_hz  = ESC_RESOLUTION_HZ,
     };
-
     ret = mcpwm_new_timer(&timer_config, &timer);
     if (ret != ESP_OK) {
         LOG_E(
@@ -147,13 +146,14 @@ void esc_init() {
 
         return;
     }
+
     ret = mcpwm_timer_start_stop(timer, MCPWM_TIMER_START_NO_STOP);
     if (ret != ESP_OK) {
         LOG_E("MCPWM timer start failed with error %s.", esp_err_to_name(ret));
 
         return;
     }
-};
+}
 
 void esc_set_pwm(esc_t esc, pwm_t pwm) {
     pwm_norm_t pwm_norm = pwm_normalize(pwm);
@@ -171,7 +171,7 @@ void esc_set_pwm(esc_t esc, pwm_t pwm) {
     }
 
     LOG_V("%s duty cycle set to %d us.", controllers[esc].name, pwm_norm);
-};
+}
 
 void esc_set_pwm_mix(pwm_norm_t pwms[NUMBER_OF_ESCS]) {
     pwm_norm_t steering_us = pwms[0];
@@ -179,13 +179,13 @@ void esc_set_pwm_mix(pwm_norm_t pwms[NUMBER_OF_ESCS]) {
 
     esc_set_pwm(ESC_L, (pwm_t) steering_us + throttle_us - PWM_NEUTRAL_US);
     esc_set_pwm(ESC_R, (pwm_t) steering_us - throttle_us + PWM_NEUTRAL_US);
-};
+}
 
 void esc_set_pwm_mix_neutral() {
     esc_set_pwm_neutral(ESC_L);
     esc_set_pwm_neutral(ESC_R);
-};
+}
 
 void esc_set_pwm_neutral(esc_t esc) {
-    esc_set_pwm(esc, (pwm_t)PWM_NEUTRAL_US);
-};
+    esc_set_pwm(esc, (pwm_t) PWM_NEUTRAL_US);
+}

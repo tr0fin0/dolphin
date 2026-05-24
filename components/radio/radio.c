@@ -51,7 +51,7 @@ static void IRAM_ATTR radio_isr(void *arg) {
             radio.last_times_us[channel] = now;
         }
     }
-};
+}
 
 void radio_init() {
     esp_err_t ret;
@@ -108,7 +108,7 @@ void radio_init() {
     }
 
     radio.status = RADIO_DISCONNECTED;
-};
+}
 
 void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]) {
     portDISABLE_INTERRUPTS();
@@ -116,7 +116,7 @@ void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]) {
         pwms[i] = radio.pwms[i];
     }
     portENABLE_INTERRUPTS();
-};
+}
 
 pwm_norm_t radio_read_channel(radio_channel_t channel) {
     pwm_norm_t pwm;
@@ -128,7 +128,7 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
     LOG_V("%s channel %d: %d.", radio.name, channel, radio.pwms[channel]);
 
     return pwm;
-};
+}
 
 radio_status_t radio_status() {
     portDISABLE_INTERRUPTS();
@@ -152,4 +152,4 @@ radio_status_t radio_status() {
     }
 
     return radio.status;
-};
+}

@@ -5,7 +5,7 @@
 #include "freertos/task.h"
 #include "freertos/message_buffer.h"
 
-static MessageBufferHandle_t log_message_buffer = NULL; /** Cross-core message buffer. */
+static MessageBufferHandle_t message_buffer = NULL; /** Cross-core message buffer. */
 
 /**
  * @brief Dedicated logging task on Core 0.
@@ -15,7 +15,7 @@ static void vLogTask(void *pvParameters) {
 
     while (1) {
         size_t received_bytes = xMessageBufferReceive(
-            log_message_buffer,
+            message_buffer,
             rx_buffer,
             sizeof(rx_buffer),
             portMAX_DELAY
@@ -31,7 +31,7 @@ static void vLogTask(void *pvParameters) {
  * @brief Asynchronous logging vprintf based function.
  */
 static int async_log_vprintf(const char *fmt, va_list args) {
-    if (log_message_buffer == NULL) {
+    if (message_buffer == NULL) {
         return 0;
     }
 
@@ -39,16 +39,16 @@ static int async_log_vprintf(const char *fmt, va_list args) {
     int len = vsnprintf(buffer, sizeof(buffer), fmt, args);
 
     if (len > 0 && len < sizeof(buffer)) {
-        xMessageBufferSend(log_message_buffer, buffer, len, 0);
+        xMessageBufferSend(message_buffer, buffer, len, 0);
     }
 
     return len;
 }
 
 void log_init_async(void) {
-    log_message_buffer = xMessageBufferCreate(LOG_MESSAGE_SIZE);
+    message_buffer = xMessageBufferCreate(LOG_MESSAGE_SIZE);
 
-    if (log_message_buffer != NULL) {
+    if (message_buffer != NULL) {
         xTaskCreatePinnedToCore(
             vLogTask,
             "LogTask",
