@@ -51,14 +51,16 @@ typedef enum radio_channel {
 typedef enum radio_status {
     RADIO_DISCONNECTED = 0, /**< Radio Receiver disconnected after timeout. */
     RADIO_CONNECTED,        /**< Radio Receiver connected. */
+    NUMBER_OF_RADIO_STATUS
 } radio_status_t;
 
 /**
- * @brief Radio Controller PWM pulse width capture via interruptions.
+ * @brief Radio Receiver PWM pulse width capture via interruptions.
  */
 typedef struct radio {
     const char *name;
     radio_status_t status;
+    const char *status_names[NUMBER_OF_RADIO_STATUS];
     pin_t pins[NUMBER_OF_CHANNELS];
     pwm_norm_t pwms[NUMBER_OF_CHANNELS];
     int64_t rise_times_us[NUMBER_OF_CHANNELS];
@@ -97,6 +99,11 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
  * Interruptions briefly disabled while copying values.
  */
 void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]);
+
+/**
+ * @brief Returns the Radio Receiver status name as a null-terminated string.
+ */
+const char *radio_status_name();
 
 /**
  * @brief Returns latest Radio Receiver status.

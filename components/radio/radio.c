@@ -11,6 +11,10 @@
 
 static volatile radio_t radio_receiver = {
     .name = "FS-GT2",
+    .status_names = {
+        [RADIO_DISCONNECTED] = "DISCONNECTED",
+        [RADIO_CONNECTED]    = "CONNECTED",
+    },
     .pins = {
         PIN_RADIO_CH1,
         PIN_RADIO_CH2,
@@ -147,6 +151,10 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
     return pwm;
 }
 
+const char *radio_status_name() {
+    return radio_receiver.status_names[radio_receiver.status];
+}
+
 radio_status_t radio_status() {
     portDISABLE_INTERRUPTS();
     int64_t now = esp_timer_get_time();
@@ -170,9 +178,9 @@ radio_status_t radio_status() {
         radio_receiver.status = new_status;
 
         LOG_W(
-            "%s radio status is %d.",
+            "%s radio status is %s",
             radio_receiver.name,
-            radio_receiver.status
+            radio_status_name()
         );
     }
 
