@@ -106,15 +106,15 @@ void led_set_brightness_all(led_brightness_t brightness) {
     led_refresh();
 }
 
-void led_set_color(led_t led, led_color_t colors) {
-    leds.colors[led] = colors;
+void led_set_color(led_t led, led_color_t color) {
+    leds.colors[led] = color;
 
     led_refresh();
 }
 
-void led_set_color_all(led_color_t colors) {
+void led_set_color_all(led_color_t color) {
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
-        leds.colors[i] = colors;
+        leds.colors[i] = color;
     };
 
     led_refresh();
