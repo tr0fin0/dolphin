@@ -56,7 +56,7 @@ typedef enum led {
 /**
  * @brief LED strip configuration.
  */
-typedef struct led_config {
+typedef struct led_array {
     const char *name;
     pin_t pin;
     led_strip_handle_t strip;
@@ -65,12 +65,11 @@ typedef struct led_config {
     led_state_t states[NUMBER_OF_LEDS];
     int64_t intervals_us[NUMBER_OF_LEDS];
     int64_t last_time_us[NUMBER_OF_LEDS];
-} led_config_t;
+} led_array_t;
 
 #define LED_BRIGHTNESS_MIN  0
 #define LED_BRIGHTNESS_MED  50
 #define LED_BRIGHTNESS_MAX  100
-
 #define LED_RESOLUTION_HZ   10000000
 
 /**

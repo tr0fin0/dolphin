@@ -5,7 +5,7 @@
 #include "logging.h"
 #include "pinout.h"
 
-static led_config_t leds = {
+static led_array_t leds = {
     .name = "WS2812B",
     .pin = PIN_RGB_LEDS
 };
