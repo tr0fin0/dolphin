@@ -1,3 +1,6 @@
 .pio
 .vscode/*
 sdkconfig.*
+
+# exceptions
+!sdkconfig.defaults
