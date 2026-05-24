@@ -101,7 +101,7 @@ void fsm_transition(fsm_state_t new_state) {
         return;
     }
     LOG_I(
-        "transition from current state %s to %s",
+        "transition from %s to %s",
         fsm_get_state_name(current_state),
         fsm_get_state_name(new_state)
     );
@@ -128,25 +128,23 @@ void fsm_transition(fsm_state_t new_state) {
 }
 
 void fsm_step(void) {
-    if (fsm_table[current_state].on_run != NULL) {
-        LOG_V("running of %s", fsm_get_state_name(current_state));
+    if (fsm_table[current_state].on_run == NULL) {
+        LOG_E("no on_run() function for %s", fsm_get_state_name(current_state));
 
-        return fsm_table[current_state].on_run();
+        return;
     }
 
-    LOG_E(
-        "no on_run() function defined for %s", fsm_get_state_name(current_state)
-    );
+    return fsm_table[current_state].on_run();
 }
 
 const char *fsm_get_state_name(fsm_state_t state) {
-    if (fsm_table[state].name != NULL) {
-        return fsm_table[state].name;
+    if (fsm_table[state].name == NULL) {
+        LOG_E("no name for %d", state);
+
+        return "UNKNOWN";
     }
 
-    LOG_W("no name defined for state %d", state);
-
-    return "UNKNOWN";
+    return fsm_table[state].name;
 }
 
 fsm_state_t fsm_get_state(void) {

@@ -177,11 +177,7 @@ radio_status_t radio_status() {
     if (new_status != radio_receiver.status) {
         radio_receiver.status = new_status;
 
-        LOG_W(
-            "%s radio status is %s",
-            radio_receiver.name,
-            radio_status_name()
-        );
+        LOG_W("%s radio %s", radio_receiver.name, radio_status_name());
     }
 
     return radio_receiver.status;
