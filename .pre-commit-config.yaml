@@ -15,6 +15,11 @@ repos:
   rev: v2.4.1
   hooks:
   - id: codespell
+    exclude: |
+      (?x)^(
+          .*\.cjs|
+          .*\.json
+      )$
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0

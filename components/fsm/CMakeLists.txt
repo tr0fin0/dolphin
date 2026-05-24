@@ -1,5 +1,5 @@
 idf_component_register(
-    SRCS 
+    SRCS
         "fsm.c"
         "states/src/attack.c"
         "states/src/boot.c"

@@ -96,7 +96,7 @@ void fsm_init(void) {
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
     if (current_state == new_state || new_state >= NUMBER_OF_STATES) {
-        LOG_W("unkown state %d", new_state);
+        LOG_W("unknown state %d", new_state);
 
         return;
     }

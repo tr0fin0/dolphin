@@ -25,7 +25,7 @@ void safe_entry(void);
  * control.
  *
  * @note
- * - If Radio Controller is disconnected during opening selection, 
+ * - If Radio Controller is disconnected during opening selection,
  * `opening_step` remains unchanged.
  *
  * - Once an opening is executed, the `STATE_OPENING` stays unreachable
