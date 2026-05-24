@@ -3,6 +3,11 @@ name: PlatformIO
 on:
     pull_request:
         branches: [ "main" ]
+        paths:
+          - 'components/**'
+          - 'src/**'
+          - 'platformio.ini'
+          - 'sdkconfig.defaults'
         types:
           - opened
           - synchronize
