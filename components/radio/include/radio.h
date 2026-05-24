@@ -13,7 +13,7 @@
 #include "pinout.h"
 
 /**
- * @brief Radio Controller receiver channels.
+ * @brief Radio Receiver receiver channels.
  * 
  * Available values are:
  *
@@ -40,7 +40,7 @@ typedef enum radio_channel {
 } radio_channel_t;
 
 /**
- * @brief Radio Controller connection status.
+ * @brief Radio Receiver connection status.
  *
  * Available values are:
  *
@@ -49,8 +49,8 @@ typedef enum radio_channel {
  * - `RADIO_DISCONNECTED`
  */
 typedef enum radio_status {
-    RADIO_DISCONNECTED = 0, /**< Radio Controller disconnected after timeout. */
-    RADIO_CONNECTED         /**< Radio Controller connected. */
+    RADIO_DISCONNECTED = 0, /**< Radio Receiver disconnected after timeout. */
+    RADIO_CONNECTED,        /**< Radio Receiver connected. */
 } radio_status_t;
 
 /**
@@ -68,7 +68,7 @@ typedef struct radio {
 #define RADIO_TIMEOUT_US 25000
 
 /**
- * @brief Initialize Radio Controller interrupts.
+ * @brief Initialize Radio Receiver interrupts.
  *
  * @note
  * After initialization, channels start at `PWM_NEUTRAL_US` until pulses are
@@ -79,7 +79,7 @@ void radio_init(void);
 /**
  * @brief Return latest measure pulse width in microseconds from channel.
  *
- * @param channel Radio Controller channel.
+ * @param channel Radio Receiver channel.
  *
  * @return Normalized pulse width in microseconds.
  *
@@ -91,7 +91,7 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
 /**
  * @brief Return latest measured pulse widths in microseconds from all channels.
  *
- * @param pwms Array of Radio Controller channels.
+ * @param pwms Array of Radio Receiver channels.
  *
  * @note
  * Interruptions briefly disabled while copying values.
@@ -99,6 +99,6 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
 void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]);
 
 /**
- * @brief Returns latest Radio Controller status.
+ * @brief Returns latest Radio Receiver status.
  */
 radio_status_t radio_status(void);

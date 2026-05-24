@@ -9,7 +9,7 @@
 #include "radio.h"
 #include "soc/gpio_reg.h"
 
-static volatile radio_t radio = {
+static volatile radio_t radio_receiver = {
     .name = "FS-GT2",
     .pins = {
         PIN_RADIO_CH1,
@@ -36,19 +36,21 @@ static volatile radio_t radio = {
  * providing faster and ISR-safe input sampling.
  */
 static void IRAM_ATTR radio_isr(void *arg) {
-    radio_channel_t channel = (uint8_t) (uintptr_t)arg; // portable cast
+    radio_channel_t channel = (uint8_t) (uintptr_t) arg; // portable cast
 
-    uint32_t level = (REG_READ(GPIO_IN1_REG) >> (radio.pins[channel] - 32)) & 0x1;
+    uint32_t level = (
+        REG_READ(GPIO_IN1_REG) >> (radio_receiver.pins[channel] - 32)
+    ) & 0x1;
 
     int64_t now = esp_timer_get_time();
     if (level) { // rising edge
-        radio.rise_times_us[channel] = now;
+        radio_receiver.rise_times_us[channel] = now;
     } else { // falling edge
-        if (radio.rise_times_us[channel] != 0) {
-            pwm_t pwm = (pwm_t)(now - radio.rise_times_us[channel]);
+        if (radio_receiver.rise_times_us[channel] != 0) {
+            pwm_t pwm = (pwm_t) (now - radio_receiver.rise_times_us[channel]);
 
-            radio.pwms[channel] = pwm_normalize(pwm);
-            radio.last_times_us[channel] = now;
+            radio_receiver.pwms[channel] = pwm_normalize(pwm);
+            radio_receiver.last_times_us[channel] = now;
         }
     }
 }
@@ -60,16 +62,17 @@ void radio_init() {
     if (ret != ESP_OK) {
         LOG_E(
             "%s ISR install service failed with error %s.",
-            radio.name, esp_err_to_name(ret)
+            radio_receiver.name,
+            esp_err_to_name(ret)
         );
 
         return;
     }
 
     int64_t now = esp_timer_get_time();
-    for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
+    for (uint8_t channel = 0; channel < NUMBER_OF_CHANNELS; channel++) {
         gpio_config_t pin_config = {
-            .pin_bit_mask   = (1ULL << radio.pins[i]),
+            .pin_bit_mask   = (1ULL << radio_receiver.pins[channel]),
             .mode           = GPIO_MODE_INPUT,
             .pull_up_en     = GPIO_PULLUP_DISABLE,
             .pull_down_en   = GPIO_PULLDOWN_DISABLE,
@@ -80,40 +83,49 @@ void radio_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s channel %d GPIO configuration failed with error %s.",
-                radio.name, radio.pins[i], esp_err_to_name(ret)
+                radio_receiver.name,
+                radio_receiver.pins[channel],
+                esp_err_to_name(ret)
             );
 
             return;
         }
 
         ret = gpio_isr_handler_add(
-            radio.pins[i], radio_isr, (void *) (uintptr_t)i
+            radio_receiver.pins[channel],
+            radio_isr,
+            (void *) (uintptr_t) channel
         );
         if (ret != ESP_OK) {
             LOG_E(
                 "%s channel %d ISR handler addition failed with error %s.",
-                radio.name, radio.pins[i], esp_err_to_name(ret)
+                radio_receiver.name,
+                radio_receiver.pins[channel],
+                esp_err_to_name(ret)
             );
 
             return;
         }
 
-        radio.pwms[i] = (pwm_t)PWM_NEUTRAL_US;
-        radio.rise_times_us[i] = now;
-        radio.last_times_us[i] = now;
+        radio_receiver.pwms[channel] = (pwm_t) PWM_NEUTRAL_US;
+        radio_receiver.rise_times_us[channel] = now;
+        radio_receiver.last_times_us[channel] = now;
 
         LOG_I(
-            "%s channel %d initialized on pin %d.", radio.name, i, radio.pins[i]
+            "%s channel %d initialized on pin %d.",
+            radio_receiver.name,
+            channel,
+            radio_receiver.pins[channel]
         );
     }
 
-    radio.status = RADIO_DISCONNECTED;
+    radio_receiver.status = RADIO_DISCONNECTED;
 }
 
 void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]) {
     portDISABLE_INTERRUPTS();
-    for (uint8_t i = 0; i < NUMBER_OF_CHANNELS; i++) {
-        pwms[i] = radio.pwms[i];
+    for (uint8_t channel = 0; channel < NUMBER_OF_CHANNELS; channel++) {
+        pwms[channel] = radio_receiver.pwms[channel];
     }
     portENABLE_INTERRUPTS();
 }
@@ -122,10 +134,15 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
     pwm_norm_t pwm;
 
     portDISABLE_INTERRUPTS();
-    pwm = radio.pwms[channel];
+    pwm = radio_receiver.pwms[channel];
     portENABLE_INTERRUPTS();
 
-    LOG_V("%s channel %d: %d.", radio.name, channel, radio.pwms[channel]);
+    LOG_V(
+        "%s channel %d: %d.",
+        radio_receiver.name,
+        channel,
+        radio_receiver.pwms[channel]
+    );
 
     return pwm;
 }
@@ -134,8 +151,12 @@ radio_status_t radio_status() {
     portDISABLE_INTERRUPTS();
     int64_t now = esp_timer_get_time();
 
-    bool steering_dead = (now - radio.last_times_us[CHANNEL_STEERING]) > RADIO_TIMEOUT_US;
-    bool throttle_dead = (now - radio.last_times_us[CHANNEL_THROTTLE]) > RADIO_TIMEOUT_US;
+    bool steering_dead = (
+        now - radio_receiver.last_times_us[CHANNEL_STEERING]
+    ) > RADIO_TIMEOUT_US;
+    bool throttle_dead = (
+        now - radio_receiver.last_times_us[CHANNEL_THROTTLE]
+    ) > RADIO_TIMEOUT_US;
     portENABLE_INTERRUPTS();
 
     radio_status_t new_status;
@@ -145,11 +166,15 @@ radio_status_t radio_status() {
         new_status = RADIO_CONNECTED;
     }
 
-    if (new_status != radio.status) {
-        radio.status = new_status;
+    if (new_status != radio_receiver.status) {
+        radio_receiver.status = new_status;
 
-        LOG_W("%s radio status is %d.", radio.name, radio.status);
+        LOG_W(
+            "%s radio status is %d.",
+            radio_receiver.name,
+            radio_receiver.status
+        );
     }
 
-    return radio.status;
+    return radio_receiver.status;
 }
