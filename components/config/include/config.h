@@ -9,19 +9,20 @@
 #pragma once
 
 /**
- * @brief Defines Control Approach
+ * @brief Defines control approaches
  *
  * @note Available options are:
  *
- * - `AUTONOMOUS`
+ * - `CONFIG_CONTROL_AUTONOMOUS`
  *
- * - `RADIO`
+ * - `CONFIG_CONTROL_RADIO`
  */
-typedef enum {
-    AUTONOMOUS = 0,
-    RADIO,
-} control_mode_t;
+typedef enum config_control_mode {
+    CONFIG_CONTROL_AUTONOMOUS = 0,
+    CONFIG_CONTROL_RADIO,
+} config_control_mode_t;
 
-#define PROJECT_NAME    "dolphin"
+#define CONFIG_CONTROL_MODE     CONFIG_CONTROL_RADIO
 
-#define CONTROL_MODE    RADIO
+#define CONFIG_PROJECT_NAME     "dolphin"
+

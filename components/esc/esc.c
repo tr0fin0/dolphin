@@ -142,7 +142,7 @@ void esc_init() {
         }
 
         LOG_I(
-            "%s initialized on pin %d.",
+            "%s initialized on pin %02d.",
             escs[i].name,
             escs[i].pin
         );
