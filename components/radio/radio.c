@@ -74,7 +74,7 @@ void radio_init() {
     }
 
     int64_t now = esp_timer_get_time();
-    for (uint8_t channel = 0; channel < NUMBER_OF_CHANNELS; channel++) {
+    for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {
         gpio_config_t pin_config = {
             .pin_bit_mask   = (1ULL << radio_receiver.pins[channel]),
             .mode           = GPIO_MODE_INPUT,
@@ -126,9 +126,9 @@ void radio_init() {
     radio_receiver.status = RADIO_DISCONNECTED;
 }
 
-void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]) {
+void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS]) {
     portDISABLE_INTERRUPTS();
-    for (uint8_t channel = 0; channel < NUMBER_OF_CHANNELS; channel++) {
+    for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {
         pwms[channel] = radio_receiver.pwms[channel];
     }
     portENABLE_INTERRUPTS();
@@ -160,10 +160,10 @@ radio_status_t radio_status() {
     int64_t now = esp_timer_get_time();
 
     bool steering_dead = (
-        now - radio_receiver.last_times_us[CHANNEL_STEERING]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_STEERING]
     ) > RADIO_TIMEOUT_US;
     bool throttle_dead = (
-        now - radio_receiver.last_times_us[CHANNEL_THROTTLE]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_THROTTLE]
     ) > RADIO_TIMEOUT_US;
     portENABLE_INTERRUPTS();
 

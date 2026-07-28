@@ -17,26 +17,26 @@
  *
  * Available values are:
  *
- * - `CHANNEL_STEERING`
+ * - `RADIO_CHANNEL_STEERING`
  *
- * - `CHANNEL_THROTTLE`
+ * - `RADIO_CHANNEL_THROTTLE`
  *
- * - `CHANNEL_BUTTON`
+ * - `RADIO_CHANNEL_BUTTON`
  *
- * - `CHANNEL_4`
+ * - `RADIO_CHANNEL_4`
  *
- * - `CHANNEL_5`
+ * - `RADIO_CHANNEL_5`
  *
- * - `CHANNEL_6`
+ * - `RADIO_CHANNEL_6`
  */
 typedef enum radio_channel {
-    CHANNEL_STEERING = 0,
-    CHANNEL_THROTTLE,
-    CHANNEL_BUTTON,
-    CHANNEL_4,
-    CHANNEL_5,
-    CHANNEL_6,
-    NUMBER_OF_CHANNELS
+    RADIO_CHANNEL_STEERING = 0,
+    RADIO_CHANNEL_THROTTLE,
+    RADIO_CHANNEL_BUTTON,
+    RADIO_CHANNEL_4,
+    RADIO_CHANNEL_5,
+    RADIO_CHANNEL_6,
+    NUMBER_OF_RADIO_CHANNELS
 } radio_channel_t;
 
 /**
@@ -61,10 +61,10 @@ typedef struct radio {
     const char *name;
     radio_status_t status;
     const char *status_names[NUMBER_OF_RADIO_STATUS];
-    pin_t pins[NUMBER_OF_CHANNELS];
-    pwm_norm_t pwms[NUMBER_OF_CHANNELS];
-    int64_t rise_times_us[NUMBER_OF_CHANNELS];
-    int64_t last_times_us[NUMBER_OF_CHANNELS];
+    pin_t pins[NUMBER_OF_RADIO_CHANNELS];
+    pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS];
+    int64_t rise_times_us[NUMBER_OF_RADIO_CHANNELS];
+    int64_t last_times_us[NUMBER_OF_RADIO_CHANNELS];
 } radio_t;
 
 #define RADIO_TIMEOUT_US 25000
@@ -98,7 +98,7 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
  * @note
  * Interruptions briefly disabled while copying values.
  */
-void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_CHANNELS]);
+void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS]);
 
 /**
  * @brief Returns the Radio Receiver status name as a null-terminated string.
