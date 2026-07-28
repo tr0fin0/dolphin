@@ -12,5 +12,11 @@ idf_component_register(
     INCLUDE_DIRS
         "include"
         "states/include"
-    REQUIRES config esc led logging pwm radio
+    REQUIRES
+        config
+        esc
+        led
+        logging
+        pwm
+        radio
 )

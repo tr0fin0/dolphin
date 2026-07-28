@@ -33,7 +33,7 @@ static volatile radio_t radio_receiver = {
  * It measures the high-level pulse width in microseconds of a PWM signal
  * using edge timing.
  *
- * @param arg  Radio Receiver channel encoded as void*.
+ * @param arg Radio Receiver channel encoded as void*.
  *
  * @note
  * GPIO level is read with direct ESP32 register access `REG_READ(GPIO_IN_REG)`
@@ -47,9 +47,9 @@ static void IRAM_ATTR radio_isr(void *arg) {
     ) & 0x1;
 
     int64_t now = esp_timer_get_time();
-    if (level) { // rising edge
+    if (level) { // rising  edge
         radio_receiver.rise_times_us[channel] = now;
-    } else { // falling edge
+    } else {     // falling edge
         if (radio_receiver.rise_times_us[channel] != 0) {
             pwm_t pwm = (pwm_t) (now - radio_receiver.rise_times_us[channel]);
 

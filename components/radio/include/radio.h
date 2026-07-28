@@ -79,7 +79,7 @@ typedef struct radio {
 void radio_init(void);
 
 /**
- * @brief Return latest measure pulse width in microseconds from channel.
+ * @brief Return latest measured pulse width in microseconds from channel.
  *
  * @param channel Radio Receiver channel.
  *
