@@ -1,5 +1,4 @@
 #include "colors.h"
-#include "config.h"
 #include "esc.h"
 #include "fsm.h"
 #include "led.h"
