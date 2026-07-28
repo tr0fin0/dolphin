@@ -22,7 +22,7 @@ typedef struct esc_config {
 } esc_config_t;
 
 /**
- * @brief ESCs on the project.
+ * @brief ESCs positions.
  *
  * Available values are:
  *
@@ -52,7 +52,7 @@ void esc_init(void);
  *
  * PWM pulse normalized via `pwm_normalize()` to ensure safe ESC limits.
  *
- * @param esc ESC on the project.
+ * @param esc ESC position.
  * @param pwm PWM pulse width in microseconds.
  */
 void esc_set_pwm(esc_t esc, pwm_t pwm);
@@ -82,6 +82,6 @@ void esc_set_pwm_mix_neutral();
 /**
  * @brief Set PWM pulse width to `PWM_NEUTRAL_US` for a ESC.
  *
- * @param esc ESC on the project.
+ * @param esc ESC position.
  */
 void esc_set_pwm_neutral(esc_t esc);
