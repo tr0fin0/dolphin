@@ -178,7 +178,7 @@ void esc_set_pwm(esc_t esc, pwm_t pwm) {
         return;
     }
 
-    LOG_V("%s duty cycle set to %d us.", escs[esc].name, pwm_norm);
+    LOG_V("%s PWM set to %d us.", escs[esc].name, pwm_norm);
 }
 
 void esc_set_pwm_mix(pwm_norm_t pwms[NUMBER_OF_ESCS]) {
