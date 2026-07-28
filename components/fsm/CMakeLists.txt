@@ -13,6 +13,7 @@ idf_component_register(
         "include"
         "states/include"
     REQUIRES
+        config
         esc
         led
         logging
