@@ -40,7 +40,7 @@ static volatile radio_t radio_receiver = {
  * providing faster and ISR-safe input sampling.
  */
 static void IRAM_ATTR radio_isr(void *arg) {
-    radio_channel_t channel = (uint8_t) (uintptr_t) arg; // portable cast
+    radio_channel_t channel = (radio_channel_t) (uintptr_t) arg;
 
     uint32_t level = (
         REG_READ(GPIO_IN1_REG) >> (radio_receiver.pins[channel] - 32)
