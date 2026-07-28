@@ -1,5 +1,4 @@
 #include "colors.h"
-#include "config.h"
 #include "esc.h"
 #include "fsm.h"
 #include "led.h"
@@ -96,7 +95,7 @@ void fsm_init(void) {
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
     if (current_state == new_state || new_state >= NUMBER_OF_STATES) {
-        LOG_W("unknown state %d", new_state);
+        LOG_W("unknown state %02d", new_state);
 
         return;
     }
@@ -139,7 +138,7 @@ void fsm_step(void) {
 
 const char *fsm_get_state_name(fsm_state_t state) {
     if (fsm_table[state].name == NULL) {
-        LOG_E("no name for %d", state);
+        LOG_E("no name for %02d", state);
 
         return "UNKNOWN";
     }

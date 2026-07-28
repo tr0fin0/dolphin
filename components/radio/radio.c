@@ -40,7 +40,7 @@ static volatile radio_t radio_receiver = {
  * providing faster and ISR-safe input sampling.
  */
 static void IRAM_ATTR radio_isr(void *arg) {
-    radio_channel_t channel = (uint8_t) (uintptr_t) arg; // portable cast
+    radio_channel_t channel = (radio_channel_t) (uintptr_t) arg;
 
     uint32_t level = (
         REG_READ(GPIO_IN1_REG) >> (radio_receiver.pins[channel] - 32)
@@ -63,7 +63,7 @@ void radio_init() {
     esp_err_t ret;
 
     ret = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    if (ret != ESP_OK) {
+    if (ret != (ESP_OK | ESP_ERR_INVALID_STATE)) {
         LOG_E(
             "%s ISR install service failed with error %s.",
             radio_receiver.name,
@@ -86,9 +86,9 @@ void radio_init() {
         ret = gpio_config(&pin_config);
         if (ret != ESP_OK) {
             LOG_E(
-                "%s channel %d GPIO configuration failed with error %s.",
+                "%s channel %01d GPIO configuration failed with error %s.",
                 radio_receiver.name,
-                radio_receiver.pins[channel],
+                channel,
                 esp_err_to_name(ret)
             );
 
@@ -102,9 +102,9 @@ void radio_init() {
         );
         if (ret != ESP_OK) {
             LOG_E(
-                "%s channel %d ISR handler addition failed with error %s.",
+                "%s channel %01d ISR handler addition failed with error %s.",
                 radio_receiver.name,
-                radio_receiver.pins[channel],
+                channel,
                 esp_err_to_name(ret)
             );
 
@@ -116,7 +116,7 @@ void radio_init() {
         radio_receiver.last_times_us[channel] = now;
 
         LOG_I(
-            "%s channel %d initialized on pin %d.",
+            "%s channel %01d initialized on pin %02d.",
             radio_receiver.name,
             channel,
             radio_receiver.pins[channel]
@@ -142,7 +142,7 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
     portENABLE_INTERRUPTS();
 
     LOG_V(
-        "%s channel %d: %d.",
+        "%s channel %01d PWM is %04d us.",
         radio_receiver.name,
         channel,
         radio_receiver.pwms[channel]

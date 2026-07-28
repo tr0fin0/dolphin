@@ -41,7 +41,9 @@ static void led_refresh(void) {
         );
         if (ret != ESP_OK) {
             LOG_E(
-                "LED %d refresh failed with error %s.", i, esp_err_to_name(ret)
+                "LED %02d refresh failed with error %s.",
+                i,
+                esp_err_to_name(ret)
             );
         };
     };
@@ -88,7 +90,7 @@ void led_init(void) {
         LOG_E("LED clear failed with error %s.", esp_err_to_name(ret));
     };
 
-    LOG_I("%d LEDs initialized on pin %d.", NUMBER_OF_LEDS, leds.pin);
+    LOG_I("%02d LEDs initialized on pin %d.", NUMBER_OF_LEDS, leds.pin);
 }
 
 void led_set_brightness(led_t led, led_brightness_t brightness) {
