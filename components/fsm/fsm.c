@@ -50,7 +50,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_MANUAL] = {
         .name       = "MANUAL",
-        .color      = LED_COLOR_GREEN,
+        .color      = LED_COLOR_RED,
         .on_entry   = NULL,
         .on_run     = manual_run,
         .on_exit    = manual_exit
@@ -64,7 +64,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_SAFE] = {
         .name       = "SAFE",
-        .color      = LED_COLOR_RED,
+        .color      = LED_COLOR_GREEN,
         .on_entry   = safe_entry,
         .on_run     = safe_run,
         .on_exit    = NULL
