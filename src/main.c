@@ -4,7 +4,7 @@
 #include "freertos/FreeRTOS.h"
 
 void app_main(void) {
-    log_init_async();
+    logging_init_async();
 
     fsm_init();
     led_init();
