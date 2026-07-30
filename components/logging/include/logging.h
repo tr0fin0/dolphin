@@ -10,8 +10,10 @@
 
 #include "esp_log.h"
 
-#define LOG_BUFFER_SIZE     256
-#define LOG_MESSAGE_SIZE    4096
+#define LOGGING_BUFFER_SIZE      256
+#define LOGGING_MESSAGE_SIZE    4096
+#define LOGGING_TASK_CORE_ID       0
+#define LOGGING_TASK_PRIORITY      1
 
 #if (LOG_DEFAULT_LEVEL <= LOG_DEFAULT_LEVEL_ERROR)
 /**
@@ -69,4 +71,4 @@
  * Routes all logging calls through a message buffer to a dedicated task on
  * Core 0.
  */
-void log_init_async(void);
+void logging_init_async(void);
