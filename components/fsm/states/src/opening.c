@@ -12,7 +12,7 @@ static pwm_norm_t button_us = 0;
 uint8_t opening_step = 0;
 
 void opening_entry(void) {
-    button_us = radio_read_channel(CHANNEL_BUTTON);
+    button_us = radio_read_channel(RADIO_CHANNEL_BUTTON);
 }
 
 void opening_run(void) {
@@ -22,31 +22,31 @@ void opening_run(void) {
         return;
     }
 
-    pwm_norm_t pulses_us[NUMBER_OF_CHANNELS];
+    pwm_norm_t pulses_us[NUMBER_OF_RADIO_CHANNELS];
     radio_read_channels(pulses_us);
 
     // ensure initial button value is not PWM_NEUTRAL_US
     if (
         button_us == PWM_NEUTRAL_US &&
-        pulses_us[CHANNEL_BUTTON] != PWM_NEUTRAL_US
+        pulses_us[RADIO_CHANNEL_BUTTON] != PWM_NEUTRAL_US
     ) {
-        button_us = pulses_us[CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
     }
 
     if (
         opening_step < OPENING_ITERATIONS &&
-        button_us != pulses_us[CHANNEL_BUTTON]
+        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
     ) {
         // opening selection
-        button_us = pulses_us[CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
 
         uint8_t increase;
         if (
-            pulses_us[CHANNEL_THROTTLE] > (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
+            pulses_us[RADIO_CHANNEL_THROTTLE] > (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
         ) {
             increase = 2;
         } else if (
-            pulses_us[CHANNEL_THROTTLE] < (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+            pulses_us[RADIO_CHANNEL_THROTTLE] < (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
         ) {
             increase = 1;
         } else {
@@ -60,10 +60,10 @@ void opening_run(void) {
         opening_step++;
     } else if (
         opening_step == OPENING_ITERATIONS &&
-        button_us != pulses_us[CHANNEL_BUTTON]
+        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
     ) {
         // opening execution
-        button_us = pulses_us[CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
         LOG_W("running opening strategy %d", opening_strategy);
 
         switch (opening_strategy) {
