@@ -139,6 +139,7 @@ static void opening_release(void) {
  * @brief Opening strategy execution.
  */
 static void opening_execution(void) {
+    fsm_transition(STATE_MANUAL);
 
 }
 
