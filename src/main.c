@@ -2,16 +2,19 @@
 #include "led.h"
 #include "logging.h"
 #include "freertos/FreeRTOS.h"
+#include "odometry.h"
 
 void app_main(void) {
     logging_init_async();
 
-    fsm_init();
+    odometry_init();
     led_init();
+    fsm_init();
 
     while (1) {
-        fsm_step();
+        odometry_step();
         led_step();
+        fsm_step();
 
         vTaskDelay(1);
     }

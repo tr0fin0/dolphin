@@ -26,3 +26,5 @@ typedef enum config_control_mode {
 
 #define CONFIG_PROJECT_NAME     "dolphin"
 
+#define CONFIG_WHEELBASE_M      0.1400f
+#define CONFIG_WHEEL_RADIUS_M   0.0225f
