@@ -1,18 +1,149 @@
-#include "config.h"
-#include "esc.h"
 #include "fsm.h"
 #include "logging.h"
 #include "opening.h"
-#include "pwm.h"
 #include "radio.h"
 
-static opening_t opening_strategy;
-static pwm_norm_t button_us = 0;
+static opening_code_t opening_code;
 
-uint8_t opening_step = 0;
+static opening_config_t openings[NUMBER_OF_OPENINGS] = {
+    [OPENING_STATIC] = {
+        .name       = "STATIC",
+        .code       = 222,
+        .waypoints  = {
+            +0.0, +0.0, DEG2RAD(0),    0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_DRAW] = {
+        .name       = "DRAW",
+        .code       = 221,
+        .waypoints  = {
+            +0.0, +0.0, DEG2RAD(180),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_NE] = {
+        .name       = "NORTH-EAST",
+        .code       = 331,
+        .waypoints  = {
+            +0.6, +0.6, DEG2RAD(-45),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_NN] = {
+        .name       = "NORTH-NORTH",
+        .code       = 232,
+        .waypoints  = {
+            +0.0, +0.6, DEG2RAD(0),    0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_NW] = {
+        .name       = "NORTH-WEST",
+        .code       = 133,
+        .waypoints  = {
+            -0.6, +0.6, DEG2RAD(+45),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_SEN] = {
+        .name       = "SOUTH-EAST-NEUTRAL",
+        .code       = 312,
+        .waypoints  = {
+            +0.6, -0.6, DEG2RAD(-45),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_SE] = {
+        .name       = "SOUTH-EAST",
+        .code       = 313,
+        .waypoints  = {
+            +0.6, -0.6, DEG2RAD(+90),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_SS] = {
+        .name       = "SOUTH-SOUTH",
+        .code       = 212,
+        .waypoints  = {
+            +0.0, -0.6, DEG2RAD(0),    0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_SW] = {
+        .name       = "SOUTH-WEST",
+        .code       = 111,
+        .waypoints  = {
+            -0.6, -0.6, DEG2RAD(-90),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    },
+    [OPENING_SWN] = {
+        .name       = "SOUTH-WEST-NEUTRAL",
+        .code       = 112,
+        .waypoints  = {
+            -0.6, -0.6, DEG2RAD(+90),  0.05, DEG2RAD(+90), 0.05, DEG2RAD(+5)
+        }
+    }
+};
+
+static pwm_norm_t last_button;
+
+opening_step_t opening_step = 0;
+opening_t opening_strategy  = OPENING_STATIC;
+
+/**
+ * @brief Opening strategy selection depending on radio receiver model.
+ *
+ * Available radio receiver models are:
+ *
+ * - `FS-GT2`: iterative measures of a single radio receiver channel.
+ */
+static void opening_selection(void) {
+    pwm_norm_t current_button   = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    pwm_norm_t current_throttle = radio_read_channel(RADIO_CHANNEL_THROTTLE);
+
+    // ensure initial button value is not PWM_NEUTRAL_US
+    if (last_button == PWM_NEUTRAL_US && current_button != PWM_NEUTRAL_US) {
+        last_button = current_button;
+    }
+
+    // opening selection via sequential throttle value measures
+    if (last_button != current_button) {
+        opening_step++;
+        last_button = current_button;
+        led_set_toggle(LED_STATE, 100);
+
+        uint8_t increase = 2;
+        if (current_throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) increase = 3;
+        if (current_throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) increase = 1;
+
+        opening_code = (opening_code_t) (10 * opening_code + increase);
+        LOG_I("opening strategy code is %d", opening_code);
+    }
+}
+
+/**
+ * @brief Opening strategy wait release command from radio receiver.
+ *
+ * Opening strategy is executed upon user confirmation.
+ */
+static void opening_release(void) {
+    pwm_norm_t current_button = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    if (last_button != current_button) {
+        opening_step++;
+
+        for (uint8_t i = 0; i < NUMBER_OF_OPENINGS; i++) {
+            if (opening_code == openings[i].code) {
+                opening_strategy = (opening_t) i;
+                LOG_I("opening strategy selected is %s", openings[i].name);
+
+                break;
+            }
+        }
+    }
+}
+
+/**
+ * @brief Opening strategy execution.
+ */
+static void opening_execution(void) {
+
+}
 
 void opening_entry(void) {
-    button_us = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    last_button  = radio_read_channel(RADIO_CHANNEL_BUTTON);
 }
 
 void opening_run(void) {
@@ -22,215 +153,11 @@ void opening_run(void) {
         return;
     }
 
-    pwm_norm_t pulses_us[NUMBER_OF_RADIO_CHANNELS];
-    radio_read_channels(pulses_us);
-
-    // ensure initial button value is not PWM_NEUTRAL_US
-    if (
-        button_us == PWM_NEUTRAL_US &&
-        pulses_us[RADIO_CHANNEL_BUTTON] != PWM_NEUTRAL_US
-    ) {
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
-    }
-
-    if (
-        opening_step < OPENING_ITERATIONS &&
-        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
-    ) {
-        // opening selection
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
-
-        uint8_t increase;
-        if (
-            pulses_us[RADIO_CHANNEL_THROTTLE] > (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
-        ) {
-            increase = 2;
-        } else if (
-            pulses_us[RADIO_CHANNEL_THROTTLE] < (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
-        ) {
-            increase = 1;
-        } else {
-            increase = 0;
-        }
-
-        opening_strategy = (opening_t)(10 * opening_strategy + increase);
-        LOG_W("current opening strategy is %d", opening_strategy);
-
-        led_set_toggle(LED_STATE, 100);
-        opening_step++;
-    } else if (
-        opening_step == OPENING_ITERATIONS &&
-        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
-    ) {
-        // opening execution
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
-        LOG_W("running opening strategy %d", opening_strategy);
-
-        switch (opening_strategy) {
-            case OPENING_STATIC:
-                break;
-
-            case OPENING_DRAW:
-                // rotation     +180
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(80);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_NE:
-                // rotation     +045
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(25);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  +50
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(140);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // rotation     -090
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(65);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_NN:
-                // translation  +50
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(140);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_NW:
-                // rotation     -045
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(25);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  +50
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(140);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // rotation     +090
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(65);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_SE:
-                // rotation     -045
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(30);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  -50
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(120);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // rotation     +090
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(60);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_SEN:
-                // rotation     -045
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(30);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  -50
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(120);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_SS:
-                // translation  -50
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(120);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_SW:
-                // rotation     +045
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(30);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  -50
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(120);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // rotation     -090
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(-90), ESC_R);
-                // // delay(60);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-
-            case OPENING_SWN:
-                // rotation     +045
-                // esc_set_pwm(pwm_percentage(+90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(20);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                // translation  -50
-                // esc_set_pwm(pwm_percentage(-90), ESC_L);
-                // esc_set_pwm(pwm_percentage(+90), ESC_R);
-                // // delay(120);
-                // esc_set_pwm_mix_neutral();
-                // // delay(1);
-
-                break;
-        }
-
-        fsm_transition(STATE_MANUAL);
+    if (opening_step < OPENING_ITERATIONS) {
+        opening_selection();
+    } else if (opening_step == OPENING_ITERATIONS) {
+        opening_release();
+    } else {
+        opening_execution();
     }
 }

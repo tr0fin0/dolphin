@@ -9,11 +9,34 @@
 
 #pragma once
 
+#include "odometry.h"
+
 /**
- * @brief Defines quantity of iterations required to select the opening strategy
- * in the Radio Controlled mode.
+ * @brief Opening 3 digit code.
+ *
+ * @note Possible individual digit values are:
+ *
+ * - `3` if radio receiver channel is `> (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2`.
+ *
+ * - `1` if radio receiver channel is `< (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2`.
+ *
+ * - `2` if radio receiver channel is not in the previous intervals.
  */
-#define OPENING_ITERATIONS 3
+typedef uint16_t opening_code_t;
+
+/**
+ * @brief Opening interation step.
+ */
+typedef uint8_t opening_step_t;
+
+/**
+ * @brief
+ */
+typedef struct opening_config {
+    const char *name;
+    const opening_code_t code;
+    odometry_waypoint_t waypoints;
+} opening_config_t;
 
 /**
  * @brief Radio Controlled possible opening moves.
@@ -21,24 +44,51 @@
  * Each digit from left to right represents the measure throttle value at the
  * respective iteration.
  *
- * @note Omitted digits should be considered as `0`.
+ * Available values are:
  *
- * @example An opening strategy of value `210` is obtained by having a throttle
- * channel value of `2` in the first measure, `1` in the second measure and `0`
+ * - `OPENING_STATIC`
+ *
+ * - `OPENING_DRAW`
+ *
+ * - `OPENING_NE`
+ *
+ * - `OPENING_NN`
+ *
+ * - `OPENING_NW`
+ *
+ * - `OPENING_SEN`
+ *
+ * - `OPENING_SE`
+ *
+ * - `OPENING_SS`
+ *
+ * - `OPENING_SW`
+ *
+ * - `OPENING_SWN`
+ *
+ * @example An opening strategy of value 321` is obtained by having a throttle
+ * channel value of `3` in the first measure, `2` in the second measure and `1`
  * in the third measure.
  */
-typedef enum {
-    OPENING_STATIC =   0, /** Remains in the initial position and rotation. */
-    OPENING_DRAW   =   1, /** Remains in the initial position and rotate 180 degrees. */
-    OPENING_NE     = 221, /** From the initial position goes to north-east. */
-    OPENING_NN     = 20,  /** From the initial position goes to north. */
-    OPENING_NW     = 122, /** From the initial position goes to north-west. */
-    OPENING_SEN    = 210, /** From the initial position goes to south-east with neutral rotation. */
-    OPENING_SE     = 212, /** From the initial position goes to south-east. */
-    OPENING_SS     =  10, /** From the initial position goes to south. */
-    OPENING_SW     = 111, /** From the initial position goes to south-west. */
-    OPENING_SWN    = 110, /** From the initial position goes to south-west with neutral rotation. */
+typedef enum opening {
+    OPENING_STATIC = 0, /** 222: Remains in the initial position and rotation. */
+    OPENING_DRAW,       /** 221: Remains in the initial position and rotate 180 degrees. */
+    OPENING_NE,         /** 331: Goes to north-east. */
+    OPENING_NN,         /** 232: Goes to north. */
+    OPENING_NW,         /** 133: Goes to north-west. */
+    OPENING_SEN,        /** 312: Goes to south-east with neutral rotation. */
+    OPENING_SE,         /** 313: Goes to south-east. */
+    OPENING_SS,         /** 212: Goes to south. */
+    OPENING_SW,         /** 111: Goes to south-west. */
+    OPENING_SWN,        /** 112: Goes to south-west with neutral rotation. */
+    NUMBER_OF_OPENINGS
 } opening_t;
+
+/**
+ * @brief Defines quantity of iterations required to select the opening strategy
+ * in the Radio Controlled mode.
+ */
+#define OPENING_ITERATIONS 3
 
 /**
  * @brief Entry handler for `STATE_OPENING`.
@@ -53,12 +103,5 @@ void opening_entry(void);
  *
  * While Radio Controller is connected, 3 sequential reads of the throttle
  * channel are used to determine the opening move.
- *
- * @note
- * - `2` if throttle is more than `PWM_PERCENTAGE_P50`.
- *
- * - `0` if throttle is between `PWM_PERCENTAGE_M50` and `PWM_PERCENTAGE_P50`.
- *
- * - `1` if throttle is less than `PWM_PERCENTAGE_M50`.
  */
 void opening_run(void);
