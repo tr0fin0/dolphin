@@ -1,4 +1,4 @@
-name: Hardware CI for KiCad
+name: KiCAD CI
 
 
 on:
@@ -35,14 +35,14 @@ jobs:
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
 
-          symbol_libraries: "symbol-library=hardware/library/symbols/dolphin.kicad_sym"
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
           schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
           run_erc: true
 
           schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}_sch.pdf"
           schematic_output_pdf: true
 
-          footprint_libraries: "footprint-library=hardware/library/footprints"
+          footprint_libraries: "dolphin=hardware/library/footprints"
           pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
           run_drc: true
 
@@ -60,6 +60,13 @@ jobs:
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
+      - name: ERC Report on Failure
+        if: failure()
+        run: |
+          if [ -f erc.rpt ]; then
+            cat erc.rpt
+          fi
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
@@ -68,8 +75,6 @@ jobs:
             hardware/projects/${{ matrix.project }}/*.pdf
             hardware/projects/${{ matrix.project }}/*.png
             hardware/projects/${{ matrix.project }}/*.step
-
-
 
   auto-commit:
     name: Auto Commit Modified Files
