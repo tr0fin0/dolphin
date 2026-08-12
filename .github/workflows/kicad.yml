@@ -30,7 +30,7 @@ jobs:
         with:
           persist-credentials: true
 
-      - name: Verify KiCAD for ${{ matrix.project }}
+      - name: Verify ${{ matrix.project }} Project
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
@@ -61,6 +61,7 @@ jobs:
           pcb_output_image: true
 
       - name: ERC Report
+        if: always()
         run: |
           if [ -f erc.rpt ]; then
             cat erc.rpt
