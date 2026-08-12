@@ -3135,6 +3135,7 @@
 		(layer "B.Cu")
 		(uuid "23650985-c10a-457f-b363-5daf0360a984")
 		(at 185.7 93.2 180)
+		(descr "Equipe Paralela 5mm logo")
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "B.SilkS")
@@ -3591,6 +3592,7 @@
 		(layer "B.Cu")
 		(uuid "3ce0864e-680f-4b88-be0b-ce0eb44f25ec")
 		(at 174.5 92.5 180)
+		(descr "Equipe Paralela 10mm mascot")
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "B.SilkS")

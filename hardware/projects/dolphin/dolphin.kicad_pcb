@@ -531,7 +531,7 @@
 			(uuid "6e6961d0-2187-4733-8f70-f6e1223603c5")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -958,7 +958,7 @@
 			(uuid "021b34c2-c5c6-4138-8148-781cdfda329a")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B4B-ZR_1x04_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B4B-ZR_1x04_P1.50mm_Vertical.step"
 			(offset
 				(xyz 2.25 1.5 4.5)
 			)
@@ -4649,7 +4649,7 @@
 			(uuid "4c75ab5a-4da0-4ffc-a47b-3831de310efc")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -5025,7 +5025,7 @@
 			(uuid "644fd671-4a08-4688-9960-a08b94e5bb3e")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -5777,7 +5777,7 @@
 			(uuid "fecacc39-19bb-4d99-a592-95194339d75a")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -7068,7 +7068,7 @@
 			(uuid "7f54b373-e89c-4114-af79-2ca203936bec")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -8853,7 +8853,7 @@
 			(uuid "05b290fe-ab61-4f61-8c0e-964d2cc10477")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -9703,7 +9703,7 @@
 			(uuid "772c6530-bafe-497c-9e42-9cdfac925af4")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -11331,7 +11331,7 @@
 			(uuid "e59f326e-57cc-40e5-bc7c-b92c9e8eb480")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -12728,7 +12728,7 @@
 			(uuid "66ef8b3f-50e6-4020-87cc-ed5b5e2f0e5a")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -14842,7 +14842,7 @@
 			(uuid "28ba2a07-b713-4696-b025-4df11fddbd06")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -15218,7 +15218,7 @@
 			(uuid "98a2eb42-b42d-4812-b09e-fc09af904c00")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -15595,7 +15595,7 @@
 			(uuid "5bf9dea8-d6e4-43bd-bb1b-f44a3ed9461c")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -15881,7 +15881,7 @@
 			(uuid "6466fdf1-b0e6-4af7-8c55-7ab3c2afdb9e")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_USB-C.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_USB-C.step"
 			(offset
 				(xyz 4.5 0 2.35)
 			)
@@ -19599,7 +19599,7 @@
 			(uuid "b9ad9eeb-41d6-41a7-8915-95c7866d3f8c")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Receiver_FS-iA6.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Receiver_FS-iA6.step"
 			(offset
 				(xyz -14.58 0.55 6.254)
 			)
@@ -20041,7 +20041,7 @@
 			(uuid "20b696aa-5201-4422-a521-6ceebe2915fb")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -20936,11 +20936,10 @@
 			(pinfunction "GND_4")
 			(pintype "power_in")
 			(solder_mask_margin 0.102)
-			(zone_connect 2)
 			(uuid "022216fc-9c7d-41db-aa1a-dfb05d0da5b8")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -21692,7 +21691,7 @@
 			(uuid "ef085c51-8309-4749-9464-83c3791e6b4c")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -22565,7 +22564,7 @@
 			(uuid "573b24af-00b5-41a7-bca7-24808cbf51b3")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -23276,7 +23275,7 @@
 			(uuid "681efdb7-b7a0-4d73-8281-62c4fbedd174")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -23590,7 +23589,7 @@
 			(uuid "54cfee87-e2af-4888-8f7c-e3a6a20a5a36")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Regulator_DC-DC_MINI-360.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Regulator_DC-DC_MINI-360.step"
 			(offset
 				(xyz 0 0.65 -16)
 			)
@@ -24465,7 +24464,7 @@
 			(uuid "9d10c4ef-9f5d-4898-93bf-342b3618e718")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -24848,7 +24847,7 @@
 			(uuid "0c3f3f9e-54be-4141-8c30-73bc0771edfe")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -25118,7 +25117,7 @@
 			(uuid "86fb599c-b62d-4f0d-b68e-6b02ad51e22a")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -26241,7 +26240,7 @@
 			(uuid "bdcbe793-29a5-4c7c-8977-236668f66713")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -26624,7 +26623,7 @@
 			(uuid "de8579ab-e088-459c-a67a-1d234cb2e376")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -27007,7 +27006,7 @@
 			(uuid "e4cd616a-7dd3-4da8-9e1b-017cca9ae74e")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
@@ -27817,7 +27816,7 @@
 			(uuid "a34c67df-b653-4497-9ba8-268b60e9fdce")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -29377,7 +29376,7 @@
 			(uuid "73ff4dd1-33a3-4777-b914-399fba03590a")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -29811,7 +29810,7 @@
 			(uuid "d6babe3e-498c-4b00-a3f9-f639124948d4")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/LED_WS2812B-4020.step"
+		(model "${KIPRJMOD}/../../library/3d_models/LED_WS2812B-4020.step"
 			(offset
 				(xyz 0 -1 1)
 			)
@@ -30472,7 +30471,7 @@
 			(uuid "3e1df3ee-ef3c-4458-b160-e37069293fe0")
 		)
 		(embedded_fonts no)
-		(model "/home/guilherme-nunes-trofino/Documents/git/dolphin/hardware/library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
+		(model "${KIPRJMOD}/../../library/3d_models/Connector_JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.step"
 			(offset
 				(xyz 1.5 1.5 4.5)
 			)
