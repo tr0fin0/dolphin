@@ -1,4 +1,4 @@
-name: KiCAD CI
+name: Hardware CI for KiCad
 
 
 on:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   verify-hardware:
-    name: Verify KiCAD
+    name: Verify KiCAD ERC and DRC
     permissions:
       contents: read
     runs-on: ubuntu-latest
