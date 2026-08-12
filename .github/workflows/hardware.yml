@@ -1,0 +1,98 @@
+name: Hardware CI for KiCad
+
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "hardware/**"
+      - ".github/workflows/hardware.yml"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "hardware/**"
+      - ".github/workflows/hardware.yml"
+
+
+jobs:
+  verify-hardware:
+    name: Verify KiCAD ERC and DRC
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ['dolphin', 'encoder']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+        with:
+          persist-credentials: true
+
+      - name: Verify KiCAD for ${{ matrix.project }}
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+
+          symbol_libraries: "symbol-library=hardware/library/symbols/dolphin.kicad_sym"
+          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+          run_erc: true
+
+          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}_sch.pdf"
+          schematic_output_pdf: true
+
+          footprint_libraries: "footprint-library=hardware/library/footprints"
+          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
+          run_drc: true
+
+          pcb_output_step_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step"
+          pcb_output_step: true
+
+          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.png"
+          pcb_output_image_side: "top"
+          pcb_output_image_background: "transparent"
+          pcb_output_image_width: 1920
+          pcb_output_image_floor: false
+          pcb_output_image_perspective: false
+          pcb_output_image_zoom: 1.0
+          pcb_output_image_quality: "high"
+          pcb_output_image_rotate: "0,0,0"
+          pcb_output_image: true
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        with:
+          name: hardware-outputs-${{ matrix.project }}
+          path: |
+            hardware/projects/${{ matrix.project }}/*.pdf
+            hardware/projects/${{ matrix.project }}/*.png
+            hardware/projects/${{ matrix.project }}/*.step
+
+
+
+  auto-commit:
+    name: Auto Commit Modified Files
+    needs: verify-hardware
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          persist-credentials: true
+
+      - name: Download All Generated Artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
+        with:
+          pattern: hardware-outputs-*
+          merge-multiple: true
+
+      - name: Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d #v7.2.0
+        with:
+          commit_message: "chore(ci): update generated hardware files [skip ci]"
+          file_pattern: 'hardware/**/*.pdf hardware/**/*.png hardware/**/*.step'
