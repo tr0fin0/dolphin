@@ -28,6 +28,10 @@ repos:
   - id: check-merge-conflict
   - id: check-yaml
   - id: trailing-whitespace
+    exclude: |
+        (?x)^(
+            hardware/.*
+        )$
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
   rev: 0.37.4
