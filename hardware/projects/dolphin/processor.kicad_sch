@@ -4820,7 +4820,7 @@
 			(uuid "711e754e-796c-4a48-9773-9f647982d5b6")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR043")
 					(unit 1)
@@ -4900,7 +4900,7 @@
 			(uuid "4da1ae63-796a-4714-93c5-69e5ea988424")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR054")
 					(unit 1)
@@ -4985,7 +4985,7 @@
 			(uuid "a382cd09-80fb-4878-b278-10d348675c98")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "J7")
 					(unit 1)
@@ -5061,7 +5061,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#G4")
 					(unit 1)
@@ -5143,7 +5143,7 @@
 			(uuid "38bc16a6-33ef-4ae8-b152-c77f8ce8f4e9")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R26")
 					(unit 1)
@@ -5223,7 +5223,7 @@
 			(uuid "e96b73f5-de5b-4c32-ab1f-ab5869882eb5")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "C9")
 					(unit 1)
@@ -5301,7 +5301,7 @@
 			(uuid "bac2121f-fda4-4971-8d8d-c22e52f94c30")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "SW1")
 					(unit 1)
@@ -5379,7 +5379,7 @@
 			(uuid "c36dfbfb-5467-4265-8281-458ed5218e7f")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR051")
 					(unit 1)
@@ -5457,7 +5457,7 @@
 			(uuid "fd0e0938-afd0-40d1-9d54-ca932886e22c")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR049")
 					(unit 1)
@@ -5535,7 +5535,7 @@
 			(uuid "8c21eb34-0d2d-4a3e-8fa9-55f36e2ad4e2")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR042")
 					(unit 1)
@@ -5617,7 +5617,7 @@
 			(uuid "25b57d4a-3b57-4f82-9da0-3d3cb29cf97e")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R24")
 					(unit 1)
@@ -5699,7 +5699,7 @@
 			(uuid "052f53b0-039f-4b28-a3c7-f29b0acac312")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R23")
 					(unit 1)
@@ -5781,7 +5781,7 @@
 			(uuid "3a684098-6920-4c33-84ad-ef330abfa4ba")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "C10")
 					(unit 1)
@@ -5978,7 +5978,7 @@
 			(uuid "afa668df-d4cf-44a7-8ad2-b14fea805125")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "U4")
 					(unit 1)
@@ -6056,7 +6056,7 @@
 			(uuid "dafdfb3b-a187-44cd-aa20-87c5491d91fe")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR045")
 					(unit 1)
@@ -6132,7 +6132,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#SYM3")
 					(unit 1)
@@ -6214,7 +6214,7 @@
 			(uuid "d8655934-1740-4938-8ade-57cfbaf85f37")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R25")
 					(unit 1)
@@ -6293,7 +6293,7 @@
 			(uuid "a16cb9dd-969b-4576-906f-c82b4ab1ab53")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR053")
 					(unit 1)
@@ -6376,7 +6376,7 @@
 			(uuid "487f7b96-27ce-46a1-84da-21aa4283e421")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "J1")
 					(unit 1)
@@ -6454,7 +6454,7 @@
 			(uuid "02d6930b-578a-4c51-9782-a374fd9c3648")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR044")
 					(unit 1)
@@ -6539,7 +6539,7 @@
 			(uuid "5134efb7-b8c9-4f27-904f-e48d4584a4ce")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "J3")
 					(unit 1)
@@ -6621,7 +6621,7 @@
 			(uuid "024bc726-c0d9-40d7-95f8-579399721d6f")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R27")
 					(unit 1)
@@ -6701,7 +6701,7 @@
 			(uuid "ce167745-639f-4c03-a233-973f85fc1415")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR052")
 					(unit 1)
@@ -6823,7 +6823,7 @@
 			(uuid "446d309c-bb71-4a05-8e03-4745b8166f80")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "J4")
 					(unit 1)
@@ -6901,7 +6901,7 @@
 			(uuid "c5e60560-9a58-447d-8920-dba3d07468d4")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR055")
 					(unit 1)
@@ -6979,7 +6979,7 @@
 			(uuid "07557d74-52d1-4084-a6f1-550d053ef766")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "#PWR050")
 					(unit 1)
@@ -7061,7 +7061,7 @@
 			(uuid "0d687989-492f-4dc4-b100-06ceda7f8428")
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/2d64a635-0d43-4b25-9ace-c400679441ca"
 					(reference "R22")
 					(unit 1)

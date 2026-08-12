@@ -821,7 +821,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(reference "#SYM1")
 					(unit 1)
@@ -897,7 +897,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(reference "#G3")
 					(unit 1)
@@ -1014,7 +1014,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(page "3")
 				)
@@ -1220,7 +1220,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(page "2")
 				)
@@ -1286,7 +1286,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(page "4")
 				)
@@ -1342,7 +1342,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(page "6")
 				)
@@ -1448,7 +1448,7 @@
 			)
 		)
 		(instances
-			(project "dolphin_v2"
+			(project "dolphin"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
 					(page "5")
 				)

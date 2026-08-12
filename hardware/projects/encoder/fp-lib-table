@@ -1,4 +1,4 @@
 (fp_lib_table
 	(version 7)
-	(lib (name "dolphin") (type "KiCad") (uri "/home/guilherme-nunes-trofino/Documents/git/dolphin/kicad/library/dolphin.pretty") (options "") (descr ""))
+	(lib (name "dolphin") (type "KiCad") (uri "${KIPRJMOD}/../../library/footprints") (options "") (descr ""))
 )
