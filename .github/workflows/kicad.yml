@@ -34,17 +34,17 @@ jobs:
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
-
-          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
           schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
+
+          footprint_libraries: "dolphin=hardware/library/footprints"
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
+
           run_erc: true
+          run_drc: true
 
           schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}_sch.pdf"
           schematic_output_pdf: true
-
-          footprint_libraries: "dolphin=hardware/library/footprints"
-          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
-          run_drc: true
 
           pcb_output_step_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step"
           pcb_output_step: true
@@ -60,8 +60,7 @@ jobs:
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
-      - name: ERC Report on Failure
-        if: failure()
+      - name: ERC Report
         run: |
           if [ -f erc.rpt ]; then
             cat erc.rpt
