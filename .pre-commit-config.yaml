@@ -18,7 +18,8 @@ repos:
     exclude: |
       (?x)^(
           .*\.cjs|
-          .*\.json
+          .*\.json|
+          hardware/.*
       )$
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
