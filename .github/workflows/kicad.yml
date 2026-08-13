@@ -31,6 +31,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
+      - name: Verify KiCAD Environment
+        run: |
+          ls -d /usr/share/kicad/3dmodels
+          ls -d /usr/share/kicad/modules/packages3d
+          find /usr/share/kicad -name "Capacitor_SMD.3dshapes"
+
+
       - name: Verify ${{ matrix.project }}
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
