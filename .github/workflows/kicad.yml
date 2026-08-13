@@ -13,24 +13,24 @@ on:
       - "hardware/**"
       - ".github/workflows/hardware.yml"
 
+env:
+  PROJECTS: '["dolphin", "encoder"]'
 
 jobs:
-  verify-hardware:
+  verify-rules:
     name: Check KiCAD Rules
     permissions:
       contents: read
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ['dolphin', 'encoder']
+        project: ${{ fromJSON(env.PROJECTS) }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
-        with:
-          persist-credentials: true
 
-      - name: Verify Project ${{ matrix.project }}
+      - name: Verify ${{ matrix.project }}
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
@@ -49,17 +49,6 @@ jobs:
           pcb_output_step_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step"
           pcb_output_step: true
 
-          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}.png"
-          pcb_output_image_side: "top"
-          pcb_output_image_background: "transparent"
-          pcb_output_image_width: 1920
-          pcb_output_image_floor: false
-          pcb_output_image_perspective: false
-          pcb_output_image_zoom: "1.0"
-          pcb_output_image_quality: "high"
-          pcb_output_image_rotate: "0,0,0"
-          pcb_output_image: true
-
       - name: ERC Report
         if: always()
         run: |
@@ -77,15 +66,60 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
-          name: hardware-outputs-${{ matrix.project }}
+          name: artifacts-rules-${{ matrix.project }}
           path: |
-            hardware/projects/${{ matrix.project }}/*.pdf
-            hardware/projects/${{ matrix.project }}/*.step
-            hardware/projects/${{ matrix.project }}/images/*.png
+            hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf
+            hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step
+
+
+  export-images:
+    name: Export PCB Images
+    needs:
+      - verify-rules
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ${{ fromJSON(env.PROJECTS) }}
+        side: [ "top", "bottom" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+
+      - name: Export ${{ matrix.project }} ${{ matrix.side }}
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
+
+          footprint_libraries: "dolphin=hardware/library/footprints"
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
+
+          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_${{ matrix.side }}.png"
+          pcb_output_image_side: "${{ matrix.side }}"
+          pcb_output_image_background: "transparent"
+          pcb_output_image_width: 1920
+          pcb_output_image_floor: false
+          pcb_output_image_perspective: false
+          pcb_output_image_zoom: "1.0"
+          pcb_output_image_quality: "high"
+          pcb_output_image_rotate: "0,0,0"
+          pcb_output_image: true
+
+      - name: Upload Artifact PNG
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
+        with:
+          name: artifacts-images-${{ matrix.project }}-${{ matrix.side }}
+          path: hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_${{ matrix.side }}.png
+
 
   auto-commit:
     name: Auto Commit Modified Files
-    needs: verify-hardware
+    needs:
+      - export-images
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -100,8 +134,9 @@ jobs:
       - name: Download All Generated Artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c #v8.0.1
         with:
-          pattern: hardware-outputs-*
-          merge-multiple: false
+          pattern: "artifacts-*"
+          merge-multiple: true
+          path: .
 
       - name: Auto Commit
         uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d #v7.2.0
