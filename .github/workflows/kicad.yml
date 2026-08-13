@@ -13,8 +13,6 @@ on:
       - "hardware/**"
       - ".github/workflows/hardware.yml"
 
-env:
-  PROJECTS: '["dolphin", "encoder"]'
 
 jobs:
   verify-rules:
@@ -24,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ${{ fromJSON(env.PROJECTS) }}
+        project: ["dolphin", "encoder"]
 
     steps:
       - name: Checkout
@@ -81,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ${{ fromJSON(env.PROJECTS) }}
+        project: ["dolphin", "encoder"]
         side: [ "top", "bottom" ]
 
     steps:
