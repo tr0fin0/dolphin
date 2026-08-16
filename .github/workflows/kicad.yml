@@ -25,18 +25,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ["dolphin", "encoder"]
+        project: [ "dolphin", "encoder" ]
 
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
 
+      - name: Install KiCad 3D Models
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends kicad-packages3d
+
       - name: Verify KiCAD Environment
         run: |
-          ls -d /usr/share/kicad/3dmodels
-          ls -d /usr/share/kicad/modules/packages3d
-          find /usr/share/kicad -name "Capacitor_SMD.3dshapes"
-
+          if [ -d "/usr/share/kicad/3dmodels" ]; then
+            echo "/usr/share/kicad/3dmodels installed"
+          else
+            echo "/usr/share/kicad/3dmodels not found"
+          fi
 
       - name: Verify ${{ matrix.project }}
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
@@ -81,7 +87,7 @@ jobs:
 
 
   export-images:
-    name: Export PCB Image
+    name: Export PCB Images
     needs:
       - verify-rules
     permissions:
@@ -89,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ["dolphin", "encoder"]
+        project: [ "dolphin", "encoder" ]
         side: [ "top", "bottom" ]
 
     steps:
