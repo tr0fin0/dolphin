@@ -18,8 +18,8 @@ env:
   KICAD10_3DMODEL_DIR: "./3dmodels"
 
 jobs:
-  verify-rules:
-    name: Verify ERC and DRC
+  verify-project:
+    name: Verify KiCAD Project
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -35,21 +35,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends kicad-packages3d
+          mv /usr/share/kicad/3dmodels ./3dmodels
 
-          if [ -d "/usr/share/kicad/3dmodels" ]; then
-            echo "/usr/share/kicad/3dmodels installed"
-          else
-            echo "/usr/share/kicad/3dmodels not found"
-          fi
-
-          cp -R /usr/share/kicad/3dmodels ./3dmodels
-          if [ -d "./3dmodels" ]; then
-            echo "./3dmodels copied"
-          else
-            echo "./3dmodels not copied"
-          fi
-
-      - name: Verify ${{ matrix.project }}'s ERC and DRC
+      - name: Verify Rules
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
@@ -62,11 +50,12 @@ jobs:
           run_erc: true
           run_drc: true
 
-          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
-          schematic_output_pdf: true
-
-          pcb_output_step_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step"
-          pcb_output_step: true
+      - name: DRC Report
+        if: always()
+        run: |
+          if [ -f drc.rpt ]; then
+            cat drc.rpt
+          fi
 
       - name: ERC Report
         if: always()
@@ -75,50 +64,39 @@ jobs:
             cat erc.rpt
           fi
 
-      - name: DRC Report
-        if: always()
-        run: |
-          if [ -f drc.rpt ]; then
-            cat drc.rpt
-          fi
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
-        with:
-          name: artifacts-${{ matrix.project }}-rules
-          path: |
-            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf
-            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step
-
-
-  export-images:
-    name: Export PCB Images
-    needs:
-      - verify-rules
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [ "dolphin", "encoder" ]
-        side: [ "top", "bottom" ]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
-
-      - name: Export ${{ matrix.project }} ${{ matrix.side }}
+      - name: Export SCH PDF
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
           schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
+
+          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
+          schematic_output_pdf: true
+
+
+      - name: Export PCB STEP
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
           pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
 
           footprint_libraries: "dolphin=hardware/library/footprints"
-          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
 
-          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_${{ matrix.side }}.png"
-          pcb_output_image_side: "${{ matrix.side }}"
+          pcb_output_step_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step"
+          pcb_output_step: true
+
+      - name: Export PCB Image Top
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
+
+          footprint_libraries: "dolphin=hardware/library/footprints"
+
+          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_top.png"
+          pcb_output_image_side: "top"
           pcb_output_image_background: "transparent"
           pcb_output_image_width: 1920
           pcb_output_image_floor: false
@@ -128,17 +106,39 @@ jobs:
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
-      - name: Upload Artifact PNG
+      - name: Export PCB Image Bottom
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+          pcb_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pcb"
+
+          footprint_libraries: "dolphin=hardware/library/footprints"
+
+          pcb_output_image_file_name: "hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_bottom.png"
+          pcb_output_image_side: "bottom"
+          pcb_output_image_background: "transparent"
+          pcb_output_image_width: 1920
+          pcb_output_image_floor: false
+          pcb_output_image_perspective: false
+          pcb_output_image_zoom: "1.0"
+          pcb_output_image_quality: "high"
+          pcb_output_image_rotate: "0,0,0"
+          pcb_output_image: true
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
-          name: artifacts-${{ matrix.project }}-images-${{ matrix.side }}
-          path: "**/hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_${{ matrix.side }}.png"
+          name: artifacts-${{ matrix.project }}
+          path: |
+            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf
+            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step
+            **/hardware/projects/${{ matrix.project }}/images/*.png
 
 
   auto-commit:
     name: Auto Commit Modified Files
     needs:
-      - export-images
+      - verify-project
     permissions:
       contents: write
     runs-on: ubuntu-latest
