@@ -6,20 +6,20 @@ on:
     branches: [ "main" ]
     paths:
       - "hardware/**"
-      - ".github/workflows/hardware.yml"
+      - ".github/workflows/kicad.yml"
   pull_request:
     branches: [ "main" ]
     paths:
       - "hardware/**"
-      - ".github/workflows/hardware.yml"
+      - ".github/workflows/kicad.yml"
 
 
 env:
-  KICAD10_3DMODEL_DIR: "/usr/share/kicad/3dmodels"
+  KICAD10_3DMODEL_DIR: "./3dmodels"
 
 jobs:
   verify-rules:
-    name: Check ERC and DRC
+    name: Verify ERC and DRC
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -36,15 +36,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends kicad-packages3d
 
-      - name: Verify KiCAD Environment
-        run: |
           if [ -d "/usr/share/kicad/3dmodels" ]; then
             echo "/usr/share/kicad/3dmodels installed"
           else
             echo "/usr/share/kicad/3dmodels not found"
           fi
 
-      - name: Verify ${{ matrix.project }}
+          cp -R /usr/share/kicad/3dmodels ./3dmodels
+          if [ -d "./3dmodels" ]; then
+            echo "./3dmodels copied"
+          else
+            echo "./3dmodels not copied"
+          fi
+
+      - name: Verify ${{ matrix.project }}'s ERC and DRC
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
           project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
@@ -80,7 +85,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
-          name: artifacts-rules-${{ matrix.project }}
+          name: artifacts-${{ matrix.project }}-rules
           path: |
             **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf
             **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step
@@ -126,7 +131,7 @@ jobs:
       - name: Upload Artifact PNG
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
-          name: artifacts-images-${{ matrix.project }}-${{ matrix.side }}
+          name: artifacts-${{ matrix.project }}-images-${{ matrix.side }}
           path: "**/hardware/projects/${{ matrix.project }}/images/${{ matrix.project }}_${{ matrix.side }}.png"
 
 
