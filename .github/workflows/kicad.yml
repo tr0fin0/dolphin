@@ -35,7 +35,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends kicad-packages3d
-          mv /usr/share/kicad/3dmodels ./3dmodels
+          sudo mv /usr/share/kicad/3dmodels ./3dmodels
 
       - name: Verify Rules
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
