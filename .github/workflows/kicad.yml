@@ -64,18 +64,6 @@ jobs:
             cat erc.rpt
           fi
 
-      - name: Export SCH PDF
-        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
-        with:
-          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
-          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
-
-          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
-
-          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
-          schematic_output_pdf: true
-
-
       - name: Export PCB STEP
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
         with:
@@ -125,6 +113,16 @@ jobs:
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
+      - name: Export SCH PDF
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
+
+          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
+          schematic_output_pdf: true
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
