@@ -33,9 +33,8 @@ typedef enum config_control_mode {
  * @def CONFIG_PROJECT_NAME
  * @brief Project name identifier.
  *
- * Used for system identification and logging.
+ * Human-readable null-terminated system identification.
  *
- * **Default Value:** @ref `"dolphin"`
+ * **Default Value:** "dolphin"
  */
 #define CONFIG_PROJECT_NAME     "dolphin"
-
