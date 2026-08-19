@@ -52,7 +52,7 @@ typedef struct led_array {
     led_brightness_t brightness[NUMBER_OF_LEDS];    /**< LEDs brightness in percentage. */
     led_color_t colors[NUMBER_OF_LEDS];             /**< LEDs color in RGB. */
     led_state_t states[NUMBER_OF_LEDS];             /**< LEDs operation  states. */
-    int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animaition interval in microseconds. */
+    int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animation interval in microseconds. */
     int64_t last_time_us[NUMBER_OF_LEDS];           /**< LEDs last update time in microseconds. */
 } led_array_t;
 
