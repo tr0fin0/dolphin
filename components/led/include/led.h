@@ -18,58 +18,74 @@
  *
  * Where:
  *
- * - minimal brightness with 0%.
+ * - **minimal** brightness with `0%`.
  *
- * - maximal brightness with 100%.
+ * - **maximal** brightness with `100%`.
  */
 typedef uint8_t led_brightness_t;
 
 /**
  * @brief LED operation state.
- *
- * Available values are:
- *
- * - `LED_STATE_IDLE`
- *
- * - `LED_STATE_TOGGLE`
  */
 typedef enum led_state {
-    LED_STATE_IDLE = 0, /** Default operation state. */
-    LED_STATE_TOGGLE,   /** Brightness inverted for an interval in ms. */
+    LED_STATE_IDLE = 0,     /**< Default operation state. */
+    LED_STATE_TOGGLE,       /**< Brightness inverted for an interval in ms. */
+    NUMBER_OF_LED_STATES    /**< Number of LED states. */
 } led_state_t;
 
 /**
- * @brief LED name.
- *
- * Available values are:
- *
- * - `LED_STATE`
- *
- * - `LED_EXTRA`
+ * @brief LED names.
  */
 typedef enum led {
-    LED_STATE = 0,  /** LED used for the system state. */
-    LED_EXTRA,      /** LED used for debugging. */
-    NUMBER_OF_LEDS
+    LED_STATE = 0,  /**< LED used for indicating the system state. */
+    LED_EXTRA,      /**< LED used for debugging. */
+    NUMBER_OF_LEDS  /**< Number of distinct LEDs. */
 } led_t;
 
 /**
- * @brief LED strip configuration.
+ * @brief LED array configuration.
  */
 typedef struct led_array {
-    const char *name;
-    pin_t pin;
-    led_strip_handle_t strip;
-    led_brightness_t brightness[NUMBER_OF_LEDS];
-    led_color_t colors[NUMBER_OF_LEDS];
-    led_state_t states[NUMBER_OF_LEDS];
-    int64_t intervals_us[NUMBER_OF_LEDS];
-    int64_t last_time_us[NUMBER_OF_LEDS];
+    const char *name;                               /**< Human-readable null-terminated LED array name.*/
+    pin_t pin;                                      /**< LED array pin connection. */
+    led_strip_handle_t strip;                       /**< LED strip handle. */
+    led_brightness_t brightness[NUMBER_OF_LEDS];    /**< LEDs brightness in percentage. */
+    led_color_t colors[NUMBER_OF_LEDS];             /**< LEDs color in RGB. */
+    led_state_t states[NUMBER_OF_LEDS];             /**< LEDs operation  states. */
+    int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animation interval in microseconds. */
+    int64_t last_time_us[NUMBER_OF_LEDS];           /**< LEDs last update time in microseconds. */
 } led_array_t;
 
+/**
+ * @def LED_BRIGHTNESS_MIN
+ * @brief LED minimal brightness percentage.
+ *
+ * **Default Value:** 0%
+ */
 #define LED_BRIGHTNESS_MIN  0
+
+/**
+ * @def LED_BRIGHTNESS_MED
+ * @brief LED medium brightness percentage.
+ *
+ * **Default Value:** 50%
+ */
 #define LED_BRIGHTNESS_MED  50
+
+/**
+ * @def LED_BRIGHTNESS_MAX
+ * @brief LED maximal brightness percentage.
+ *
+ * **Default Value:** 100%
+ */
 #define LED_BRIGHTNESS_MAX  100
+
+/**
+ * @def LED_RESOLUTION_HZ
+ * @brief LED Strip RMT tick resolution.
+ *
+ * **Default Value:** 10 MHz
+ */
 #define LED_RESOLUTION_HZ   10000000
 
 /**
@@ -80,40 +96,41 @@ void led_init(void);
 /**
  * @brief Set the brightness of a LED on the strip.
  *
- * @param led LED name.
- * @param brightness Brightness in percentage.
+ * @param[in] led LED identifier.
+ * @param[in] brightness Brightness in percentage.
  */
 void led_set_brightness(led_t led, led_brightness_t brightness);
 
 /**
  * @brief Set the brightness of all LEDs on the strip.
  *
- * @param brightness Brightness in percentage.
+ * @param[in] brightness Brightness in percentage.
  */
 void led_set_brightness_all(led_brightness_t brightness);
 
 /**
  * @brief Set the RGB color of a LED on the strip.
  *
- * @param led LED name.
- * @param color RGB color.
+ * @param[in] led LED identifier.
+ * @param[in] color RGB color.
  */
 void led_set_color(led_t led, led_color_t color);
 
 /**
  * @brief Set the RGB color of all LEDs on the strip.
  *
- * @param color RGB color.
+ * @param[in] color RGB color.
  */
 void led_set_color_all(led_color_t color);
 
 /**
  * @brief Set a brightness toggle of a LED on the strip.
  *
- * Brightness toggle is an inversion with respect to the medium value.
+ * Brightness toggle is an inversion with respect to the @ref LED_BRIGHTNESS_MED
+ * value.
  *
- * @param led LED name.
- * @param interval_ms Toggle interval in milliseconds.
+ * @param[in] led LED identifier.
+ * @param[in] interval_ms Toggle interval in milliseconds.
  */
 void led_set_toggle(led_t led, uint32_t interval_ms);
 

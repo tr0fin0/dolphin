@@ -126,7 +126,7 @@ void radio_init() {
     radio_receiver.status = RADIO_DISCONNECTED;
 }
 
-void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS]) {
+void radio_read_channels(pwm_norm_t *pwms) {
     portDISABLE_INTERRUPTS();
     for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {
         pwms[channel] = radio_receiver.pwms[channel];
