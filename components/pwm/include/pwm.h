@@ -17,66 +17,92 @@
 typedef int16_t pwm_t;
 
 /**
- * @brief PWM pulse width in microseconds normalized between `PWM_MINIMUM_US`
- * and `PWM_MAXIMUM_US`.
+ * @brief PWM pulse width in microseconds normalized between @ref PWM_MINIMUM_US
+ * and @ref PWM_MAXIMUM_US.
  */
 typedef uint16_t pwm_norm_t;
 
 /**
- * @brief PWM pulse width in percentage with:
+ * @brief PWM pulse width in percentage.
  *
- * - `PWM_MINIMUM_US` being -100%
+ * Where:
  *
- * - `PWM_NEUTRAL_US` being 0%
+ * - @ref PWM_MINIMUM_US being `-100%`
  *
- * - `PWM_MAXIMUM_US` being +100%.
+ * - @ref PWM_NEUTRAL_US being `0%`
+ *
+ * - @ref PWM_MAXIMUM_US being `+100%`
  */
 typedef int8_t pwm_percentage_t;
 
 /**
+ * @def PWM_DEADBAND_US
  * @brief Deadband distance around maximum, minimum and neutral positions in
  * microseconds.
  *
- * Pulses within `PWM_DEADBAND_US` distance of `PWM_MINIMUM_US`, `PWM_NEUTRAL_US`,
- * or `PWM_MAXIMUM_US` are truncated to their respective values.
+ * Pulses within `PWM_DEADBAND_US` distance of @ref PWM_MINIMUM_US,
+ * @ref PWM_NEUTRAL_US, or @ref PWM_MAXIMUM_US are truncated to their respective
+ * values.
  *
- * @note
- * - button debounce requires at least 50 microseconds deadband.
+ * @note Button debounce requires at least 50 microseconds of deadband.
+ *
+ * **Default Value:** 50
  */
 #define PWM_DEADBAND_US       50U
 
 /**
+ * @def PWM_DUTY_INITIAL
  * @brief PWM duty cycle initialization value.
+ *
+ * **Default Value:** 0.0
  */
 #define PWM_DUTY_INITIAL       0.0F
 
 /**
- * @brief Nominal servo frequency in Hz.
+ * @def PWM_FREQUENCY_HZ
+ * @brief PWM Nominal frequency in Hz.
+ *
+ * **Default Value:** 50 Hz
  */
 #define PWM_FREQUENCY_HZ      50U
 
 /**
- * @brief Maximum accepted pulse width in percentage.
+ * @def PWM_MAXIMUM_PERCENTAGE
+ * @brief PWM Maximum accepted pulse width in percentage.
+ *
+ * **Default Value:** +100%
  */
 #define PWM_MAXIMUM_PERCENTAGE +100
 
 /**
- * @brief Maximum accepted pulse width in microseconds.
+ * @def PWM_MAXIMUM_US
+ * @brief PWM Maximum accepted pulse width in microseconds.
+ *
+ * **Default Value:** 2000
  */
 #define PWM_MAXIMUM_US      2000U
 
 /**
- * @brief Minimum accepted pulse width in percentage.
+ * @def PWM_MINIMUM_PERCENTAGE
+ * @brief PWM Minimum accepted pulse width in percentage.
+ *
+ * **Default Value:** -100%
  */
 #define PWM_MINIMUM_PERCENTAGE -100
 
 /**
- * @brief Minimum accepted pulse width in microseconds.
+ * @def PWM_MINIMUM_US
+ * @brief PWM Minimum accepted pulse width in microseconds.
+ *
+ * **Default Value:** 1000
  */
 #define PWM_MINIMUM_US      1000U
 
 /**
- * @brief Neutral pulse width in microseconds.
+ * @def PWM_NEUTRAL_US
+ * @brief PWM Neutral pulse width in microseconds.
+ *
+ * **Default Value:** 1500
  */
 #define PWM_NEUTRAL_US      1500U
 
@@ -85,40 +111,42 @@ typedef int8_t pwm_percentage_t;
  *
  * The function performs:
  *
- *  1. PWM saturation to [`PWM_MINIMUM_US`, `PWM_MAXIMUM_US`]
+ *  1. PWM saturation to [ @ref PWM_MINIMUM_US, @ref PWM_MAXIMUM_US ]
  *
- *  2. `PWM_DEADBAND_US` filtering around `PWM_MAXIMUM_US`
+ *  2. @ref PWM_DEADBAND_US filtering around @ref PWM_MAXIMUM_US.
  *
- *  3. `PWM_DEADBAND_US` filtering around `PWM_NEUTRAL_US`
+ *  3. @ref PWM_DEADBAND_US filtering around @ref PWM_NEUTRAL_US.
  *
- *  4. `PWM_DEADBAND_US` filtering around `PWM_MINIMUM_US`
+ *  4. @ref PWM_DEADBAND_US filtering around @ref PWM_MINIMUM_US.
  *
  * Function placed in IRAM to allow execution from interrupt context.
  *
- * @param pwm PWM pulse width in microseconds.
+ * @param[in] pwm PWM pulse width in microseconds.
  *
- * @return PWM pulse width in microseconds normalized.
+ * @return Normalized PWM pulse width in microseconds.
  */
 pwm_norm_t IRAM_ATTR pwm_normalize(pwm_t pwm);
 
 /**
- * @brief PWM pulse percentage conversion to normalized PWM pulse width in
+ * @brief Convert PWM pulse percentage to a normalized PWM pulse width in
  * microseconds.
  *
- * The following equation converts PWM pulse percentage into PWM pulse width:
+ * The following equation converts the percentage into a pulse width:
  *
- *  1. `PWM_PULSE_US = PWM_NEUTRAL_US + 5 * percentage`
+ * ```text
+ * PWM_PULSE_US = PWM_NEUTRAL_US + (5 * percentage)
+ * ```
  *
  * For example:
  *
- * - `PWM_MINIMUM_US` is -100%
+ * - @ref PWM_MINIMUM_US is -100%
  *
- * - `PWM_NEUTRAL_US` is 0%
+ * - @ref PWM_NEUTRAL_US is 0%
  *
- * - `PWM_MAXIMUM_US` is +100%.
+ * - @ref PWM_MAXIMUM_US is +100%.
  *
- * @param pwm_percentage PWM pulse width in percentage.
+ * @param[in] pwm_percentage PWM pulse width in percentage.
  *
- * @return PWM pulse width in microseconds normalized.
+ * @return Normalized PWM pulse width in microseconds.
  */
 pwm_norm_t pwm_percentage(pwm_percentage_t pwm_percentage);
