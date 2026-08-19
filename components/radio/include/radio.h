@@ -86,14 +86,14 @@ void radio_read_channels(pwm_norm_t *pwms);
 
 /**
 * @brief Returns the current Radio Receiver status name.
- * 
+ *
  * @return Human-readable null-terminated string representing the status.
  */
 const char *radio_status_name();
 
 /**
  * @brief Returns the latest Radio Receiver status.
- * 
+ *
  * @return Current connection status
  */
 radio_status_t radio_status(void);
