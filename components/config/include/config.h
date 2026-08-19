@@ -9,20 +9,33 @@
 #pragma once
 
 /**
- * @brief Defines control approaches
+ * @brief Available control approaches.
  *
- * @note Available options are:
- *
- * - `CONFIG_CONTROL_AUTONOMOUS`
- *
- * - `CONFIG_CONTROL_RADIO`
+ * @note Control approaches are mutual exclusive, meaning only one can be chosen
+ * at a time.
  */
 typedef enum config_control_mode {
-    CONFIG_CONTROL_AUTONOMOUS = 0,
-    CONFIG_CONTROL_RADIO,
+    CONFIG_CONTROL_AUTONOMOUS = 0, /**< Robot controlled via algorithms. */
+    CONFIG_CONTROL_RADIO,          /**< Robot controlled via radio receiver. */
 } config_control_mode_t;
 
+/**
+ * @def CONFIG_CONTROL_MODE
+ * @brief Current control approach.
+ *
+ * Determines how the robot is controlled at runtime.
+ *
+ * **Default Value:** @ref CONFIG_CONTROL_RADIO
+ */
 #define CONFIG_CONTROL_MODE     CONFIG_CONTROL_RADIO
 
+/**
+ * @def CONFIG_PROJECT_NAME
+ * @brief Project name identifier.
+ *
+ * Used for system identification and logging.
+ *
+ * **Default Value:** @ref `"dolphin"`
+ */
 #define CONFIG_PROJECT_NAME     "dolphin"
 
