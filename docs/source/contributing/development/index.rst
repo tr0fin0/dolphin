@@ -64,17 +64,17 @@ Each commit message **must** respect the `conventional commits <https://www.conv
     Based on `Angular <https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines>`_ commit guidelines:
 
     ============ =================================================================
-    Types        Application                                                      
+    Types        Application
     ============ =================================================================
     ``build``    modifications affecting the build system or external dependencies
-    ``ci``       modifications affecting CI configuration files and scripts       
-    ``docs``     modifications only on documentation                              
-    ``feat``     addition of a new feature                                        
-    ``fix``      correction of a bug                                              
-    ``perf``     modifications bringing performance improvements                  
-    ``refactor`` modifications that neither fixes a bug nor adds a feature        
-    ``style``    modifications not affecting code behavior                        
-    ``test``     addition or correction of tests                                  
+    ``ci``       modifications affecting CI configuration files and scripts
+    ``docs``     modifications only on documentation
+    ``feat``     addition of a new feature
+    ``fix``      correction of a bug
+    ``perf``     modifications bringing performance improvements
+    ``refactor`` modifications that neither fixes a bug nor adds a feature
+    ``style``    modifications not affecting code behavior
+    ``test``     addition or correction of tests
     ============ =================================================================
 
 .. note::
@@ -96,16 +96,16 @@ Each modification **must** be described on an Issue using either a `Bug <.github
     :open:
 
     ==================== ==========================================
-    Label                Application                               
+    Label                Application
     ==================== ==========================================
-    ``bug``              something isn't working                   
-    ``dependencies``     related with project dependencies         
+    ``bug``              something isn't working
+    ``dependencies``     related with project dependencies
     ``documentation``    improvements or additions to documentation
-    ``enhancement``      new features or code improvements         
-    ``good first issue`` easy to solve for newcomers               
-    ``maintenance``      package and maintenance related           
-    ``security``         anything related to security advisories   
-    ``testing``          anything related to tests                 
+    ``enhancement``      new features or code improvements
+    ``good first issue`` easy to solve for newcomers
+    ``maintenance``      package and maintenance related
+    ``security``         anything related to security advisories
+    ``testing``          anything related to tests
     ==================== ==========================================
 
 Pull Requests Creation

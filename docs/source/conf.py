@@ -23,7 +23,7 @@ extensions = [
 ]
 
 breathe_projects = {
-    "firmware": "./firmware/api/xml" 
+    "firmware": "./firmware/api/xml"
 }
 breathe_default_project = "firmware"
 
