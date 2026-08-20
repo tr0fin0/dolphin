@@ -50,6 +50,13 @@ jobs:
           run_erc: true
           run_drc: true
 
+      - name: ERC Report
+        if: always()
+        run: |
+          if [ -f erc.rpt ]; then
+            cat erc.rpt
+          fi
+
       - name: DRC Report
         if: always()
         run: |
@@ -57,12 +64,16 @@ jobs:
             cat drc.rpt
           fi
 
-      - name: ERC Report
-        if: always()
-        run: |
-          if [ -f erc.rpt ]; then
-            cat erc.rpt
-          fi
+      - name: Export SCH PDF
+        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
+        with:
+          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
+          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
+
+          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
+
+          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
+          schematic_output_pdf: true
 
       - name: Export PCB STEP
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
@@ -112,17 +123,6 @@ jobs:
           pcb_output_image_quality: "high"
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
-
-      - name: Export SCH PDF
-        uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
-        with:
-          project_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_pro"
-          schematic_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.kicad_sch"
-
-          symbol_libraries: "dolphin=hardware/library/symbols/dolphin.kicad_sym"
-
-          schematic_output_pdf_file_name: "hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf"
-          schematic_output_pdf: true
 
       - name: Export Gerbers and Drill Files
         uses: actions-for-kicad/kicad-actions@a9f126ff27df502685a1f0048f45b48e0dd04838 #v2.5-k10.0.5
