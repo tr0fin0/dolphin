@@ -79,6 +79,7 @@ Each commit message **must** respect the `conventional commits <https://www.conv
 
 .. note::
     Breaking API change commit message must include either:
+
     - a footer ``BREAKING CHANGE:``
     - a ``!`` after the type/scope
 
