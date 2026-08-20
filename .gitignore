@@ -8,6 +8,12 @@ sdkconfig.*
 ## exceptions
 !sdkconfig.defaults
 
+# Sphinx Python
+env/
+docs/build/
+docs/source/firmware/api/rst
+docs/source/firmware/api/xml
+
 
 # Hardware KiCad.gitignore by https://gitignore.org
 
