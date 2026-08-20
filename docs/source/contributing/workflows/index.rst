@@ -17,4 +17,5 @@ When running for the first time, it should pull an ubuntu image which could take
    :caption: Defined Workflows
 
    cicd/index
+   kicad/index
    release/index
