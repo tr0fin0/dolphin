@@ -527,7 +527,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "dolphin.kicad_pro",
+    "filename": "mainboard.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -726,18 +726,18 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "dolphin.kicad_sch",
-        "name": "dolphin",
+        "filename": "mainboard.kicad_sch",
+        "name": "mainboard",
         "uuid": "3dd8433a-d791-41c6-ab32-c2f4a4a2ba79"
       }
     ],
-    "used_designators": "ENC_L1,SW1,ESC_R1,J1-23,#PWR1-58,TP1-4,R1-27,JP1-3,P1-2,ENC_R1,MSTART1,U1-4,D1-21,RC1-2,H1-4,#SYM1-7,#FLG1-3,ESC_L1,C1-16,#G1-8,S1-16",
+    "used_designators": "D1-21,U1-4,MSTART1,P1-2,ENC_R1,JP1-3,R1-27,TP1-4,S1-16,ESC_L1,#FLG1-3,#G1-8,C1-16,RC1-2,#SYM1-7,H1-4,ENC_L1,SW1,ESC_R1,J1-23,#PWR1-58",
     "variants": []
   },
   "sheets": [
     [
       "3dd8433a-d791-41c6-ab32-c2f4a4a2ba79",
-      "dolphin"
+      "mainboard"
     ],
     [
       "2d64a635-0d43-4b25-9ace-c400679441ca",

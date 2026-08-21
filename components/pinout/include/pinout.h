@@ -1,6 +1,6 @@
 /**
  * @file pinout.h
- * @brief Dolphin's pinout.
+ * @brief Mainboard pinout.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-04-26
@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 /**
- * @brief Physical connection on the Dolphin board.
+ * @brief Physical connection on the mainboard board.
  */
 typedef uint8_t pin_t;
 

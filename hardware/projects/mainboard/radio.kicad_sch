@@ -2001,7 +2001,7 @@
 			(uuid "890b839a-b49d-432d-843d-626dfa63375d")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "RC1")
 					(unit 1)
@@ -2079,7 +2079,7 @@
 			(uuid "0d960ef8-269a-4872-a880-f8680cd9caa3")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R15")
 					(unit 1)
@@ -2155,7 +2155,7 @@
 			)
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "#SYM2")
 					(unit 1)
@@ -2233,7 +2233,7 @@
 			(uuid "32b5f818-f534-4c81-854f-8fc84961b73f")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R4")
 					(unit 1)
@@ -2311,7 +2311,7 @@
 			(uuid "e60c5fa9-4b42-4fb5-a714-1bada6f446ae")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R11")
 					(unit 1)
@@ -2389,7 +2389,7 @@
 			(uuid "58e2ab84-4e0c-49e1-a9d6-386844792cb4")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R13")
 					(unit 1)
@@ -2467,7 +2467,7 @@
 			(uuid "1dd6157b-2b0f-4538-b23b-eb105e8d3ce3")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R10")
 					(unit 1)
@@ -2545,7 +2545,7 @@
 			(uuid "cdb4d311-d8ec-422c-b85b-2ae9638a1079")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R7")
 					(unit 1)
@@ -2623,7 +2623,7 @@
 			(uuid "01406919-54aa-436c-a419-a2bb38c2b184")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R5")
 					(unit 1)
@@ -2701,7 +2701,7 @@
 			(uuid "5de71331-f2e6-49d4-992e-1125588867ca")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R8")
 					(unit 1)
@@ -2779,7 +2779,7 @@
 			(uuid "7795e4ad-794f-4dae-ac94-89e992e2c628")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "#PWR017")
 					(unit 1)
@@ -2857,7 +2857,7 @@
 			(uuid "992c2e58-3f01-4aa7-93d4-af5b7c648538")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "#PWR016")
 					(unit 1)
@@ -2935,7 +2935,7 @@
 			(uuid "77e7bfea-7ee4-4b81-913d-640434f4491e")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R14")
 					(unit 1)
@@ -3013,7 +3013,7 @@
 			(uuid "272ea885-e82a-4f83-a562-e8651cb6ee4a")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R6")
 					(unit 1)
@@ -3091,7 +3091,7 @@
 			(uuid "5c037387-83ed-45d5-bf9e-bd9c30f4af5c")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R9")
 					(unit 1)
@@ -3167,7 +3167,7 @@
 			)
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "#G6")
 					(unit 1)
@@ -3245,7 +3245,7 @@
 			(uuid "9ed7da29-b9a3-4c19-a52b-779846690ad3")
 		)
 		(instances
-			(project "dolphin"
+			(project "mainboard"
 				(path "/3dd8433a-d791-41c6-ab32-c2f4a4a2ba79/f8dcbcf4-72f2-4606-8b1f-476141a9d969"
 					(reference "R12")
 					(unit 1)

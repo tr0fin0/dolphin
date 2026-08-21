@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [ "dolphin", "encoder" ]
+        project: [ "encoder", "mainboard" ]
 
     steps:
       - name: Checkout

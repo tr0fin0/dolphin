@@ -1,5 +1,5 @@
-Dolphin
-=======
+Mainboard
+=========
 
 .. toctree::
    :maxdepth: 2

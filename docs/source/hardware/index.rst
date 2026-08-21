@@ -6,5 +6,5 @@ Hardware
    :caption: Table of Contents
 
    architecture/index
-   dolphin/index
    encoder/index
+   mainboard/index
