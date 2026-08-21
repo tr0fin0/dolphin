@@ -1,6 +1,6 @@
 /**
  * @file attack.h
- * @brief @ref STATE_ATTACK definition of the FSM callback functions `on_exit()`
+ * @brief STATE_ATTACK definition of the FSM callback functions `on_exit()`
  * and `on_run()`.
  *
  * @author Guilherme Nunes Trofino
