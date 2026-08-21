@@ -41,7 +41,7 @@ When It Does
 
 This workflow runs whenever a push or pull request to the main branch of the repository affects either the ``kicad.yml`` workflow file or any file the ``hardware/`` folder.
 
-How to ... Add Projects
+How to... Add Projects
 -----------------------
 
 .. literalinclude:: ../../../../../.github/workflows/kicad.yml

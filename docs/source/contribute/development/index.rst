@@ -59,6 +59,7 @@ Each commit message **must** respect the `conventional commits <https://www.conv
     [optional footer(s)]
 
 .. dropdown:: Accepted Types
+    :animate: fade-in-slide-down
     :open:
 
     Based on `Angular <https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines>`_ commit guidelines:
@@ -94,6 +95,7 @@ Issues Creation
 Each modification **must** be described on an Issue using either a `Bug <.github/ISSUE_TEMPLATE/bug.md>`_ or a `Feature <.github/ISSUE_TEMPLATE/feature.md>`_ Issue template. At least one of the following accepted `labels <.github/labels.yml>`_ **must** be included:
 
 .. dropdown:: Accepted Labels
+    :animate: fade-in-slide-down
     :open:
 
     ==================== ==========================================
