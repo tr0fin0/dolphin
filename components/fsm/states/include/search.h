@@ -1,6 +1,6 @@
 /**
  * @file search.h
- * @brief `STATE_SEARCH` definition of the FSM callback functions `on_run()`.
+ * @brief @ref STATE_SEARCH definition of the FSM callback functions `on_run()`.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13

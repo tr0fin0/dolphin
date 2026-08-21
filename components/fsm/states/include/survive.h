@@ -1,6 +1,6 @@
 /**
  * @file survive.h
- * @brief `STATE_SURVIVE` definition of the FSM callback functions `on_run()`.
+ * @brief @ref STATE_SURVIVE definition of the FSM callback functions `on_run()`.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13

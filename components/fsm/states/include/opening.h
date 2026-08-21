@@ -1,6 +1,6 @@
 /**
  * @file opening.h
- * @brief `STATE_OPENING` definition of the FSM callback functions `on_entry()`
+ * @brief @ref STATE_OPENING definition of the FSM callback functions `on_entry()`
  * and `on_run()`.
  *
  * @author Guilherme Nunes Trofino

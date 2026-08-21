@@ -1,6 +1,6 @@
 /**
  * @file safe.h
- * @brief `STATE_SAFE` definition of the FSM callback functions `on_entry()` and
+ * @brief @ref STATE_SAFE definition of the FSM callback functions `on_entry()` and
  * `on_run()`.
  *
  * @author Guilherme Nunes Trofino
