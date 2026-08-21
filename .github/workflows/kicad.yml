@@ -135,16 +135,16 @@ jobs:
 
       - name: Zip Gerbers and Drill Files
         run: |
-          sudo zip -j hardware/projects/${{ matrix.project }}/${{ matrix.project }}_gerbers.zip hardware/projects/${{ matrix.project }}/gerbers/*
+          sudo zip -j hardware/projects/${{ matrix.project }}/${{ matrix.project }}.zip hardware/projects/${{ matrix.project }}/gerbers/*
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #v7.0.1
         with:
           name: artifacts-${{ matrix.project }}
           path: |
-            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}_gerbers.zip
             **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.pdf
             **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.step
+            **/hardware/projects/${{ matrix.project }}/${{ matrix.project }}.zip
             **/hardware/projects/${{ matrix.project }}/images/*.png
 
 
@@ -174,4 +174,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d #v7.2.0
         with:
           commit_message: "chore(ci): update generated KiCAD files [skip ci]"
-          file_pattern: 'hardware/**/*_gerbers.zip hardware/**/*.pdf hardware/**/*.png hardware/**/*.step'
+          file_pattern: 'hardware/**/*.pdf hardware/**/*.png hardware/**/*.step hardware/**/*.zip'
