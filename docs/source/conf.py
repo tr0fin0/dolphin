@@ -19,6 +19,7 @@ extensions = [
     'exhale',
     'sphinx.ext.duration',
     'sphinx_design',
+    'sphinx_simplepdf',
     'sphinxcontrib.mermaid',
 ]
 
