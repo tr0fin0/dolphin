@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Dolphin'
+project = 'Dolphin Project'
 copyright = '2026, Guilherme Nunes Trofino'
 author = 'Guilherme Nunes Trofino'
 release = 'v1.4.0'
