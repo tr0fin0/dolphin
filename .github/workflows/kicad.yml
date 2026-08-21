@@ -101,7 +101,7 @@ jobs:
           pcb_output_image_floor: false
           pcb_output_image_perspective: false
           pcb_output_image_zoom: "1.0"
-          pcb_output_image_quality: "high"
+          pcb_output_image_quality: "basic"
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
@@ -120,7 +120,7 @@ jobs:
           pcb_output_image_floor: false
           pcb_output_image_perspective: false
           pcb_output_image_zoom: "1.0"
-          pcb_output_image_quality: "high"
+          pcb_output_image_quality: "basic"
           pcb_output_image_rotate: "0,0,0"
           pcb_output_image: true
 
