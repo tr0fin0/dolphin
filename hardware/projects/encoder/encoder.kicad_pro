@@ -700,7 +700,7 @@
         "uuid": "dd377b94-717c-4ee0-9513-40e5d42baf70"
       }
     ],
-    "used_designators": "#FLG1-3,#G1,#SYM1,TP1-12,JP1,R1-3,#PWR1-3,C2,C9,E1",
+    "used_designators": "#FLG1-3,#G1,#SYM1,TP1-14,JP1,R1-3,#PWR1-3,C2,C9,E1",
     "variants": [
       {
         "name": "3V3"

@@ -2136,6 +2136,12 @@
 		(uuid "18403e96-6807-47bf-888b-6da0454c97cd")
 	)
 	(junction
+		(at 114.3 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "42556ac1-f86e-41bb-8877-e0e7092c8c6d")
+	)
+	(junction
 		(at 93.98 127)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2200,6 +2206,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e698b3dc-ca21-4ab9-b73d-7efef4c17303")
+	)
+	(junction
+		(at 110.49 127)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f54a4ac3-d927-406c-b25d-d0ba43a22eb4")
 	)
 	(wire
 		(pts
@@ -2523,6 +2535,16 @@
 	)
 	(wire
 		(pts
+			(xy 110.49 127) (xy 101.6 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "92eed31e-9819-46dc-ad1d-dfac6c105968")
+	)
+	(wire
+		(pts
 			(xy 60.96 124.46) (xy 60.96 127)
 		)
 		(stroke
@@ -2703,7 +2725,7 @@
 	)
 	(wire
 		(pts
-			(xy 132.08 127) (xy 101.6 127)
+			(xy 132.08 127) (xy 114.3 127)
 		)
 		(stroke
 			(width 0)
@@ -2720,6 +2742,16 @@
 			(type default)
 		)
 		(uuid "facbe801-927f-4173-a596-0722dbc3d6d5")
+	)
+	(wire
+		(pts
+			(xy 114.3 127) (xy 110.49 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fc02fce0-ba93-475c-99b7-def40e60560f")
 	)
 	(wire
 		(pts
@@ -5825,6 +5857,89 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 110.49 127 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3cedf036-5f24-4085-8474-94906a7b9c15")
+		(property "Reference" "TP13"
+			(at 110.49 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 107.95 130.302 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 105.41 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 105.41 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 110.49 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b9e7074d-624c-4a2b-b248-4df7c52dae41")
+		)
+		(instances
+			(project "encoder"
+				(path "/dd377b94-717c-4ee0-9513-40e5d42baf70"
+					(reference "TP13")
+					(unit 1)
+					(variant
+						(name "3V3")
+					)
+					(variant
+						(name "3V3_SPI")
+					)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R_US")
 		(at 60.96 97.79 0)
 		(unit 1)
@@ -7256,6 +7371,89 @@
 			(project "encoder"
 				(path "/dd377b94-717c-4ee0-9513-40e5d42baf70"
 					(reference "TP11")
+					(unit 1)
+					(variant
+						(name "3V3")
+					)
+					(variant
+						(name "3V3_SPI")
+					)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint")
+		(at 114.3 127 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d27d8bf0-386f-4306-b443-5334e8f1e35d")
+		(property "Reference" "TP14"
+			(at 114.3 133.35 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 111.76 130.302 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 109.22 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 114.3 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c3422660-0f0b-4bc9-84fe-6c564d7e85e2")
+		)
+		(instances
+			(project "encoder"
+				(path "/dd377b94-717c-4ee0-9513-40e5d42baf70"
+					(reference "TP14")
 					(unit 1)
 					(variant
 						(name "3V3")
