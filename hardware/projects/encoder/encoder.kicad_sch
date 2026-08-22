@@ -5,7 +5,7 @@
 	(uuid "dd377b94-717c-4ee0-9513-40e5d42baf70")
 	(paper "A4")
 	(title_block
-		(title "encoder")
+		(title "dolphin/encoder")
 		(date "2026-08-03")
 		(rev "v1")
 		(company "Equipe Paralela")

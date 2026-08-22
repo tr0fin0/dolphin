@@ -5,7 +5,7 @@
 	(uuid "c4fb1ba5-abc7-4add-8fd1-8d888550515f")
 	(paper "A4")
 	(title_block
-		(title "dolphin")
+		(title "dolphin/mainboard/processor")
 		(date "2026-08-03")
 		(rev "v2")
 		(company "Equipe Paralela")

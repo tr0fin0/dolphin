@@ -5,7 +5,7 @@
 	(uuid "562b685b-b044-42f7-bc6a-37045fc0e620")
 	(paper "A4")
 	(title_block
-		(title "dolphin")
+		(title "dolphin/mainboard/sensors")
 		(date "2026-08-03")
 		(rev "v2")
 		(company "Equipe Paralela")

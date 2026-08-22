@@ -5,7 +5,7 @@
 	(uuid "3a2f9b97-fc2a-4e24-a55c-df24eed198fa")
 	(paper "A4")
 	(title_block
-		(title "dolphin")
+		(title "dolphin/mainboard/radio")
 		(date "2026-08-03")
 		(rev "v2")
 		(company "Equipe Paralela")

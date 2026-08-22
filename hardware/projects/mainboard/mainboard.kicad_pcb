@@ -30682,7 +30682,7 @@
 			)
 		)
 	)
-	(gr_text "dolphin_v2\n"
+	(gr_text "dolphin/mainboard_v2\n"
 		(at 135.5 88.5 0)
 		(layer "F.SilkS")
 		(uuid "fee6158b-c147-4c54-b35b-f48d5e12dba4")
