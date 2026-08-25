@@ -13,6 +13,7 @@ What It Does
 
 This workflow ensures that every KiCAD project passes the **Electrical Rules Check (ERC)** for the schematics and the **Design Rules Check (DRC)** for the PCBs via the `kicad-actions <https://github.com/actions-for-kicad/kicad-actions>`_ before proceeding to export the following files:
 
+- BOM as CSV
 - SCH as PDF
 - PCB as STEP
 - PCB from the Top perspective as PNG
