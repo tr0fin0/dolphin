@@ -2,26 +2,44 @@ Encoder
 #######
 
 :Version: v1
-:Author: Equipe Paralela
+:Author: Guilherme Nunes Trofino
 
 .. toctree::
     :maxdepth: 2
 
     files/index
 
-Purpose
-=======
-
-Designed to precisely measure motor rotation using small-diameter magnets.
-
+Designed to precisely measure motor rotation using the `AS5147U <https://www.mouser.com/datasheet/3/5912/1/AS5147U_AS5247U_DS000639_4_00.pdf>`_ high-resolution redundant rotary magnetic position sensor for fast absolute angle measurement over a full
+360-degree range with a reduced form factor.
 
 Features
 ========
 
-* **Compact Design:** reduced board footprint and height to fit tight assemblies.
-* **Dual Power Modes:** supports both 3.3V and 5V operating voltages.
-* **SMD Connection:** solder pads used in place of physical connectors.
-* **SPI Reconfigurable:** settings can be modified via SPI communication pins.
+Communication
+-------------
+
+.. tab-set::
+
+    .. tab-item:: SPI
+
+        All resistors must remain **unpopulated** while programming over SPI.
+
+    .. tab-item:: PWM
+
+        All resistors must remain **populated** while reading over PWM.
+
+Dimensions
+----------
+
+2 layer board with:
+
+========== =========== ======
+Coordinate Dimension   Name
+========== =========== ======
+x          ``20.0 mm`` length
+y          ``25.0 mm`` width
+z          ``03.1 mm`` height
+========== =========== ======
 
 Operating Voltages
 ------------------
@@ -31,28 +49,16 @@ Operating Voltages
     .. tab-item:: 3V3
 
         1. supply input voltage to the ``3V3`` pin
-        2. solder the bottom jumper
-        3. remove the ``C1`` capacitor.
+        2. leave the bottom jumper **soldered**
+        3. leava the ``C1`` capacitor **unpopulated**
 
     .. tab-item:: 5V
 
         1. supply input voltage to the ``VDD`` pin
-        2. unsolder the bottom jumper
-        3. add the ``C1`` capacitor.
-
-.. tip::
-    Ensure power sources and capacitor configurations before applying power.
-
-Programming Configuration
--------------------------
-
-.. warning::
-    Do not populate mode resistors during programming.
-
-1. **SPI Reprogramming:** keep configuration resistors **unpopulated** while programming over SPI.
-2. **PWM Operation:** after programming, populate the resistors with their required values.
+        2. leave the bottom jumper **unsoldered**
+        3. leave the ``C1`` capacitor **populated**
 
 Limitations
 ===========
 
-* **No Connectors:** physical header connectors are omitted due to board size constraints.
+**No Physical Connectors** headers are omitted due to board size constraints.
