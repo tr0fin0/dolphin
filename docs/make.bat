@@ -35,6 +35,13 @@ if exist %SOURCEDIR%\firmware\api\rst rmdir /s /q %SOURCEDIR%\firmware\api\rst
 if exist %SOURCEDIR%\firmware\api\xml rmdir /s /q %SOURCEDIR%\firmware\api\xml
 goto end
 
+:docs
+echo Running clean documentation HTML build
+make clean
+doxygen Doxyfile
+make html
+goto end
+
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 
