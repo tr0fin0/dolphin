@@ -1,6 +1,6 @@
 /**
  * @file opening.h
- * @brief @ref STATE_OPENING definition of the FSM callback functions `on_entry()`
+ * @brief STATE_OPENING definition of the FSM callback functions `on_entry()`
  * and `on_run()`.
  *
  * @author Guilherme Nunes Trofino
@@ -15,11 +15,11 @@
  * Each digit from left to right represents the measure throttle value at the
  * respective iteration.
  *
- * @note Omitted digits should be considered as `0`.
- *
- * @example An opening strategy of value `210` is obtained by having a throttle
+ * An opening strategy of value `210` is obtained by having a throttle
  * channel value of `2` in the first measure, `1` in the second measure and `0`
  * in the third measure.
+ *
+ * @note Omitted digits should be considered as `0`.
  */
 typedef enum opening {
     OPENING_STATIC =   0, /**< Remains in the initial position and rotation. */

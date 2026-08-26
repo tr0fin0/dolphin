@@ -1,0 +1,5 @@
+"DNP","QTY","REF","value","footprint","datasheet"
+"","1","J1","Conn_01x03","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",""
+"","1","R1","10k","Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder",""
+"","1","R2","100","Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder",""
+"","1","U1","QRE1113GR","OptoDevice:OnSemi_CASE100CY","http://www.onsemi.com/pub/Collateral/QRE1113-D.PDF"

@@ -1,0 +1,414 @@
+(footprint "Receiver_FS-iA6"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "FlySky FS-iA6 6 channel radio receiver")
+	(property "Reference" "REF**"
+		(at 0 -8.7 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "11bf1622-0d2f-4683-b47d-2320c43882d0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "FS-iA6"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "e8b97369-e66b-4496-8416-85e7388c6448")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a09a306d-e46a-4612-b67e-57288b13ed25")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "FlySky FS-iA6 6 channel radio receiver"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "541cfb22-3276-4d45-8d18-cdcc7a8aa1e0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -3.92 -7.725)
+		(end -3.92 4.98)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "39b634d5-6fb7-4f7d-ac78-72676371caae")
+	)
+	(fp_line
+		(start -3.92 4.97)
+		(end -3.92 7.73)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "856e8486-393d-4c48-80d4-5d67b16408fe")
+	)
+	(fp_line
+		(start 1.2658 -7.725)
+		(end -3.9158 -7.725)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "415c6359-0488-4df5-a8ed-a69c08baf444")
+	)
+	(fp_line
+		(start 1.27 -7.725)
+		(end 1.27 7.73)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b248fad7-a5b1-41b4-a693-90f19b3c5663")
+	)
+	(fp_line
+		(start 1.27 7.73)
+		(end -3.92 7.73)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "fc81c6d2-9cc4-4a9d-94cc-d1b178fb0b62")
+	)
+	(fp_line
+		(start 2.54 -7.725)
+		(end 3.925 -7.725)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "1123dd53-1b67-4634-8eea-373c9fee8c48")
+	)
+	(fp_line
+		(start 3.925 -7.725)
+		(end 3.925 -6.33)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "bc33968b-48d1-4c7b-a373-0ba28b8d7a76")
+	)
+	(fp_rect
+		(start -4.31 -8.12)
+		(end 4.31 8.12)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "62d77697-98fc-492e-b47b-ad304b5b72d3")
+	)
+	(fp_line
+		(start -3.81 7.62)
+		(end -3.81 -7.62)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "007e346b-f26d-495b-9f6a-5159e01fc1ec")
+	)
+	(fp_line
+		(start 3.81 -7.62)
+		(end -3.81 -7.62)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b887dfea-e14b-4cc0-89b7-7516c3d69a75")
+	)
+	(fp_line
+		(start 3.81 -7.62)
+		(end 3.81 7.62)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "49222dfa-2de4-4da9-9215-6d316c3e69eb")
+	)
+	(fp_line
+		(start 3.81 7.62)
+		(end -3.81 7.62)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5ac62671-4b42-45c0-b895-9bb7d57a7cff")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "dcb54ac8-c5ae-449d-ace6-1ce94c822a14")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 -6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "13bf61fd-041d-4687-94c0-dc46ea2a741a")
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 -3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "395c6f17-1729-4f08-af1a-c7331acefb83")
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 -1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "49d2fbc9-1f35-424a-a362-a2090362a890")
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1351e945-2bd3-4d66-bf6f-a2a074b7d220")
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "b559bd75-a813-4711-84fc-0a74aee84bb2")
+	)
+	(pad "1" thru_hole rect
+		(at 2.54 6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "42a3f34a-00d2-4df1-bc37-3c910eca7abf")
+	)
+	(pad "2" thru_hole circle
+		(at 0 -6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "14aac6e5-e3b0-4377-8c08-475648c28fc3")
+	)
+	(pad "2" thru_hole circle
+		(at 0 -3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "2d6ef86e-26b2-4df7-9c8e-cb32c0e3bd7b")
+	)
+	(pad "2" thru_hole circle
+		(at 0 -1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9e274ec3-1605-4055-b0c2-8cd62d29fc58")
+	)
+	(pad "2" thru_hole circle
+		(at 0 1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1eaae3bc-1482-4029-afc7-d52412013457")
+	)
+	(pad "2" thru_hole circle
+		(at 0 3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8cdb3635-0adb-41eb-816f-ab0abe47e668")
+	)
+	(pad "2" thru_hole circle
+		(at 0 6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d8820ccc-a70e-4fc8-a99f-a2ff332867e5")
+	)
+	(pad "3" thru_hole circle
+		(at -2.54 -6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "8f781170-d5ef-4f02-9313-a739ff1681ce")
+	)
+	(pad "4" thru_hole circle
+		(at -2.54 -3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1f70de96-b57c-4bae-8a6f-87e2f90316aa")
+	)
+	(pad "5" thru_hole circle
+		(at -2.54 -1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "b1245e04-55c2-48be-9014-51429356bcbc")
+	)
+	(pad "6" thru_hole circle
+		(at -2.54 1.27 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "a89dca60-6278-48bb-96be-bf8d4a94c06f")
+	)
+	(pad "7" thru_hole circle
+		(at -2.54 3.81 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "14ccb4ca-3067-49e3-8528-8e16da2c7622")
+	)
+	(pad "8" thru_hole circle
+		(at -2.54 6.35 270)
+		(size 1.7 1.7)
+		(drill 1)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9bbfc5a0-d844-4336-80be-187ef4c6ee35")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/../../library/3d_models/Receiver_FS-iA6.step"
+		(offset
+			(xyz -14.58 0.55 6.254)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 90 -0 -0)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 -3.81 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 -6.35 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 -1.27 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 1.27 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 3.81 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+	(model "${KICAD10_3DMODEL_DIR}/Connector_PinSocket_2.54mm.3dshapes/PinSocket_1x03_P2.54mm_Vertical.step"
+		(offset
+			(xyz 2.54 6.35 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+)

@@ -1,8 +1,11 @@
+# Firmware
+
+## exclusions
 .pio
 .vscode/*
 sdkconfig.*
 
-# exceptions
+## exceptions
 !sdkconfig.defaults
 
 # Sphinx Python
@@ -10,3 +13,46 @@ env/
 docs/build/
 docs/source/firmware/api/rst
 docs/source/firmware/api/xml
+
+
+# Hardware KiCad.gitignore by https://gitignore.org
+
+## Temporary files
+*.000
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*-backups
+*-cache*
+*-bak
+*-bak*
+*~
+~*
+_autosave-*
+\#auto_saved_files\#
+*.tmp
+*-save.pro
+*-save.kicad_pcb
+fp-info-cache
+~*.lck
+\#auto_saved_files#
+
+## Netlist files (exported from Eeschema)
+*.net
+
+## Autorouter files (exported from Pcbnew)
+*.dsn
+*.ses
+
+## Exported BOM files
+*.xml
+
+## Archived Backups (KiCad 6.0)
+**/*-backups/*.zip
+
+## Local git-based history (KiCad 9.0+)
+.history
+
+## Local project settings
+*.kicad_prl

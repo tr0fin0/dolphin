@@ -18,7 +18,8 @@ repos:
     exclude: |
       (?x)^(
           .*\.cjs|
-          .*\.json
+          .*\.json|
+          hardware/.*
       )$
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -27,6 +28,10 @@ repos:
   - id: check-merge-conflict
   - id: check-yaml
   - id: trailing-whitespace
+    exclude: |
+        (?x)^(
+            hardware/.*
+        )$
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
   rev: 0.38.0

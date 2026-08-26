@@ -90,7 +90,53 @@ module.exports = {
     [
       '@semantic-release/github',
       {
-        assets: [],
+        assets: [
+          {
+            path: "hardware/projects/encoder/encoder.zip",
+            name: "encoder-GER-${nextRelease.gitTag}.zip",
+            label: "Encoder Gerber Files"
+          },
+          {
+            path: "hardware/projects/encoder/encoder.step",
+            name: "encoder-PCB-${nextRelease.gitTag}.step",
+            label: "Encoder PCB STEP"
+          },
+          {
+            path: "hardware/projects/encoder/encoder.pdf",
+            name: "encoder-SCH-${nextRelease.gitTag}.pdf",
+            label: "Encoder Schematic PDF"
+          },
+          {
+            path: "hardware/projects/line/line.zip",
+            name: "line-GER-${nextRelease.gitTag}.zip",
+            label: "Line Sensor Gerber Files"
+          },
+          {
+            path: "hardware/projects/line/line.step",
+            name: "line-PCB-${nextRelease.gitTag}.step",
+            label: "Line Sensor PCB STEP"
+          },
+          {
+            path: "hardware/projects/line/line.pdf",
+            name: "line-SCH-${nextRelease.gitTag}.pdf",
+            label: "Line Sensor Schematic PDF"
+          },
+          {
+            path: "hardware/projects/mainboard/mainboard.zip",
+            name: "mainboard-GER-${nextRelease.gitTag}.zip",
+            label: "Mainboard Gerber Files"
+          },
+          {
+            path: "hardware/projects/mainboard/mainboard.step",
+            name: "mainboard-PCB-${nextRelease.gitTag}.step",
+            label: "Mainboard PCB STEP"
+          },
+          {
+            path: "hardware/projects/mainboard/mainboard.pdf",
+            name: "mainboard-SCH-${nextRelease.gitTag}.pdf",
+            label: "Mainboard Schematic PDF"
+          }
+        ],
         failComment: false,
         labels: ['bug', 'maintenance'],
         releasedLabels: false,

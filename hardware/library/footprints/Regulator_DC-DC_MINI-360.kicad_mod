@@ -1,0 +1,289 @@
+(footprint "Regulator_DC-DC_MINI-360"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "DC-DC Switching Regulator MINI-360")
+	(property "Reference" "REF**"
+		(at 0 -0.5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "5b076ecd-aabe-4451-9c75-58b3280d9638")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "Regulator_DC-DC_MINI-360"
+		(at 0 1 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "783905f8-cad9-4919-a8ee-3a6aaff85360")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "e2ef342a-c5d3-4e77-9a95-fed0e34b8bd1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "DC-DC Switching Regulator MINI-360"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "aff2a2a3-3fd3-46ed-aae5-886abfc971aa")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -10 -3.5)
+		(end -10 3.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "bf1986cd-a29b-4aaa-bfcb-b4162d0108c5")
+	)
+	(fp_line
+		(start -5.5 -6)
+		(end 5.5 -6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "f04082d2-f1f1-4702-8f33-149ef2973c72")
+	)
+	(fp_line
+		(start -5.5 6)
+		(end 5.5 6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "4f655084-eef7-4d04-baa5-a78ddc0cee0a")
+	)
+	(fp_line
+		(start 10 -3.5)
+		(end 10 3.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "304b6c74-e855-40ba-8e33-dbd0ed774d7d")
+	)
+	(fp_line
+		(start -10 -6)
+		(end -10 6)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "bfa92446-bc0e-4cb9-ab50-fc9c3dc7e49f")
+	)
+	(fp_line
+		(start -10 -6)
+		(end 10 -6)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "ee7f6c22-7243-4658-823e-a7248db7608f")
+	)
+	(fp_line
+		(start 10 -6)
+		(end 10 6)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "d465b5e6-0157-46a6-9be2-749b150ec701")
+	)
+	(fp_line
+		(start 10 -6)
+		(end 10 6)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "dc84aee5-87d7-424d-895e-0e8055847448")
+	)
+	(fp_line
+		(start 10 6)
+		(end -10 6)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "61c30ad0-a5c3-4a40-9361-a860559f9a8e")
+	)
+	(fp_line
+		(start -10 -6)
+		(end 10 -6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "1e2cbef5-9329-4ce6-8032-ffbb5e60c911")
+	)
+	(fp_line
+		(start -10 6)
+		(end -10 -6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "960360f5-720d-49ee-930b-31a2123842d8")
+	)
+	(fp_line
+		(start 10 -6)
+		(end 10 6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "3fe2c0da-8406-4649-9f85-7b0425392044")
+	)
+	(fp_line
+		(start 10 6)
+		(end -10 6)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "fde62e48-4704-4ebc-ac01-8cf5cc619ac6")
+	)
+	(fp_text user "VOUT"
+		(at -5.5 -5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "7c3b1e83-15e8-4ddb-9198-cedfb8f36d7c")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+			(justify left)
+		)
+	)
+	(fp_text user "GND"
+		(at -5.5 5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "fea9afa6-02c4-40c1-a01e-e485dccc63ad")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+			(justify left)
+		)
+	)
+	(fp_text user "VIN"
+		(at 5.5 -5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "cc6f3286-3af9-439a-beee-ddba36516f99")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+			(justify right)
+		)
+	)
+	(fp_text user "GND"
+		(at 5.5 5 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "f49c8ee8-725d-45e5-8254-fc6a8eae142e")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.1)
+			)
+			(justify right)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 2.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "ebf7ffbb-beb4-4628-833a-4fd780eb554b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 8 -5)
+		(size 3.999998 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "2e4d1a84-4eae-4bba-8176-79e6937ea96b")
+	)
+	(pad "2" smd rect
+		(at -8 5)
+		(size 4 1.999994)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "373869b5-23a0-47fa-9382-c0f27a6d652e")
+	)
+	(pad "2" smd rect
+		(at 8 5)
+		(size 4 1.999994)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "ad04bc1b-4230-44de-81fa-e594943ad31d")
+	)
+	(pad "3" smd rect
+		(at -8 -5)
+		(size 3.999998 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "58703664-9f1f-4759-8885-1fec63970fe1")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/../../library/3d_models/Regulator_DC-DC_MINI-360.step"
+		(offset
+			(xyz 0 0.65 -16)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -90)
+		)
+	)
+)
