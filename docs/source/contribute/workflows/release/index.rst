@@ -22,7 +22,7 @@ When It Does
     :start-after: name:
     :end-before: permissions:
 
-This workflow runs whenever it's triggered and every sunday at midnight.
+This workflow runs whenever it's triggered by an user, whenever there is a push to the ``main`` branch and every sunday at midnight.
 
 
 How to... Verify Locally
