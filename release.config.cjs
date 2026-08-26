@@ -107,6 +107,21 @@ module.exports = {
             label: "Encoder Schematic PDF"
           },
           {
+            path: "hardware/projects/line/line.zip",
+            name: "line-GER-${nextRelease.gitTag}.zip",
+            label: "Line Sensor Gerber Files"
+          },
+          {
+            path: "hardware/projects/line/line.step",
+            name: "line-PCB-${nextRelease.gitTag}.step",
+            label: "Line Sensor PCB STEP"
+          },
+          {
+            path: "hardware/projects/line/line.pdf",
+            name: "line-SCH-${nextRelease.gitTag}.pdf",
+            label: "Line Sensor Schematic PDF"
+          },
+          {
             path: "hardware/projects/mainboard/mainboard.zip",
             name: "mainboard-GER-${nextRelease.gitTag}.zip",
             label: "Mainboard Gerber Files"
