@@ -1,4 +1,4 @@
-Sensor Line
+Line Sensor
 ###########
 
 :Version: v1
@@ -32,7 +32,7 @@ Dimensions
 Coordinate Dimension   Name
 ========== =========== ======
 x          ``07.5 mm`` length
-y          ``15.0 mm`` width
+y          ``14.0 mm`` width
 z          ``04.0 mm`` height
 ========== =========== ======
 

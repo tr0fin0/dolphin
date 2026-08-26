@@ -7,5 +7,5 @@ Hardware
 
     architecture/index
     encoder/index
-    mainboard/index
     line/index
+    mainboard/index
