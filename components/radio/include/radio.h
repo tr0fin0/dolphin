@@ -14,66 +14,52 @@
 
 /**
  * @brief Radio Receiver receiver channels.
- *
- * Available values are:
- *
- * - `RADIO_CHANNEL_STEERING`
- *
- * - `RADIO_CHANNEL_THROTTLE`
- *
- * - `RADIO_CHANNEL_BUTTON`
- *
- * - `RADIO_CHANNEL_4`
- *
- * - `RADIO_CHANNEL_5`
- *
- * - `RADIO_CHANNEL_6`
  */
 typedef enum radio_channel {
-    RADIO_CHANNEL_STEERING = 0,
-    RADIO_CHANNEL_THROTTLE,
-    RADIO_CHANNEL_BUTTON,
-    RADIO_CHANNEL_4,
-    RADIO_CHANNEL_5,
-    RADIO_CHANNEL_6,
-    NUMBER_OF_RADIO_CHANNELS
+    RADIO_CHANNEL_STEERING = 0, /**< Radio Receiver Steering channel. */
+    RADIO_CHANNEL_THROTTLE,     /**< Radio Receiver Throttle channel. */
+    RADIO_CHANNEL_BUTTON,       /**< Radio Receiver Button channel. */
+    RADIO_CHANNEL_4,            /**< Radio Receiver channel 4. */
+    RADIO_CHANNEL_5,            /**< Radio Receiver channel 5. */
+    RADIO_CHANNEL_6,            /**< Radio Receiver channel 6. */
+    NUMBER_OF_RADIO_CHANNELS    /**< Number of Radio Channels. */
 } radio_channel_t;
 
 /**
  * @brief Radio Receiver connection status.
- *
- * Available values are:
- *
- * - `RADIO_CONNECTED`
- *
- * - `RADIO_DISCONNECTED`
  */
 typedef enum radio_status {
     RADIO_DISCONNECTED = 0, /**< Radio Receiver disconnected after timeout. */
     RADIO_CONNECTED,        /**< Radio Receiver connected. */
-    NUMBER_OF_RADIO_STATUS
+    NUMBER_OF_RADIO_STATUS  /**< Number of Radio Status. */
 } radio_status_t;
 
 /**
  * @brief Radio Receiver PWM pulse width capture via interruptions.
  */
 typedef struct radio {
-    const char *name;
-    radio_status_t status;
-    const char *status_names[NUMBER_OF_RADIO_STATUS];
-    pin_t pins[NUMBER_OF_RADIO_CHANNELS];
-    pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS];
-    int64_t rise_times_us[NUMBER_OF_RADIO_CHANNELS];
-    int64_t last_times_us[NUMBER_OF_RADIO_CHANNELS];
+    const char *name;                                   /**< Human-readable null-terminated Radio name. */
+    radio_status_t status;                              /**< Radio Receiver current connection status. */
+    const char *status_names[NUMBER_OF_RADIO_STATUS];   /**< Human-readable null-terminated Radio status. */
+    pin_t pins[NUMBER_OF_RADIO_CHANNELS];               /**< Radio Receiver channels pins connections. */
+    pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS];          /**< Radio Receiver channels latest normalized PWM pulse widths. */
+    int64_t rise_times_us[NUMBER_OF_RADIO_CHANNELS];    /**< Radio Receiver last rising time in microseconds. */
+    int64_t last_times_us[NUMBER_OF_RADIO_CHANNELS];    /**< Radio Receiver last update time in microseconds. */
 } radio_t;
 
+/**
+ * @def RADIO_TIMEOUT_US
+ * @brief Radio Receiver disconnection timeout interval in microseconds.
+ *
+ * **Default Value:** 25 us
+ */
 #define RADIO_TIMEOUT_US 25000
 
 /**
  * @brief Initialize Radio Receiver interrupts.
  *
  * @note
- * After initialization, channels start at `PWM_NEUTRAL_US` until pulses are
+ * After initialization, channels start at @ref PWM_NEUTRAL_US until pulses are
  * received.
  */
 void radio_init(void);
@@ -81,31 +67,33 @@ void radio_init(void);
 /**
  * @brief Return latest measured pulse width in microseconds from channel.
  *
- * @param channel Radio Receiver channel.
+ * @note Interruptions briefly disabled while copying values.
  *
+ * @param[in] channel Radio Receiver channel.
  * @return Normalized pulse width in microseconds.
- *
- * @note
- * Interruptions briefly disabled while copying values.
  */
 pwm_norm_t radio_read_channel(radio_channel_t channel);
 
 /**
  * @brief Return latest measured pulse widths in microseconds from all channels.
  *
- * @param pwms Array of Radio Receiver channels.
+ * @note Interruptions briefly disabled while copying values.
  *
- * @note
- * Interruptions briefly disabled while copying values.
+ * @param[in] pwms Array of Radio Receiver channels.
+ * @return Normalized array of pulses width in microseconds.
  */
-void radio_read_channels(pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS]);
+void radio_read_channels(pwm_norm_t *pwms);
 
 /**
- * @brief Returns the Radio Receiver status name as a null-terminated string.
+* @brief Returns the current Radio Receiver status name.
+ *
+ * @return Human-readable null-terminated string representing the status.
  */
 const char *radio_status_name();
 
 /**
- * @brief Returns latest Radio Receiver status.
+ * @brief Returns the latest Radio Receiver status.
+ *
+ * @return Current connection status
  */
 radio_status_t radio_status(void);

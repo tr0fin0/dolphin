@@ -181,7 +181,7 @@ void esc_set_pwm(esc_t esc, pwm_t pwm) {
     LOG_V("%s PWM set to %d us.", escs[esc].name, pwm_norm);
 }
 
-void esc_set_pwm_mix(pwm_norm_t pwms[NUMBER_OF_ESCS]) {
+void esc_set_pwm_mix(pwm_norm_t *pwms) {
     pwm_norm_t steering_us = pwms[0];
     pwm_norm_t throttle_us = pwms[1];
 

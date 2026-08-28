@@ -13,53 +13,43 @@
 #include "led.h"
 
 /**
- * @brief FSM possible states.
+ * @brief Finite State Machine states.
  *
  * Each state handler callback functions are defined in an independent `.c` and
  * `.h` files under the states folder.
  */
 typedef enum fsm_state {
-    /** In the Autonomous Control, attacks adversary. */
-    STATE_ATTACK = 0,
-    /** Entry point of the FSM. */
-    STATE_BOOT,
-    /** In the Autonomous Control, waits 5 seconds. */
-    STATE_COUNTDOWN,
-    /** In the Radio Control, receives radio signals and control motors. */
-    STATE_MANUAL,
-    /** In the Radio Control, selects and execute an opening move. */
-    STATE_OPENING,
-    /** In the either control, freezes the system for safety handle. */
-    STATE_SAFE,
-    /** In the Autonomous Control, aligns with adversary. */
-    STATE_SEARCH,
-    /** In the Autonomous Control, avoid leaving the dojo. */
-    STATE_SURVIVE,
-    /** Quantity of states currently implemented in the FSM. */
-    NUMBER_OF_STATES
+    STATE_ATTACK = 0,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, attacks adversary. */
+    STATE_BOOT,         /**< FSM entry point. */
+    STATE_COUNTDOWN,    /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, waits 5 seconds. */
+    STATE_MANUAL,       /**< In the @ref CONFIG_CONTROL_RADIO, receives radio signals and control motors. */
+    STATE_OPENING,      /**< In the @ref CONFIG_CONTROL_RADIO, selects and execute an opening move. */
+    STATE_SAFE,         /**< In either control mode, freezes the system for safety handle. */
+    STATE_SEARCH,       /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, aligns with adversary. */
+    STATE_SURVIVE,      /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, avoid leaving the dojo. */
+    NUMBER_OF_STATES    /**< Number of FSM states currently implemented. */
 } fsm_state_t;
 
 /**
- * @brief FSM function pointer.
+ * @brief Finite State Machine function pointer.
  */
 typedef void (*fsm_action_t)(void);
 
 /**
- * @brief Finite State Machine State Table.
+ * @brief Finite State Machine State table.
  *
  * Defines the behaviour of a single FSM state using three optional
  * lifecycle callbacks:
  *
- * - on_entry: Executed once immediately after a transition INTO this state.
+ * - `on_entry`: Executed once immediately after a transition INTO this state.
  *
- * - on_run:   Executed repeatedly while the FSM remains in this state.
+ * - `on_run`: Executed repeatedly while the FSM remains in this state.
  *
- * - on_exit:  Executed once immediately before a transition OUT this state.
+ * - `on_exit`:  Executed once immediately before a transition OUT OF this state.
  *
  * Any callback may be `NULL` if not required.
  *
- * @note
- * - callbacks must be deterministic and non-blocking.
+ * @note All callbacks must be deterministic and non-blocking.
  */
 typedef struct fsm_table {
     const char *name;       /**< Human-readable null-terminated state name. */
@@ -76,24 +66,29 @@ void fsm_init(void);
 
 /**
  * @brief Run one FSM step.
+ *
+ * Executes the `on_run` callback of the currently active state.
  */
 void fsm_step(void);
 
 /**
  * @brief Transition from current FSM state to a new FSM state.
  *
- * @param new_state The state to transition into.
+ * @param[in] new_state The state to transition into.
  */
 void fsm_transition(fsm_state_t new_state);
 
 /**
  * @brief Get the FSM state name as a null-terminated string.
  *
- * @param state A FSM state.
+ * @param[in] state A FSM state.
+ * @return Human-readable null-terminated FSM name.
  */
 const char *fsm_get_state_name(fsm_state_t state);
 
 /**
- * @brief Get current FSM state as a enumerate value.
+ * @brief Get current FSM state enumerated value.
+ *
+ * @return Current FSM state enumerated value.
  */
 fsm_state_t fsm_get_state(void);

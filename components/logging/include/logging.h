@@ -10,9 +10,36 @@
 
 #include "esp_log.h"
 
+/**
+ * @def LOGGING_BUFFER_SIZE
+ * @brief Logging FreeRTOS Buffer size.
+ *
+ * **Default Value:** 256
+ */
 #define LOGGING_BUFFER_SIZE      256
+
+/**
+ * @def LOGGING_MESSAGE_SIZE
+ * @brief Logging message size.
+ *
+ * **Default Value:** 4096
+ */
 #define LOGGING_MESSAGE_SIZE    4096
+
+/**
+ * @def LOGGING_TASK_CORE_ID
+ * @brief Logging FreeRTOS Task Core ID.
+ *
+ * **Default Value:** 0
+ */
 #define LOGGING_TASK_CORE_ID       0
+
+/**
+ * @def LOGGING_TASK_PRIORITY
+ * @brief Logging FreeRTOS Task Priority.
+ *
+ * **Default Value:** 1
+ */
 #define LOGGING_TASK_PRIORITY      1
 
 #if (LOG_DEFAULT_LEVEL <= LOG_DEFAULT_LEVEL_ERROR)
@@ -69,6 +96,6 @@
  * @brief Initializes asynchronous dual-core logging.
  *
  * Routes all logging calls through a message buffer to a dedicated task on
- * Core 0.
+ * @ref LOGGING_TASK_CORE_ID.
  */
 void logging_init_async(void);

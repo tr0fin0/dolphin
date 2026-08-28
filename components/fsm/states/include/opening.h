@@ -1,6 +1,6 @@
 /**
  * @file opening.h
- * @brief `STATE_OPENING` definition of the FSM callback functions `on_entry()`
+ * @brief STATE_OPENING definition of the FSM callback functions `on_entry()`
  * and `on_run()`.
  *
  * @author Guilherme Nunes Trofino
@@ -66,9 +66,11 @@ typedef struct opening_config {
  *
  * - `OPENING_SWN`
  *
- * @example An opening strategy of value 321` is obtained by having a throttle
+ * An opening strategy of value 321` is obtained by having a throttle
  * channel value of `3` in the first measure, `2` in the second measure and `1`
  * in the third measure.
+ *
+ * @note Omitted digits should be considered as `0`.
  */
 typedef enum opening {
     OPENING_STATIC = 0, /** 222: Remains in the initial position and rotation. */
@@ -85,21 +87,24 @@ typedef enum opening {
 } opening_t;
 
 /**
- * @brief Defines quantity of iterations required to select the opening strategy
- * in the Radio Controlled mode.
+ * @def OPENING_ITERATIONS
+ * @brief Quantity of iterations required to select the opening strategy when in
+ * the @ref CONFIG_CONTROL_RADIO.
+ *
+ * **Default Value:** 3
  */
 #define OPENING_ITERATIONS 3
 
 /**
- * @brief Entry handler for `STATE_OPENING`.
+ * @brief Entry handler for @ref STATE_OPENING.
  *
- * Set `LED_STATE` to `COLOR_PURPLE` and captures current Radio Controller
+ * Set @ref LED_STATE to @ref COLOR_PURPLE and captures current Radio Controller
  * button value.
  */
 void opening_entry(void);
 
 /**
- * @brief Run handler for `STATE_OPENING`.
+ * @brief Run handler for @ref STATE_OPENING.
  *
  * While Radio Controller is connected, 3 sequential reads of the throttle
  * channel are used to determine the opening move.
