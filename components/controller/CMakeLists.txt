@@ -4,6 +4,7 @@ idf_component_register(
     REQUIRES
         config
         esc
+        esp_timer
         logging
         odometry
         pid

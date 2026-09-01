@@ -1,6 +1,7 @@
 #include "config.h"
 #include "controller.h"
 #include "esc.h"
+#include "esp_timer.h"
 #include "logging.h"
 #include <math.h>
 #include "odometry.h"
@@ -10,27 +11,39 @@
 /**
  * @brief PID controller for the angular position.
  */
-static pid_t pid_angular;
+static pid_t pid_angular = (pid_t) {
+    .kp             = CONTROLLER_PID_ANGULAR_KP,
+    .ki             = CONTROLLER_PID_ANGULAR_KI,
+    .kd             = CONTROLLER_PID_ANGULAR_KD,
+    .error_i_max    = CONTROLLER_PID_ANGULAR_I_MAX,
+};
 
 /**
  * @brief PID controller for the linear position.
  */
-static pid_t pid_linear;
+static pid_t pid_linear = (pid_t) {
+    .kp             = CONTROLLER_PID_LINEAR_KP,
+    .ki             = CONTROLLER_PID_LINEAR_KI,
+    .kd             = CONTROLLER_PID_LINEAR_KD,
+    .error_i_max    = CONTROLLER_PID_LINEAR_I_MAX,
+};
 
 void controller_init(void) {
-    pid_angular = (pid_t) {
-        .kp             = CONTROLLER_PID_ANGULAR_KP,
-        .ki             = CONTROLLER_PID_ANGULAR_KI,
-        .kd             = CONTROLLER_PID_ANGULAR_KD,
-        .error_i_max    = CONTROLLER_PID_ANGULAR_I_MAX,
-    };
+    int64_t now = esp_timer_get_time();
 
-    pid_linear = (pid_t) {
-        .kp             = CONTROLLER_PID_LINEAR_KP,
-        .ki             = CONTROLLER_PID_LINEAR_KI,
-        .kd             = CONTROLLER_PID_LINEAR_KD,
-        .error_i_max    = CONTROLLER_PID_LINEAR_I_MAX,
-    };
+    pid_angular.error_p         = 0.0f;
+    pid_angular.error_previous  = 0.0f;
+    pid_angular.error_i         = 0.0f;
+    pid_angular.error_d         = 0.0f;
+    pid_angular.last_time_us    = now;
+    LOG_I("PID controller angular initialized.");
+
+    pid_linear.error_p          = 0.0f;
+    pid_linear.error_previous   = 0.0f;
+    pid_linear.error_i          = 0.0f;
+    pid_linear.error_d          = 0.0f;
+    pid_linear.last_time_us     = now;
+    LOG_I("PID controller linear initialized.");
 }
 
 bool controller_navigate(odometry_waypoint_t current, odometry_waypoint_t target) {
