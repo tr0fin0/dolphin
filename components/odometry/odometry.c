@@ -18,18 +18,18 @@ void odometry_init() {
     encoder_init();
 
     odometry = (odometry_t) {
-        .x_m          = (odometry_dis_m_t)   0.0f,
-        .y_m          = (odometry_dis_m_t)   0.0f,
-        .theta_rad    = (odometry_ang_rad_t) 0.0f,
+        .x_m          = (float) 0.0f,
+        .y_m          = (float) 0.0f,
+        .theta_rad    = (float) 0.0f,
         .phi_l_rad    = odometry_normalize_angle(encoder_read_angle(ENCODER_L)),
         .phi_r_rad    = odometry_normalize_angle(encoder_read_angle(ENCODER_R)),
-        .v_mps        = (odometry_vel_mps_t) 0.0f,
-        .omega_rps    = (odometry_vel_rps_t) 0.0f,
+        .v_mps        = (float) 0.0f,
+        .omega_rps    = (float) 0.0f,
         .last_time_us = esp_timer_get_time()
     };
 }
 
-odometry_ang_rad_t odometry_normalize_angle(odometry_ang_rad_t angle) {
+float odometry_normalize_angle(float angle) {
     while (angle > +M_PI) angle -= 2.0f * M_PI;
     while (angle < -M_PI) angle += 2.0f * M_PI;
 
@@ -46,30 +46,24 @@ void odometry_step() {
     float dt_s = ((float) dt_us) / 1000000.0f;
     odometry.last_time_us = now_us;
 
-    odometry_ang_rad_t phi_l_rad = odometry_normalize_angle(
-        encoder_read_angle(ENCODER_L)
-    );
-    odometry_ang_rad_t phi_r_rad = odometry_normalize_angle(
-        encoder_read_angle(ENCODER_R)
-    );
+    float phi_l_rad = odometry_normalize_angle(encoder_read_angle(ENCODER_L));
+    float phi_r_rad = odometry_normalize_angle(encoder_read_angle(ENCODER_R));
 
-    odometry_ang_rad_t delta_phi_l_rad = odometry_normalize_angle(
+    float delta_phi_l_rad = odometry_normalize_angle(
         phi_l_rad - odometry.phi_l_rad
     );
-    odometry_ang_rad_t delta_phi_r_rad = odometry_normalize_angle(
+    float delta_phi_r_rad = odometry_normalize_angle(
         phi_r_rad - odometry.phi_r_rad
     );
 
-    odometry_dis_m_t dist_l_m = delta_phi_l_rad * CONFIG_WHEEL_RADIUS_M;
-    odometry_dis_m_t dist_r_m = delta_phi_r_rad * CONFIG_WHEEL_RADIUS_M;
+    float dist_l_m = delta_phi_l_rad * CONFIG_WHEEL_RADIUS_M;
+    float dist_r_m = delta_phi_r_rad * CONFIG_WHEEL_RADIUS_M;
 
-    odometry_dis_m_t   delta_dist_m    = (dist_r_m + dist_l_m) / 2.0f;
-    odometry_ang_rad_t delta_theta_rad = (
-        (dist_r_m - dist_l_m) / CONFIG_WHEELBASE_M
-    );
+    float delta_dist_m    = (dist_r_m + dist_l_m) / 2.0f;
+    float delta_theta_rad = ((dist_r_m - dist_l_m) / CONFIG_WHEELBASE_M);
 
-    odometry_ang_rad_t alpha_rad = odometry.theta_rad + delta_theta_rad / 2.0f;
-    odometry_ang_rad_t theta_rad = odometry.theta_rad + delta_theta_rad;
+    float alpha_rad = odometry.theta_rad + delta_theta_rad / 2.0f;
+    float theta_rad = odometry.theta_rad + delta_theta_rad;
 
     odometry.x_m      += delta_dist_m * cosf(alpha_rad);
     odometry.y_m      += delta_dist_m * sinf(alpha_rad);

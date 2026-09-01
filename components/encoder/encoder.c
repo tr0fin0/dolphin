@@ -118,13 +118,13 @@ const char *encoder_get_name(encoder_t encoder) {
     return encoders[encoder].name;
 }
 
-encoder_ang_rad_t encoder_read_angle(encoder_t encoder) {
+float encoder_read_angle(encoder_t encoder) {
     portDISABLE_INTERRUPTS();
     pwm_t pwm = encoders[encoder].pwm;
     portENABLE_INTERRUPTS();
 
-    encoder_ang_rad_t angle_rad = (
-        (encoder_ang_rad_t) M_TWOPI * (
+    float angle_rad = (
+        (float) M_TWOPI * (
             ((float) pwm        - ENCODER_PWM_MIN_US) /
             (ENCODER_PWM_MAX_US - ENCODER_PWM_MIN_US)
         )

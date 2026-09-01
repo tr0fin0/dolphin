@@ -29,50 +29,30 @@
 #define ODOMETRY_PERIOD_MIN_US 1000
 
 /**
- * @brief Odometry distance in meters.
- */
-typedef float odometry_dis_m_t;
-
-/**
- * @brief Odometry angle in radians between -PI and +PI.
- */
-typedef float odometry_ang_rad_t;
-
-/**
- * @brief Odometry linear velocity in meters per second.
- */
-typedef float odometry_vel_mps_t;
-
-/**
- * @brief Odometry angular velocity in radians per second.
- */
-typedef float odometry_vel_rps_t;
-
-/**
  * @brief Odometry measurements from a differential driven architecture.
  */
 typedef struct odometry {
-    odometry_dis_m_t   x_m;         /**< Odometry coordinate x integrated from origin in meters. */
-    odometry_dis_m_t   y_m;         /**< Odometry coordinate y integrated from origin in meters. */
-    odometry_ang_rad_t theta_rad;   /**< Odometry normalized heading angle t in radians. */
-    odometry_ang_rad_t phi_l_rad;   /**< Odometry encoder angle in radians in the left motor. */
-    odometry_ang_rad_t phi_r_rad;   /**< Odometry encoder angle in radians in the right motor. */
-    odometry_vel_mps_t v_mps;       /**< Odometry linear velocity v in meters per second. */
-    odometry_vel_rps_t omega_rps;   /**< Odometry angular velocity w in radians per second. */
-    int64_t last_time_us;           /**< Odometry last rising time in microseconds.*/
+    float x_m;              /**< Odometry coordinate ``x`` integrated from origin in meters. */
+    float y_m;              /**< Odometry coordinate ``y`` integrated from origin in meters. */
+    float theta_rad;        /**< Odometry normalized heading angle ``theta`` in radians. */
+    float phi_l_rad;        /**< Odometry encoder angle ``phi_l`` in radians in the left motor. */
+    float phi_r_rad;        /**< Odometry encoder angle ``phi_r`` in radians in the right motor. */
+    float v_mps;            /**< Odometry linear velocity ``v`` in meters per second. */
+    float omega_rps;        /**< Odometry angular velocity ``omega`` in radians per second. */
+    int64_t last_time_us;   /**< Odometry last rising time in microseconds.*/
 } odometry_t;
 
 /**
  * @brief Odometry reference waypoint for navigation.
  */
 typedef struct odometry_waypoint {
-    odometry_dis_m_t   x_m;             /**< Waypoint coordinate x from waypoint in meters. */
-    odometry_dis_m_t   y_m;             /**< Waypoint coordinate y from waypoint in meters. */
-    odometry_ang_rad_t theta_rad;       /**< Waypoint normalized heading angle t in radians. */
-    odometry_vel_mps_t v_max_mps;       /**< Waypoint maximum linear velocity v in meters per second. */
-    odometry_vel_rps_t omega_max_rps;   /**< Waypoint maximum angular velocity w in radians per second. */
-    odometry_dis_m_t   d_err_m;         /**< Waypoint acceptable distance error from waypoint coordinates (x, y) in meters. */
-    odometry_ang_rad_t theta_err_rad;   /**< Waypoint acceptable heading angle error from waypoint heading t in radians. */
+    float x_m;              /**< Waypoint coordinate ``x`` from origin in meters. */
+    float y_m;              /**< Waypoint coordinate ``y`` from origin in meters. */
+    float theta_rad;        /**< Waypoint normalized heading angle ``theta`` in radians. */
+    float v_max_mps;        /**< Waypoint maximum linear velocity ``v`` in meters per second. */
+    float omega_max_rps;    /**< Waypoint maximum angular velocity ``omega`` in radians per second. */
+    float d_err_m;          /**< Waypoint acceptable distance error from coordinates ``(x, y)`` in meters. */
+    float theta_err_rad;    /**< Waypoint acceptable heading angle error from angle ``theta`` in radians. */
 } odometry_waypoint_t;
 
 /**
@@ -95,7 +75,7 @@ void odometry_init(void);
  * @param[in] angle Angle in radians between 0 and 2PI.
  * @return Angle in radians between -PI and +PI.
  */
-odometry_ang_rad_t odometry_normalize_angle(odometry_ang_rad_t angle);
+float odometry_normalize_angle(float angle);
 
 /**
  * @brief Run one odometry step.

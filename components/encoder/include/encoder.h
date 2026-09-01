@@ -13,11 +13,6 @@
 #include "pwm.h"
 
 /**
- * @brief Encoder angle in radians between 0 and 2PI.
- */
-typedef float encoder_ang_rad_t;
-
-/**
  * @brief Encoder configuration.
  */
 typedef struct encoder_config {
@@ -75,4 +70,4 @@ const char *encoder_get_name(encoder_t encoder);
  *
  * @note Interruptions briefly disabled while copying values.
  */
-encoder_ang_rad_t encoder_read_angle(encoder_t encoder);
+float encoder_read_angle(encoder_t encoder);
