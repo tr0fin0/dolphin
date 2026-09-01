@@ -55,12 +55,19 @@ typedef struct radio {
  */
 #define RADIO_TIMEOUT_US 25000
 
+
+/**
+ * @brief Returns the latest Radio Receiver status.
+ *
+ * @return Current connection status
+ */
+radio_status_t radio_get_status(void);
+
 /**
  * @brief Initialize Radio Receiver interrupts.
  *
- * @note
- * After initialization, channels start at @ref PWM_NEUTRAL_US until pulses are
- * received.
+ * @note After initialization, channels start at @ref PWM_NEUTRAL_US until
+ * pulses are received.
  */
 void radio_init(void);
 
@@ -85,15 +92,8 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
 void radio_read_channels(pwm_norm_t *pwms);
 
 /**
-* @brief Returns the current Radio Receiver status name.
+ * @brief Returns the current Radio Receiver status name.
  *
  * @return Human-readable null-terminated string representing the status.
  */
 const char *radio_status_name();
-
-/**
- * @brief Returns the latest Radio Receiver status.
- *
- * @return Current connection status
- */
-radio_status_t radio_status(void);

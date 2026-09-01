@@ -140,7 +140,6 @@ static void opening_release(void) {
  */
 static void opening_execution(void) {
     fsm_transition(STATE_MANUAL);
-
 }
 
 void opening_entry(void) {
@@ -148,7 +147,7 @@ void opening_entry(void) {
 }
 
 void opening_run(void) {
-    if (radio_status() == RADIO_DISCONNECTED) {
+    if (radio_get_status() == RADIO_DISCONNECTED) {
         fsm_transition(STATE_SAFE);
 
         return;

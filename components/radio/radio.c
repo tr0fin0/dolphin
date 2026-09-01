@@ -35,8 +35,7 @@ static volatile radio_t radio_receiver = {
  *
  * @param arg Radio Receiver channel encoded as void*.
  *
- * @note
- * GPIO level is read with direct ESP32 register access `REG_READ(GPIO_IN_REG)`
+ * @note GPIO level is read with direct ESP32 register access `REG_READ(GPIO_IN_REG)`
  * providing faster and ISR-safe input sampling.
  */
 static void IRAM_ATTR radio_isr(void *arg) {
@@ -57,6 +56,34 @@ static void IRAM_ATTR radio_isr(void *arg) {
             radio_receiver.last_times_us[channel] = now;
         }
     }
+}
+
+radio_status_t radio_get_status() {
+    portDISABLE_INTERRUPTS();
+    int64_t now = esp_timer_get_time();
+
+    bool steering_dead = (
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_STEERING]
+    ) > RADIO_TIMEOUT_US;
+    bool throttle_dead = (
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_THROTTLE]
+    ) > RADIO_TIMEOUT_US;
+    portENABLE_INTERRUPTS();
+
+    radio_status_t new_status;
+    if (steering_dead || throttle_dead) {
+        new_status = RADIO_DISCONNECTED;
+    } else {
+        new_status = RADIO_CONNECTED;
+    }
+
+    if (new_status != radio_receiver.status) {
+        radio_receiver.status = new_status;
+
+        LOG_W("%s radio %s", radio_receiver.name, radio_status_name());
+    }
+
+    return radio_receiver.status;
 }
 
 void radio_init() {
@@ -153,32 +180,4 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
 
 const char *radio_status_name() {
     return radio_receiver.status_names[radio_receiver.status];
-}
-
-radio_status_t radio_status() {
-    portDISABLE_INTERRUPTS();
-    int64_t now = esp_timer_get_time();
-
-    bool steering_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_STEERING]
-    ) > RADIO_TIMEOUT_US;
-    bool throttle_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_THROTTLE]
-    ) > RADIO_TIMEOUT_US;
-    portENABLE_INTERRUPTS();
-
-    radio_status_t new_status;
-    if (steering_dead || throttle_dead) {
-        new_status = RADIO_DISCONNECTED;
-    } else {
-        new_status = RADIO_CONNECTED;
-    }
-
-    if (new_status != radio_receiver.status) {
-        radio_receiver.status = new_status;
-
-        LOG_W("%s radio %s", radio_receiver.name, radio_status_name());
-    }
-
-    return radio_receiver.status;
 }
