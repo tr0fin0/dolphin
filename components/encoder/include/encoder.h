@@ -18,31 +18,38 @@
 typedef float encoder_ang_rad_t;
 
 /**
- * @brief Encoder configuration
+ * @brief Encoder configuration.
  */
 typedef struct encoder_config {
-    const char *name;
-    pin_t pin;
-    pwm_t pwm;
-    int64_t rise_time_us;
+    const char *name;       /**< Human-readable null-terminated encoder name.*/
+    pin_t pin;              /**< Encoder pin connection.*/
+    pwm_t pwm;              /**< Encoder latest normalized PWM pulse width.*/
+    int64_t rise_time_us;   /**< Encoder last rising time in microseconds.*/
 } encoder_config_t;
 
 /**
  * @brief Encoders positions.
- *
- * Available values are:
- *
- * - `ENCODER_L`
- *
- * - `ENCODER_R`
  */
 typedef enum encoder {
-    ENCODER_L = 0,  /** Encoder on the left wheel */
-    ENCODER_R,      /** Encoder on the right wheel */
-    NUMBER_OF_ENCODERS
+    ENCODER_L = 0,      /**< Encoder on the left wheel. */
+    ENCODER_R,          /**< Encoder on the right wheel. */
+    NUMBER_OF_ENCODERS  /**< Number of encoder positions.*/
 } encoder_t;
 
+/**
+ * @def ENCODER_PWM_MAX_US
+ * @brief Encoder maximum normalized PWM pulse width in microseconds.
+ *
+ * **Default Value:** 1000.0
+ */
 #define ENCODER_PWM_MAX_US 1000.0f
+
+/**
+ * @def ENCODER_PWM_MIN_US
+ * @brief Encoder minimum normalized PWM pulse width in microseconds.
+ *
+ * **Default Value:** 0.0
+ */
 #define ENCODER_PWM_MIN_US    0.0f
 
 /**
@@ -52,17 +59,20 @@ void encoder_init(void);
 
 /**
  * @brief Returns the Encoder name as a null-terminated string.
+ *
+ * @param[in] encoder Encoder position.
+ *
+ * @return Human-readable null-terminated string representing the encoder name.
  */
 const char *encoder_get_name(encoder_t encoder);
 
 /**
  * @brief Return latest measured angle in radians from encoder.
  *
- * @param encoder Encoder position.
+ * @param[in] encoder Encoder position.
  *
  * @return Angle in radians between 0 and 2PI.
  *
- * @note
- * Interruptions briefly disabled while copying values.
+ * @note Interruptions briefly disabled while copying values.
  */
 encoder_ang_rad_t encoder_read_angle(encoder_t encoder);
