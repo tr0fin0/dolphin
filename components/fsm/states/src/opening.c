@@ -28,25 +28,25 @@ void opening_run(void) {
     // ensure initial button value is not PWM_NEUTRAL_US
     if (
         button_us == PWM_NEUTRAL_US &&
-        pulses_us[RADIO_CHANNEL_BUTTON] != PWM_NEUTRAL_US
+        pulses_us[RADIO_CHANNEL_3] != PWM_NEUTRAL_US
     ) {
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_3];
     }
 
     if (
         opening_step < OPENING_ITERATIONS &&
-        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
+        button_us != pulses_us[RADIO_CHANNEL_3]
     ) {
         // opening selection
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_3];
 
         uint8_t increase;
         if (
-            pulses_us[RADIO_CHANNEL_THROTTLE] > (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
+            pulses_us[RADIO_CHANNEL_2] > (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2
         ) {
             increase = 2;
         } else if (
-            pulses_us[RADIO_CHANNEL_THROTTLE] < (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
+            pulses_us[RADIO_CHANNEL_2] < (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2
         ) {
             increase = 1;
         } else {
@@ -60,10 +60,10 @@ void opening_run(void) {
         opening_step++;
     } else if (
         opening_step == OPENING_ITERATIONS &&
-        button_us != pulses_us[RADIO_CHANNEL_BUTTON]
+        button_us != pulses_us[RADIO_CHANNEL_3]
     ) {
         // opening execution
-        button_us = pulses_us[RADIO_CHANNEL_BUTTON];
+        button_us = pulses_us[RADIO_CHANNEL_3];
         LOG_W("running opening strategy %d", opening_strategy);
 
         switch (opening_strategy) {
