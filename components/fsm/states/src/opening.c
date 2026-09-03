@@ -16,7 +16,7 @@ void opening_entry(void) {
 }
 
 void opening_run(void) {
-    if (radio_status() == RADIO_DISCONNECTED) {
+    if (radio_get_status() == RADIO_DISCONNECTED) {
         fsm_transition(STATE_SAFE);
 
         return;
