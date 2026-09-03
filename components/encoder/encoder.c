@@ -59,8 +59,8 @@ void encoder_init(void) {
     if (ret != (ESP_OK | ESP_ERR_INVALID_STATE)) {
         LOG_E(
             "%s and %s ISR install service failed with error %s.",
-            encoders[ENCODER_L].name,
-            encoders[ENCODER_R].name,
+            encoder_get_name(ENCODER_L),
+            encoder_get_name(ENCODER_R),
             esp_err_to_name(ret)
         );
 
@@ -81,7 +81,7 @@ void encoder_init(void) {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s GPIO configuration failed with error %s.",
-                encoders[i].name,
+                encoder_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -96,7 +96,7 @@ void encoder_init(void) {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s ISR handler addition failed with error %s.",
-                encoders[i].name,
+                encoder_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -108,7 +108,7 @@ void encoder_init(void) {
 
         LOG_I(
             "%s initialized on pin %02d.",
-            encoders[i].name,
+            encoder_get_name(i),
             encoders[i].pin
         );
     }
@@ -135,7 +135,7 @@ float encoder_get_angle(encoder_t encoder) {
 
     LOG_V(
         "%s measured angle is %.4f rad.",
-        encoders[encoder].name,
+        encoder_get_name(encoder),
         angle_rad
     );
 
