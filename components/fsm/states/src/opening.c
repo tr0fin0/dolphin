@@ -12,7 +12,7 @@ static pwm_norm_t button_us = 0;
 uint8_t opening_step = 0;
 
 void opening_entry(void) {
-    button_us = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    button_us = radio_read_channel(RADIO_CHANNEL_3);
 }
 
 void opening_run(void) {

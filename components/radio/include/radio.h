@@ -16,9 +16,9 @@
  * @brief Radio Receiver receiver channels.
  */
 typedef enum radio_channel {
-    RADIO_CHANNEL_STEERING = 0, /**< Radio Receiver Steering channel. */
-    RADIO_CHANNEL_THROTTLE,     /**< Radio Receiver Throttle channel. */
-    RADIO_CHANNEL_BUTTON,       /**< Radio Receiver Button channel. */
+    RADIO_CHANNEL_1 = 0,        /**< Radio Receiver channel 1. */
+    RADIO_CHANNEL_2,            /**< Radio Receiver channel 2. */
+    RADIO_CHANNEL_3,            /**< Radio Receiver channel 3. */
     RADIO_CHANNEL_4,            /**< Radio Receiver channel 4. */
     RADIO_CHANNEL_5,            /**< Radio Receiver channel 5. */
     RADIO_CHANNEL_6,            /**< Radio Receiver channel 6. */
