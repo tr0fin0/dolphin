@@ -35,16 +35,24 @@ typedef enum radio_status {
 } radio_status_t;
 
 /**
+ * @brief Radio Receiver connection.
+ */
+typedef struct radio_connection {
+    const char *name;       /**< Human-readable null-terminated connection name. */
+    pin_t pin;              /**< Radio Connection channel pin. */
+    pwm_norm_t pwm;         /**< Radio Connection channel latest normalized PWM pulse width. */
+    int64_t rise_time_us;   /**< Radio Connection last rising time in microseconds. */
+    int64_t last_time_us;   /**< Radio Connection last update time in microseconds. */
+} radio_connection_t;
+
+/**
  * @brief Radio Receiver PWM pulse width capture via interruptions.
  */
 typedef struct radio {
-    const char *name;                                   /**< Human-readable null-terminated Radio name. */
-    radio_status_t status;                              /**< Radio Receiver current connection status. */
-    const char *status_names[NUMBER_OF_RADIO_STATUS];   /**< Human-readable null-terminated Radio status. */
-    pin_t pins[NUMBER_OF_RADIO_CHANNELS];               /**< Radio Receiver channels pins connections. */
-    pwm_norm_t pwms[NUMBER_OF_RADIO_CHANNELS];          /**< Radio Receiver channels latest normalized PWM pulse widths. */
-    int64_t rise_times_us[NUMBER_OF_RADIO_CHANNELS];    /**< Radio Receiver last rising time in microseconds. */
-    int64_t last_times_us[NUMBER_OF_RADIO_CHANNELS];    /**< Radio Receiver last update time in microseconds. */
+    const char *name;                                           /**< Human-readable null-terminated Radio name. */
+    radio_status_t status;                                      /**< Radio Receiver current connection status. */
+    const char *status_names[NUMBER_OF_RADIO_STATUS];           /**< Human-readable null-terminated Radio status. */
+    radio_connection_t connections[NUMBER_OF_RADIO_CHANNELS];   /**< Radio Connections. */
 } radio_t;
 
 /**
@@ -56,6 +64,20 @@ typedef struct radio {
 #define RADIO_TIMEOUT_US 25000
 
 /**
+ * @brief Returns the current Radio Receiver connection name.
+ *
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *radio_get_channel_name(radio_channel_t channel);
+
+/**
+ * @brief Returns the current Radio Receiver name.
+ *
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *radio_get_name(void);
+
+/**
  * @brief Returns the latest Radio Receiver status.
  *
  * @return Current connection status
@@ -63,7 +85,7 @@ typedef struct radio {
 radio_status_t radio_get_status(void);
 
 /**
-* @brief Returns the current Radio Receiver status name.
+ * @brief Returns the current Radio Receiver status name.
  *
  * @return Human-readable null-terminated string representing the status.
  */

@@ -85,11 +85,35 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     }
 };
 
+fsm_state_t fsm_get_current_state(void) {
+    return current_state;
+}
+
+const char *fsm_get_state_name(fsm_state_t state) {
+    if (fsm_table[state].name == NULL) {
+        LOG_E("no name for %02d", state);
+
+        return "UNKNOWN";
+    }
+
+    return fsm_table[state].name;
+}
+
 void fsm_init(void) {
     esc_init();
     radio_init();
 
     current_state = STATE_BOOT;
+}
+
+void fsm_step(void) {
+    if (fsm_table[current_state].on_run == NULL) {
+        LOG_E("no on_run() function for %s", fsm_get_state_name(current_state));
+
+        return;
+    }
+
+    return fsm_table[current_state].on_run();
 }
 
 void fsm_transition(fsm_state_t new_state) {
@@ -124,28 +148,4 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 4. set state color
     led_set_color(LED_STATE, fsm_table[current_state].color);
-}
-
-void fsm_step(void) {
-    if (fsm_table[current_state].on_run == NULL) {
-        LOG_E("no on_run() function for %s", fsm_get_state_name(current_state));
-
-        return;
-    }
-
-    return fsm_table[current_state].on_run();
-}
-
-const char *fsm_get_state_name(fsm_state_t state) {
-    if (fsm_table[state].name == NULL) {
-        LOG_E("no name for %02d", state);
-
-        return "UNKNOWN";
-    }
-
-    return fsm_table[state].name;
-}
-
-fsm_state_t fsm_get_state(void) {
-    return current_state;
 }
