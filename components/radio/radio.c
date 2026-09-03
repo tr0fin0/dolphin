@@ -16,12 +16,12 @@ static volatile radio_t radio_receiver = {
         [RADIO_CONNECTED]    = "CONNECTED",
     },
     .pins = {
-        PIN_RADIO_CH1,
-        PIN_RADIO_CH2,
-        PIN_RADIO_CH3,
-        PIN_RADIO_CH4,
-        PIN_RADIO_CH5,
-        PIN_RADIO_CH6
+        PIN_RC_CH1,
+        PIN_RC_CH2,
+        PIN_RC_CH3,
+        PIN_RC_CH4,
+        PIN_RC_CH5,
+        PIN_RC_CH6
     }
 };
 
@@ -160,10 +160,10 @@ radio_status_t radio_status() {
     int64_t now = esp_timer_get_time();
 
     bool steering_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_STEERING]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_1]
     ) > RADIO_TIMEOUT_US;
     bool throttle_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_THROTTLE]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_2]
     ) > RADIO_TIMEOUT_US;
     portENABLE_INTERRUPTS();
 

@@ -13,236 +13,34 @@
 /**
  * @brief Physical connection on the mainboard board.
  */
-typedef uint8_t pin_t;
-
-/**
- * @def PIN_BUTTON_BOOT
- * @brief Boot Button connection.
- *
- * **Default Value:** `GPIO 00`
- */
-#define PIN_BUTTON_BOOT      0
-
-/**
- * @def PIN_ENCODER_L_A
- * @brief Left Motor Encoder A connection.
- *
- * **Default Value:** `GPIO 10`
- */
-#define PIN_ENCODER_L_A     10
-
-/**
- * @def PIN_ENCODER_L_B
- * @brief Left Motor Encoder B connection.
- *
- * **Default Value:** `GPIO 21`
- */
-#define PIN_ENCODER_L_B     21
-
-/**
- * @def PIN_ENCODER_L_CS
- * @brief Left Motor Encoder CS connection.
- *
- * **Default Value:** `GPIO 48`
- */
-#define PIN_ENCODER_L_CS    48
-
-/**
- * @def PIN_ENCODER_R_A
- * @brief Right Motor Encoder A connection.
- *
- * **Default Value:** `GPIO 09`
- */
-#define PIN_ENCODER_R_A      9
-
-/**
- * @def PIN_ENCODER_R_B
- * @brief Left Motor Encoder B connection.
- *
- * **Default Value:** `GPIO 14`
- */
-#define PIN_ENCODER_R_B     14
-
-/**
- * @def PIN_ENCODER_R_CS
- * @brief Right Motor Encoder CS connection.
- *
- * **Default Value:** `GPIO 47`
- */
-#define PIN_ENCODER_R_CS    47
-
-/**
- * @def PIN_ESC_L
- * @brief Left Motor ESC connection.
- *
- * **Default Value:** `GPIO 02`
- */
-#define PIN_ESC_L            2
-
-/**
- * @def PIN_ESC_R
- * @brief Right Motor ESC connection.
- *
- * **Default Value:** `GPIO 01`
- */
-#define PIN_ESC_R            1
-
-/**
- * @def PIN_I2C_SCL
- * @brief I2C Clock Line connection.
- *
- * **Default Value:** `GPIO 17`
- */
-#define PIN_I2C_SCL         17
-
-/**
- * @def PIN_I2C_SDA
- * @brief I2C Data Line connection.
- *
- * **Default Value:** `GPIO 18`
- */
-#define PIN_I2C_SDA         18
-
-/**
- * @def PIN_MODULE_START
- * @brief Module Start connection.
- *
- * **Default Value:** `GPIO 35`
- */
-#define PIN_MODULE_START    35
-
-/**
- * @def PIN_RADIO_CH1
- * @brief Radio Receiver Channel 1 connection.
- *
- * **Default Value:** `GPIO 42`
- */
-#define PIN_RADIO_CH1       42
-
-/**
- * @def PIN_RADIO_CH2
- * @brief Radio Receiver Channel 2 connection.
- *
- * **Default Value:** `GPIO 41`
- */
-#define PIN_RADIO_CH2       41
-
-/**
- * @def PIN_RADIO_CH3
- * @brief Radio Receiver Channel 3 connection.
- *
- * **Default Value:** `GPIO 40`
- */
-#define PIN_RADIO_CH3       40
-
-/**
- * @def PIN_RADIO_CH4
- * @brief Radio Receiver Channel 4 connection.
- *
- * **Default Value:** `GPIO 39`
- */
-#define PIN_RADIO_CH4       39
-
-/**
- * @def PIN_RADIO_CH5
- * @brief Radio Receiver Channel 5 connection.
- *
- * **Default Value:** `GPIO 38`
- */
-#define PIN_RADIO_CH5       38
-
-/**
- * @def PIN_RADIO_CH6
- * @brief Radio Receiver Channel 6 connection.
- *
- * **Default Value:** `GPIO 37`
- */
-#define PIN_RADIO_CH6       37
-
-/**
- * @def PIN_RGB_LEDS
- * @brief RGB LEDs array initial connection.
- *
- * **Default Value:** `GPIO 08`
- */
-#define PIN_RGB_LEDS         8
-
-/**
- * @def PIN_SPARE
- * @brief Unsigned available connection.
- *
- * **Default Value:** `GPIO 36`
- */
-#define PIN_SPARE           36
-
-/**
- * @def PIN_SPI_MISO
- * @brief SPI Master In Slave Out connection.
- *
- * **Default Value:** `GPIO 13`
- */
-#define PIN_SPI_MISO        13
-
-/**
- * @def PIN_SPI_MOSI
- * @brief SPI Master Out Slave In connection.
- *
- * **Default Value:** `GPIO 11`
- */
-#define PIN_SPI_MOSI        11
-
-/**
- * @def PIN_SPI_SCLK
- * @brief SPI Clock connection.
- *
- * **Default Value:** `GPIO 12`
- */
-#define PIN_SPI_SCLK        12
-
-/**
- * @def PIN_MUX_VALUE
- * @brief Multiplexer common connection.
- *
- * **Default Value:** `GPIO 07`
- */
-#define PIN_MUX_VALUE        7
-
-/**
- * @def PIN_MUX_ENABLE
- * @brief Multiplexer enable connection.
- *
- * **Default Value:** `GPIO 04`
- */
-#define PIN_MUX_ENABLE       4
-
-/**
- * @def PIN_MUX_S0
- * @brief Multiplexer selection pin 0 connection.
- *
- * **Default Value:** `GPIO 15`
- */
-#define PIN_MUX_S0          15
-
-/**
- * @def PIN_MUX_S1
- * @brief Multiplexer selection pin 1 connection.
- *
- * **Default Value:** `GPIO 16`
- */
-#define PIN_MUX_S1          16
-
-/**
- * @def PIN_MUX_S2
- * @brief Multiplexer selection pin 2 connection.
- *
- * **Default Value:** `GPIO 05`
- */
-#define PIN_MUX_S2           5
-
-/**
- * @def PIN_MUX_S3
- * @brief Multiplexer selection pin 3 connection.
- *
- * **Default Value:** `GPIO 06`
- */
-#define PIN_MUX_S3           6
+typedef enum pin {
+    PIN_ENC_L = 47,         /**< ``GPIO 47`` : @ref ENCODER_L connection. */
+    PIN_ENC_R = 9,          /**< ``GPIO 09`` : @ref ENCODER_R connection. */
+    PIN_ESC_L = 48,         /**< ``GPIO 48`` : @ref ESC_L connection. */
+    PIN_ESC_R = 8,          /**< ``GPIO 08`` : @ref ESC_R connection. */
+    PIN_I2C_SCL = 17,       /**< ``GPIO 17`` : I2C clock line connection. */
+    PIN_I2C_SDA = 18,       /**< ``GPIO 18`` : I2C data line connection. */
+    PIN_IO00 = 0,           /**< ``GPIO 00`` : actively low, enables ESP32 boot mode. */
+    PIN_IO10 = 10,          /**< ``GPIO 10`` : spare connection. */
+    PIN_IO21 = 21,          /**< ``GPIO 21`` : spare connection. */
+    PIN_IO35 = 35,          /**< ``GPIO 35`` : spare connection. */
+    PIN_IO36 = 36,          /**< ``GPIO 36`` : spare connection. */
+    PIN_IO37 = 37,          /**< ``GPIO 37`` : spare connection. */
+    PIN_IRR = 1,            /**< ``GPIO 01`` : infrared receiver connection. */
+    PIN_LRGB = 4,           /**< ``GPIO 04`` : @ref led_array_t pin connection. */
+    PIN_MUX_COMMON = 16,    /**< ``GPIO 16`` : @ref mux_t common pin connection. */
+    PIN_MUX_ADDR0 = 7,      /**< ``GPIO 07`` : @ref mux_t address pin 0 connection. */
+    PIN_MUX_ADDR1 = 15,     /**< ``GPIO 15`` : @ref mux_t address pin 1 connection. */
+    PIN_MUX_ADDR2 = 5,      /**< ``GPIO 05`` : @ref mux_t address pin 2 connection. */
+    PIN_MUX_ADDR3 = 6,      /**< ``GPIO 06`` : @ref mux_t address pin 3 connection. */
+    PIN_RC_CH1 = 2,         /**< ``GPIO 02`` : @ref RADIO_CHANNEL_1 connection. */
+    PIN_RC_CH2 = 42,        /**< ``GPIO 42`` : @ref RADIO_CHANNEL_2 connection. */
+    PIN_RC_CH3 = 41,        /**< ``GPIO 41`` : @ref RADIO_CHANNEL_3 connection. */
+    PIN_RC_CH4 = 40,        /**< ``GPIO 40`` : @ref RADIO_CHANNEL_4 connection. */
+    PIN_RC_CH5 = 39,        /**< ``GPIO 39`` : @ref RADIO_CHANNEL_5 connection. */
+    PIN_RC_CH6 = 38,        /**< ``GPIO 38`` : @ref RADIO_CHANNEL_6 connection. */
+    PIN_SPI_MISO = 13,      /**< ``GPIO 13`` : SPI Master In Slave Out connection. */
+    PIN_SPI_MOSI = 11,      /**< ``GPIO 11`` : SPI Master Out Slave In connection. */
+    PIN_SPI_SCLK = 12,      /**< ``GPIO 12`` : SPI clock connection. */
+    NUMBER_OF_PINS = 28     /**< Number of pin connections. */
+} pin_t;
