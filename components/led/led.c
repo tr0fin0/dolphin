@@ -7,7 +7,7 @@
 
 static led_array_t leds = {
     .name = "WS2812B",
-    .pin = PIN_RGB_LEDS
+    .pin = PIN_LRGB
 };
 
 /**
@@ -69,7 +69,7 @@ void led_init(void) {
         .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB,
         .led_model              = LED_MODEL_WS2812,
         .max_leds               = NUMBER_OF_LEDS,
-        .strip_gpio_num         = PIN_RGB_LEDS,
+        .strip_gpio_num         = leds.pin,
     };
 
     led_strip_rmt_config_t rmt_config = {

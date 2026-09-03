@@ -16,12 +16,12 @@ static volatile radio_t radio_receiver = {
         [RADIO_CONNECTED]    = "CONNECTED",
     },
     .pins = {
-        PIN_RADIO_CH1,
-        PIN_RADIO_CH2,
-        PIN_RADIO_CH3,
-        PIN_RADIO_CH4,
-        PIN_RADIO_CH5,
-        PIN_RADIO_CH6
+        PIN_RC_CH1,
+        PIN_RC_CH2,
+        PIN_RC_CH3,
+        PIN_RC_CH4,
+        PIN_RC_CH5,
+        PIN_RC_CH6
     }
 };
 
@@ -63,10 +63,10 @@ radio_status_t radio_get_status() {
     int64_t now = esp_timer_get_time();
 
     bool steering_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_STEERING]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_1]
     ) > RADIO_TIMEOUT_US;
     bool throttle_dead = (
-        now - radio_receiver.last_times_us[RADIO_CHANNEL_THROTTLE]
+        now - radio_receiver.last_times_us[RADIO_CHANNEL_2]
     ) > RADIO_TIMEOUT_US;
     portENABLE_INTERRUPTS();
 
@@ -80,10 +80,14 @@ radio_status_t radio_get_status() {
     if (new_status != radio_receiver.status) {
         radio_receiver.status = new_status;
 
-        LOG_W("%s radio %s", radio_receiver.name, radio_status_name());
+        LOG_W("%s radio %s", radio_receiver.name, radio_get_status_name());
     }
 
     return radio_receiver.status;
+}
+
+const char *radio_get_status_name(void) {
+    return radio_receiver.status_names[radio_receiver.status];
 }
 
 void radio_init() {
@@ -153,14 +157,6 @@ void radio_init() {
     radio_receiver.status = RADIO_DISCONNECTED;
 }
 
-void radio_read_channels(pwm_norm_t *pwms) {
-    portDISABLE_INTERRUPTS();
-    for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {
-        pwms[channel] = radio_receiver.pwms[channel];
-    }
-    portENABLE_INTERRUPTS();
-}
-
 pwm_norm_t radio_read_channel(radio_channel_t channel) {
     pwm_norm_t pwm;
 
@@ -178,6 +174,10 @@ pwm_norm_t radio_read_channel(radio_channel_t channel) {
     return pwm;
 }
 
-const char *radio_status_name() {
-    return radio_receiver.status_names[radio_receiver.status];
+void radio_read_channels(pwm_norm_t *pwms) {
+    portDISABLE_INTERRUPTS();
+    for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {
+        pwms[channel] = radio_receiver.pwms[channel];
+    }
+    portENABLE_INTERRUPTS();
 }

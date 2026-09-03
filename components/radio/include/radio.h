@@ -16,9 +16,9 @@
  * @brief Radio Receiver receiver channels.
  */
 typedef enum radio_channel {
-    RADIO_CHANNEL_STEERING = 0, /**< Radio Receiver Steering channel. */
-    RADIO_CHANNEL_THROTTLE,     /**< Radio Receiver Throttle channel. */
-    RADIO_CHANNEL_BUTTON,       /**< Radio Receiver Button channel. */
+    RADIO_CHANNEL_1 = 0,        /**< Radio Receiver channel 1. */
+    RADIO_CHANNEL_2,            /**< Radio Receiver channel 2. */
+    RADIO_CHANNEL_3,            /**< Radio Receiver channel 3. */
     RADIO_CHANNEL_4,            /**< Radio Receiver channel 4. */
     RADIO_CHANNEL_5,            /**< Radio Receiver channel 5. */
     RADIO_CHANNEL_6,            /**< Radio Receiver channel 6. */
@@ -55,13 +55,19 @@ typedef struct radio {
  */
 #define RADIO_TIMEOUT_US 25000
 
-
 /**
  * @brief Returns the latest Radio Receiver status.
  *
  * @return Current connection status
  */
 radio_status_t radio_get_status(void);
+
+/**
+* @brief Returns the current Radio Receiver status name.
+ *
+ * @return Human-readable null-terminated string representing the status.
+ */
+const char *radio_get_status_name(void);
 
 /**
  * @brief Initialize Radio Receiver interrupts.
@@ -90,10 +96,3 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
  * @return Normalized array of pulses width in microseconds.
  */
 void radio_read_channels(pwm_norm_t *pwms);
-
-/**
- * @brief Returns the current Radio Receiver status name.
- *
- * @return Human-readable null-terminated string representing the status.
- */
-const char *radio_status_name();

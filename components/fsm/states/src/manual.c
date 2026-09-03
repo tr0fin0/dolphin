@@ -11,8 +11,8 @@ void manual_run(void) {
     }
 
     pwm_norm_t pulses_us[NUMBER_OF_ESCS] = {
-        radio_read_channel(RADIO_CHANNEL_STEERING),
-        radio_read_channel(RADIO_CHANNEL_THROTTLE)
+        radio_read_channel(RADIO_CHANNEL_1),
+        radio_read_channel(RADIO_CHANNEL_2)
     };
 
     esc_set_pwm_mix(pulses_us);

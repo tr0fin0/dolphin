@@ -91,8 +91,8 @@ opening_t opening_strategy  = OPENING_STATIC;
  * - `FS-GT2`: iterative measures of a single radio receiver channel.
  */
 static void opening_selection(void) {
-    pwm_norm_t current_button   = radio_read_channel(RADIO_CHANNEL_BUTTON);
-    pwm_norm_t current_throttle = radio_read_channel(RADIO_CHANNEL_THROTTLE);
+    pwm_norm_t current_button   = radio_read_channel(RADIO_CHANNEL_3);
+    pwm_norm_t current_throttle = radio_read_channel(RADIO_CHANNEL_2);
 
     // ensure initial button value is not PWM_NEUTRAL_US
     if (last_button == PWM_NEUTRAL_US && current_button != PWM_NEUTRAL_US) {
@@ -120,7 +120,7 @@ static void opening_selection(void) {
  * Opening strategy is executed upon user confirmation.
  */
 static void opening_release(void) {
-    pwm_norm_t current_button = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    pwm_norm_t current_button = radio_read_channel(RADIO_CHANNEL_2);
     if (last_button != current_button) {
         opening_step++;
 
@@ -143,7 +143,7 @@ static void opening_execution(void) {
 }
 
 void opening_entry(void) {
-    last_button  = radio_read_channel(RADIO_CHANNEL_BUTTON);
+    last_button  = radio_read_channel(RADIO_CHANNEL_3);
 }
 
 void opening_run(void) {
