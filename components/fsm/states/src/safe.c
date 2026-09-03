@@ -12,7 +12,7 @@ void safe_entry(void) {
 }
 
 void safe_run(void) {
-    if (radio_status() == RADIO_CONNECTED) {
+    if (radio_get_status() == RADIO_CONNECTED) {
         if (CONFIG_CONTROL_MODE == CONFIG_CONTROL_AUTONOMOUS) {
             fsm_transition(STATE_COUNTDOWN);
         } else {
