@@ -67,28 +67,12 @@ typedef int8_t pwm_percentage_t;
 #define PWM_FREQUENCY_HZ      50U
 
 /**
- * @def PWM_MAXIMUM_PERCENTAGE
- * @brief PWM Maximum accepted pulse width in percentage.
- *
- * **Default Value:** +100%
- */
-#define PWM_MAXIMUM_PERCENTAGE +100
-
-/**
  * @def PWM_MAXIMUM_US
  * @brief PWM Maximum accepted pulse width in microseconds.
  *
  * **Default Value:** 2000
  */
 #define PWM_MAXIMUM_US      2000U
-
-/**
- * @def PWM_MINIMUM_PERCENTAGE
- * @brief PWM Minimum accepted pulse width in percentage.
- *
- * **Default Value:** -100%
- */
-#define PWM_MINIMUM_PERCENTAGE -100
 
 /**
  * @def PWM_MINIMUM_US
