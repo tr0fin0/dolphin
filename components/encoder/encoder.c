@@ -13,11 +13,11 @@
 static volatile encoder_config_t encoders[NUMBER_OF_ENCODERS] = {
     [ENCODER_L] = {
         .name = "ENCODER_L",
-        .pin  = PIN_ENCODER_L_A
+        .pin  = PIN_ENC_L
     },
     [ENCODER_R] = {
         .name = "ENCODER_R",
-        .pin  = PIN_ENCODER_R_A
+        .pin  = PIN_ENC_R
     }
 };
 
