@@ -1,6 +1,9 @@
 idf_component_register(
-    SRCS "led.c"
-    INCLUDE_DIRS "include"
+    SRCS
+        "led.c"
+    INCLUDE_DIRS
+        "include"
+        "colors/include"
     REQUIRES
         esp_timer
         led_strip

@@ -14,15 +14,37 @@
 #include "pinout.h"
 
 /**
- * @brief LED brightness in percentage.
- *
- * Where:
- *
- * - **minimal** brightness with `0%`.
- *
- * - **maximal** brightness with `100%`.
+ * @brief LED brightnesses in percentage.
  */
-typedef uint8_t led_brightness_t;
+typedef enum led_brightness {
+    LED_BRIGHTNESS_MIN = 0,         /**< LED brightness at ``  0 %``. */
+    LED_BRIGHTNESS_MED = 50,        /**< LED brightness at `` 50 %``. */
+    LED_BRIGHTNESS_MAX = 100,       /**< LED brightness at ``100 %``. */
+    NUMBER_OF_LED_BRIGHTNESSES = 3  /**< Number of LED brightnesses. */
+} led_brightness_t;
+
+/**
+ * @brief LED colors in RGB.
+ */
+typedef enum led_color {
+    LED_COLOR_BLACK,        /**< ``{.r=  0, .g=  0, .b=  0}`` */
+    LED_COLOR_BLUE,         /**< ``{.r=  0, .g=  0, .b=255}`` */
+    LED_COLOR_BLUE_LIGHT,   /**< ``{.r=  0, .g= 90, .b=255}`` */
+    LED_COLOR_CYAN,         /**< ``{.r=  0, .g=255, .b=255}`` */
+    LED_COLOR_EMERALD,      /**< ``{.r=  0, .g=250, .b= 40}`` */
+    LED_COLOR_GREEN,        /**< ``{.r=  0, .g=230, .b=  0}`` */
+    LED_COLOR_GREEN_LIGHT,  /**< ``{.r=  0, .g=220, .b= 20}`` */
+    LED_COLOR_GREEN_LIME,   /**< ``{.r=163, .g=251, .b=  0}`` */
+    LED_COLOR_ORANGE_DARK,  /**< ``{.r=254, .g= 23, .b=  0}`` */
+    LED_COLOR_ORANGE_LIGHT, /**< ``{.r=255, .g= 48, .b=  0}`` */
+    LED_COLOR_PINK,         /**< ``{.r=240, .g=  0, .b= 80}`` */
+    LED_COLOR_PURPLE,       /**< ``{.r=252, .g=  3, .b=232}`` */
+    LED_COLOR_RED,          /**< ``{.r=255, .g=  0, .b=  0}`` */
+    LED_COLOR_SCARLET,      /**< ``{.r=255, .g=  0, .b=  6}`` */
+    LED_COLOR_WHITE,        /**< ``{.r=255, .g=255, .b=255}`` */
+    LED_COLOR_YELLOW,       /**< ``{.r=255, .g=115, .b=  0}`` */
+    NUMBER_OF_LED_COLORS    /**< Number of LED colors. */
+} led_color_t;
 
 /**
  * @brief LED operation state.
@@ -55,30 +77,6 @@ typedef struct led_array {
     int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animation interval in microseconds. */
     int64_t last_time_us[NUMBER_OF_LEDS];           /**< LEDs last update time in microseconds. */
 } led_array_t;
-
-/**
- * @def LED_BRIGHTNESS_MIN
- * @brief LED minimal brightness percentage.
- *
- * **Default Value:** 0%
- */
-#define LED_BRIGHTNESS_MIN  0
-
-/**
- * @def LED_BRIGHTNESS_MED
- * @brief LED medium brightness percentage.
- *
- * **Default Value:** 50%
- */
-#define LED_BRIGHTNESS_MED  50
-
-/**
- * @def LED_BRIGHTNESS_MAX
- * @brief LED maximal brightness percentage.
- *
- * **Default Value:** 100%
- */
-#define LED_BRIGHTNESS_MAX  100
 
 /**
  * @def LED_RESOLUTION_HZ

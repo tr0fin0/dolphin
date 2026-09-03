@@ -1,9 +1,27 @@
-#include "colors.h"
 #include "esp_err.h"
 #include "esp_timer.h"
 #include "led.h"
 #include "logging.h"
 #include "pinout.h"
+
+static color_t colors[NUMBER_OF_LED_COLORS] = {
+    [LED_COLOR_BLACK]           = {.r=  0, .g=  0, .b=  0},
+    [LED_COLOR_BLUE]            = {.r=  0, .g=  0, .b=255},
+    [LED_COLOR_BLUE_LIGHT]      = {.r=  0, .g= 90, .b=255},
+    [LED_COLOR_CYAN]            = {.r=  0, .g=255, .b=255},
+    [LED_COLOR_EMERALD]         = {.r=  0, .g=250, .b= 40},
+    [LED_COLOR_GREEN]           = {.r=  0, .g=230, .b=  0},
+    [LED_COLOR_GREEN_LIGHT]     = {.r=  0, .g=220, .b= 20},
+    [LED_COLOR_GREEN_LIME]      = {.r=163, .g=251, .b=  0},
+    [LED_COLOR_ORANGE_DARK]     = {.r=254, .g= 23, .b=  0},
+    [LED_COLOR_ORANGE_LIGHT]    = {.r=255, .g= 48, .b=  0},
+    [LED_COLOR_PINK]            = {.r=240, .g=  0, .b= 80},
+    [LED_COLOR_PURPLE]          = {.r=252, .g=  3, .b=232},
+    [LED_COLOR_RED]             = {.r=255, .g=  0, .b=  0},
+    [LED_COLOR_SCARLET]         = {.r=255, .g=  0, .b=  6},
+    [LED_COLOR_WHITE]           = {.r=255, .g=255, .b=255},
+    [LED_COLOR_YELLOW]          = {.r=255, .g=115, .b=  0},
+};
 
 static led_array_t leds = {
     .name = "WS2812B",
@@ -32,12 +50,14 @@ static void led_refresh(void) {
     esp_err_t ret;
 
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
+        led_color_t color = leds.colors[i];
+
         ret = led_strip_set_pixel(
             leds.strip,
             i,
-            (leds.colors[i].r * led_brightness_rescale(leds.brightness[i])) >> 8,
-            (leds.colors[i].g * led_brightness_rescale(leds.brightness[i])) >> 8,
-            (leds.colors[i].b * led_brightness_rescale(leds.brightness[i])) >> 8
+            (colors[color].r * led_brightness_rescale(leds.brightness[i])) >> 8,
+            (colors[color].g * led_brightness_rescale(leds.brightness[i])) >> 8,
+            (colors[color].b * led_brightness_rescale(leds.brightness[i])) >> 8
         );
         if (ret != ESP_OK) {
             LOG_E(
