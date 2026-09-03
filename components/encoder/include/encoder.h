@@ -70,4 +70,4 @@ const char *encoder_get_name(encoder_t encoder);
  *
  * @note Interruptions briefly disabled while copying values.
  */
-float encoder_read_angle(encoder_t encoder);
+float encoder_get_angle(encoder_t encoder);

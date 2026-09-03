@@ -21,8 +21,8 @@ void odometry_init() {
         .x_m          = (float) 0.0f,
         .y_m          = (float) 0.0f,
         .theta_rad    = (float) 0.0f,
-        .phi_l_rad    = odometry_normalize_angle(encoder_read_angle(ENCODER_L)),
-        .phi_r_rad    = odometry_normalize_angle(encoder_read_angle(ENCODER_R)),
+        .phi_l_rad    = odometry_normalize_angle(encoder_get_angle(ENCODER_L)),
+        .phi_r_rad    = odometry_normalize_angle(encoder_get_angle(ENCODER_R)),
         .v_mps        = (float) 0.0f,
         .omega_rps    = (float) 0.0f,
         .last_time_us = esp_timer_get_time()
@@ -46,8 +46,8 @@ void odometry_step() {
     float dt_s = ((float) dt_us) / 1000000.0f;
     odometry.last_time_us = now_us;
 
-    float phi_l_rad = odometry_normalize_angle(encoder_read_angle(ENCODER_L));
-    float phi_r_rad = odometry_normalize_angle(encoder_read_angle(ENCODER_R));
+    float phi_l_rad = odometry_normalize_angle(encoder_get_angle(ENCODER_L));
+    float phi_r_rad = odometry_normalize_angle(encoder_get_angle(ENCODER_R));
 
     float delta_phi_l_rad = odometry_normalize_angle(
         phi_l_rad - odometry.phi_l_rad

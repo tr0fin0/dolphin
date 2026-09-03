@@ -118,7 +118,7 @@ const char *encoder_get_name(encoder_t encoder) {
     return encoders[encoder].name;
 }
 
-float encoder_read_angle(encoder_t encoder) {
+float encoder_get_angle(encoder_t encoder) {
     portDISABLE_INTERRUPTS();
     pwm_t pwm = encoders[encoder].pwm;
     portENABLE_INTERRUPTS();
