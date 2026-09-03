@@ -60,6 +60,21 @@ typedef struct fsm_table {
 } fsm_table_t;
 
 /**
+ * @brief Get current FSM state enumerated value.
+ *
+ * @return Current FSM state enumerated value.
+ */
+fsm_state_t fsm_get_current_state(void);
+
+/**
+ * @brief Get the FSM state name as a null-terminated string.
+ *
+ * @param[in] state A FSM state.
+ * @return Human-readable null-terminated FSM name.
+ */
+const char *fsm_get_state_name(fsm_state_t state);
+
+/**
  * @brief Initialize the FSM and underlying hardware abstractions.
  */
 void fsm_init(void);
@@ -77,18 +92,3 @@ void fsm_step(void);
  * @param[in] new_state The state to transition into.
  */
 void fsm_transition(fsm_state_t new_state);
-
-/**
- * @brief Get the FSM state name as a null-terminated string.
- *
- * @param[in] state A FSM state.
- * @return Human-readable null-terminated FSM name.
- */
-const char *fsm_get_state_name(fsm_state_t state);
-
-/**
- * @brief Get current FSM state enumerated value.
- *
- * @return Current FSM state enumerated value.
- */
-fsm_state_t fsm_get_state(void);

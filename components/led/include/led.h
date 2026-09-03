@@ -43,17 +43,25 @@ typedef enum led {
 } led_t;
 
 /**
+ * @brief LED configuration.
+ */
+typedef struct led_config {
+    const char *name;               /**< Human-readable null-terminated LED name.*/
+    led_brightness_t brightness;    /**< LED brightness in percentage. */
+    led_color_t color;              /**< LED RGB color. */
+    led_state_t state;              /**< LED operation state. */
+    int64_t interval_us;            /**< LED animation interval in microseconds. */
+    int64_t last_time_us;           /**< LED last update time in microseconds. */
+} led_config_t;
+
+/**
  * @brief LED array configuration.
  */
 typedef struct led_array {
-    const char *name;                               /**< Human-readable null-terminated LED array name.*/
-    pin_t pin;                                      /**< LED array pin connection. */
-    led_strip_handle_t strip;                       /**< LED strip handle. */
-    led_brightness_t brightness[NUMBER_OF_LEDS];    /**< LEDs brightness in percentage. */
-    led_color_t colors[NUMBER_OF_LEDS];             /**< LEDs color in RGB. */
-    led_state_t states[NUMBER_OF_LEDS];             /**< LEDs operation  states. */
-    int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animation interval in microseconds. */
-    int64_t last_time_us[NUMBER_OF_LEDS];           /**< LEDs last update time in microseconds. */
+    const char *name;                   /**< Human-readable null-terminated LED array name.*/
+    pin_t pin;                          /**< LED array pin connection. */
+    led_strip_handle_t strip;           /**< LED strip handle. */
+    led_config_t leds[NUMBER_OF_LEDS];  /**< LEDs configurations. */
 } led_array_t;
 
 /**
@@ -87,6 +95,21 @@ typedef struct led_array {
  * **Default Value:** 10 MHz
  */
 #define LED_RESOLUTION_HZ   10000000
+
+/**
+ * @brief Returns the LED array name.
+ *
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_array_name(void);
+
+/**
+ * @brief Returns the LED name.
+ *
+ * @param[in] led LED name.
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_name(led_t led);
 
 /**
  * @brief Initialization of all individual LEDs on the strip.

@@ -15,6 +15,10 @@ static esc_config_t escs[NUMBER_OF_ESCS] = {
     }
 };
 
+const char *esc_get_name(esc_t esc) {
+    return escs[esc].name;
+}
+
 void esc_init() {
     esp_err_t ret;
 
@@ -69,7 +73,7 @@ void esc_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s MCPWM comparator creation failed with error %s.",
-                escs[i].name,
+                esc_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -84,7 +88,7 @@ void esc_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s MCPWM generator creation failed with error %s",
-                escs[i].name,
+                esc_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -102,7 +106,7 @@ void esc_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s MCPWM generator set action on timer failed with error %s",
-                escs[i].name,
+                esc_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -120,7 +124,7 @@ void esc_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s MCPWM generator set action on compare failed with error %s",
-                escs[i].name,
+                esc_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -134,7 +138,7 @@ void esc_init() {
         if (ret != ESP_OK) {
             LOG_E(
                 "%s compare value set failed with error %s.",
-                escs[i].name,
+                esc_get_name(i),
                 esp_err_to_name(ret)
             );
 
@@ -143,7 +147,7 @@ void esc_init() {
 
         LOG_I(
             "%s initialized on pin %02d.",
-            escs[i].name,
+            esc_get_name(i),
             escs[i].pin
         );
     }
@@ -172,13 +176,14 @@ void esc_set_pwm(esc_t esc, pwm_t pwm) {
     if (ret != ESP_OK) {
         LOG_E(
             "%s compare value set failed with error %s.",
-            escs[esc].name, esp_err_to_name(ret)
+            esc_get_name(esc),
+            esp_err_to_name(ret)
         );
 
         return;
     }
 
-    LOG_V("%s PWM set to %d us.", escs[esc].name, pwm_norm);
+    LOG_V("%s PWM set to %d us.", esc_get_name(esc), pwm_norm);
 }
 
 void esc_set_pwm_mix(pwm_norm_t *pwms) {

@@ -3,6 +3,10 @@
 #include "manual.h"
 #include "radio.h"
 
+void manual_exit(void) {
+    esc_set_pwm_mix_neutral();
+}
+
 void manual_run(void) {
     if (radio_get_status() == RADIO_DISCONNECTED) {
         fsm_transition(STATE_SAFE);
@@ -16,8 +20,4 @@ void manual_run(void) {
     };
 
     esc_set_pwm_mix(pulses_us);
-}
-
-void manual_exit(void) {
-    esc_set_pwm_mix_neutral();
 }
