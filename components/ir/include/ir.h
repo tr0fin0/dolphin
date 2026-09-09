@@ -29,7 +29,7 @@ typedef enum ir_state {
 
 /**
  * @brief Infrared receive callback function.
- * 
+ *
  * @param[in] command Protocol command.
  */
 typedef void (*ir_rx_callback_t)(const protocol_command_t *command);
@@ -112,7 +112,7 @@ void ir_init(void);
 
 /**
  * @brief Polls the infrared receiver state.
- * 
+ *
  * Must be called continuously.
  */
 void ir_poll(void);
