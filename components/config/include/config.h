@@ -20,6 +20,16 @@ typedef enum config_control_mode {
 } config_control_mode_t;
 
 /**
+ * @brief Available mainboard versions.
+ * 
+ * @note Basically modifing the @ref pin enumerate.
+ */
+typedef enum config_mainboard_version {
+    CONFIG_MAINBOARD_V1 = 0,    /**< Mainboard version 1 made in Altium. */
+    CONFIG_MAINBOARD_V2,        /**< Mainboard version 2 made in KiCAD. */
+} config_mainboard_version_t;
+
+/**
  * @def CONFIG_CONTROL_MODE
  * @brief Current control approach.
  *
@@ -28,6 +38,21 @@ typedef enum config_control_mode {
  * **Default Value:** @ref CONFIG_CONTROL_RADIO
  */
 #define CONFIG_CONTROL_MODE     CONFIG_CONTROL_RADIO
+
+/**
+ * @def CONFIG_MAINBOARD_V1
+ * @def CONFIG_MAINBOARD_V2
+ * @brief Current mainboard version.
+ *
+ * Basically modifing the @ref pin enumerate.
+ *
+ * @note Available versions:
+ * - ``CONFIG_MAINBOARD_V1``: made in Altium
+ * - ``CONFIG_MAINBOARD_V2``: made in KiCAD
+ *
+ * **Default Value:** ``CONFIG_MAINBOARD_V2``
+ */
+#define CONFIG_MAINBOARD_V1
 
 /**
  * @def CONFIG_PROJECT_NAME
