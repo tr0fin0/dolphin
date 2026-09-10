@@ -15,7 +15,7 @@
  * @brief Physical connection on the mainboard board.
  */
 typedef enum pin {
-#ifdef CONFIG_MAINBOARD_V2
+#if defined(CONFIG_MAINBOARD_V2)
     PIN_ENC_L = 47,         /**< ``GPIO 47`` : @ref ENCODER_L connection. */
     PIN_ENC_R = 9,          /**< ``GPIO 09`` : @ref ENCODER_R connection. */
     PIN_ESC_L = 48,         /**< ``GPIO 48`` : @ref ESC_L connection. */
@@ -45,7 +45,7 @@ typedef enum pin {
     PIN_SPI_MOSI = 11,      /**< ``GPIO 11`` : SPI Master Out Slave In connection. */
     PIN_SPI_SCLK = 12,      /**< ``GPIO 12`` : SPI clock connection. */
     NUMBER_OF_PINS = 28     /**< Number of pin connections. */
-#elifdef CONFIG_MAINBOARD_V1
+#elif defined(CONFIG_MAINBOARD_V1)
     PIN_BUTTON_BOOT = 0,    /**< ``GPIO 00`` : BOOT connection. */
     PIN_ENC_L = 10,         /**< ``GPIO 10`` : @ref ENCODER_L connection A. */
     PIN_ENCODER_L_B = 21,   /**< ``GPIO 21`` : @ref ENCODER_L connection B. */

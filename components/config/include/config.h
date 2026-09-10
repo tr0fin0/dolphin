@@ -52,7 +52,7 @@ typedef enum config_mainboard_version {
  *
  * **Default Value:** ``CONFIG_MAINBOARD_V2``
  */
-#define CONFIG_MAINBOARD_V1
+#define CONFIG_MAINBOARD_V2
 
 /**
  * @def CONFIG_PROJECT_NAME
