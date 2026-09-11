@@ -4,6 +4,7 @@
 .pio
 .vscode/*
 sdkconfig.*
+managed_components
 
 ## exceptions
 !sdkconfig.defaults

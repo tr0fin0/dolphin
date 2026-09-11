@@ -103,7 +103,7 @@ void radio_init() {
     esp_err_t ret;
 
     ret = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    if (ret != (ESP_OK | ESP_ERR_INVALID_STATE)) {
+    if (ret != ESP_OK) {
         LOG_E(
             "%s ISR install service failed with error %s.",
             radio_get_name(),
