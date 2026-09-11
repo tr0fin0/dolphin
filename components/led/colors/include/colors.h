@@ -14,7 +14,8 @@
  * @brief LED RGB color.
  */
 typedef struct color {
-    uint8_t r;  /**< Red color channel ranging between 0 and 255. */
-    uint8_t g;  /**< Green color channel ranging between 0 and 255. */
-    uint8_t b;  /**< Blue color channel ranging between 0 and 255. */
+    const char *name;   /**< Human-readable null-terminated color name.*/
+    uint8_t r;          /**< Red color channel ranging between 0 and 255. */
+    uint8_t g;          /**< Green color channel ranging between 0 and 255. */
+    uint8_t b;          /**< Blue color channel ranging between 0 and 255. */
 } color_t;
