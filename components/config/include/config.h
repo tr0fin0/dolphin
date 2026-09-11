@@ -21,7 +21,7 @@ typedef enum config_control_mode {
 
 /**
  * @brief Available mainboard versions.
- * 
+ *
  * @note Basically modifing the @ref pin enumerate.
  */
 typedef enum config_mainboard_version {
