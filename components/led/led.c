@@ -28,12 +28,8 @@ static led_array_t led_array = {
     .name = "WS2812B",
     .pin  = PIN_LRGB,
     .leds = {
-        [LED_STATE] = {
-            .name = "state LED",
-        },
-        [LED_EXTRA] = {
-            .name = "extra LED",
-        },
+        [LED_EXTRA] = { .name = "extra LED", },
+        [LED_STATE] = { .name = "state LED", },
     }
 };
 

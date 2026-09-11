@@ -26,7 +26,7 @@ typedef enum led_brightness {
  * @brief LED colors in RGB.
  */
 typedef enum led_color {
-    LED_COLOR_BLACK,        /**< ``{.r=  0, .g=  0, .b=  0}`` */
+    LED_COLOR_BLACK = 0,    /**< ``{.r=  0, .g=  0, .b=  0}`` */
     LED_COLOR_BLUE,         /**< ``{.r=  0, .g=  0, .b=255}`` */
     LED_COLOR_BLUE_LIGHT,   /**< ``{.r=  0, .g= 90, .b=255}`` */
     LED_COLOR_CYAN,         /**< ``{.r=  0, .g=255, .b=255}`` */
