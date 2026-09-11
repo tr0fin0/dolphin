@@ -101,6 +101,14 @@ typedef struct led_array {
 const char *led_get_array_name(void);
 
 /**
+ * @brief Returns the LED color name.
+ *
+ * @param[in] color LED color.
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_color_name(led_color_t color);
+
+/**
  * @brief Returns the LED name.
  *
  * @param[in] led LED name.

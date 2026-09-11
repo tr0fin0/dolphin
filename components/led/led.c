@@ -6,41 +6,22 @@
 #include "pinout.h"
 
 static color_t colors[NUMBER_OF_LED_COLORS] = {
-    [LED_COLOR_BLACK]           = {.r=  0, .g=  0, .b=  0},
-    [LED_COLOR_BLUE]            = {.r=  0, .g=  0, .b=255},
-    [LED_COLOR_BLUE_LIGHT]      = {.r=  0, .g= 90, .b=255},
-    [LED_COLOR_CYAN]            = {.r=  0, .g=255, .b=255},
-    [LED_COLOR_EMERALD]         = {.r=  0, .g=250, .b= 40},
-    [LED_COLOR_GREEN]           = {.r=  0, .g=230, .b=  0},
-    [LED_COLOR_GREEN_LIGHT]     = {.r=  0, .g=220, .b= 20},
-    [LED_COLOR_GREEN_LIME]      = {.r=163, .g=251, .b=  0},
-    [LED_COLOR_ORANGE_DARK]     = {.r=254, .g= 23, .b=  0},
-    [LED_COLOR_ORANGE_LIGHT]    = {.r=255, .g= 48, .b=  0},
-    [LED_COLOR_PINK]            = {.r=240, .g=  0, .b= 80},
-    [LED_COLOR_PURPLE]          = {.r=252, .g=  3, .b=232},
-    [LED_COLOR_RED]             = {.r=255, .g=  0, .b=  0},
-    [LED_COLOR_SCARLET]         = {.r=255, .g=  0, .b=  6},
-    [LED_COLOR_WHITE]           = {.r=255, .g=255, .b=255},
-    [LED_COLOR_YELLOW]          = {.r=255, .g=115, .b=  0},
-};
-
-static color_t colors[NUMBER_OF_LED_COLORS] = {
-    [LED_COLOR_BLACK]           = {.r=  0, .g=  0, .b=  0},
-    [LED_COLOR_BLUE]            = {.r=  0, .g=  0, .b=255},
-    [LED_COLOR_BLUE_LIGHT]      = {.r=  0, .g= 90, .b=255},
-    [LED_COLOR_CYAN]            = {.r=  0, .g=255, .b=255},
-    [LED_COLOR_EMERALD]         = {.r=  0, .g=250, .b= 40},
-    [LED_COLOR_GREEN]           = {.r=  0, .g=230, .b=  0},
-    [LED_COLOR_GREEN_LIGHT]     = {.r=  0, .g=220, .b= 20},
-    [LED_COLOR_GREEN_LIME]      = {.r=163, .g=251, .b=  0},
-    [LED_COLOR_ORANGE_DARK]     = {.r=254, .g= 23, .b=  0},
-    [LED_COLOR_ORANGE_LIGHT]    = {.r=255, .g= 48, .b=  0},
-    [LED_COLOR_PINK]            = {.r=240, .g=  0, .b= 80},
-    [LED_COLOR_PURPLE]          = {.r=252, .g=  3, .b=232},
-    [LED_COLOR_RED]             = {.r=255, .g=  0, .b=  0},
-    [LED_COLOR_SCARLET]         = {.r=255, .g=  0, .b=  6},
-    [LED_COLOR_WHITE]           = {.r=255, .g=255, .b=255},
-    [LED_COLOR_YELLOW]          = {.r=255, .g=115, .b=  0},
+    [LED_COLOR_BLACK]           = { .name = "BLACK",        .r=  0, .g=  0, .b=  0 },
+    [LED_COLOR_BLUE]            = { .name = "BLUE",         .r=  0, .g=  0, .b=255 },
+    [LED_COLOR_BLUE_LIGHT]      = { .name = "BLUE LIGHT",   .r=  0, .g= 90, .b=255 },
+    [LED_COLOR_CYAN]            = { .name = "CYAN",         .r=  0, .g=255, .b=255 },
+    [LED_COLOR_EMERALD]         = { .name = "EMERALD",      .r=  0, .g=250, .b= 40 },
+    [LED_COLOR_GREEN]           = { .name = "GREEN",        .r=  0, .g=230, .b=  0 },
+    [LED_COLOR_GREEN_LIGHT]     = { .name = "GREEN LIGHT",  .r=  0, .g=220, .b= 20 },
+    [LED_COLOR_GREEN_LIME]      = { .name = "GREEN LIME",   .r=163, .g=251, .b=  0 },
+    [LED_COLOR_ORANGE_DARK]     = { .name = "ORANGE DARK",  .r=254, .g= 23, .b=  0 },
+    [LED_COLOR_ORANGE_LIGHT]    = { .name = "ORANGE LIGHT", .r=255, .g= 48, .b=  0 },
+    [LED_COLOR_PINK]            = { .name = "PINK",         .r=240, .g=  0, .b= 80 },
+    [LED_COLOR_PURPLE]          = { .name = "PURPLE",       .r=252, .g=  3, .b=232 },
+    [LED_COLOR_RED]             = { .name = "RED",          .r=255, .g=  0, .b=  0 },
+    [LED_COLOR_SCARLET]         = { .name = "SCARLET",      .r=255, .g=  0, .b=  6 },
+    [LED_COLOR_WHITE]           = { .name = "WHITE",        .r=255, .g=255, .b=255 },
+    [LED_COLOR_YELLOW]          = { .name = "YELLOW",       .r=255, .g=115, .b=  0 },
 };
 
 static led_array_t led_array = {
@@ -104,6 +85,10 @@ static void led_refresh(void) {
 
 const char *led_get_array_name() {
     return led_array.name;
+}
+
+const char *led_get_color_name(led_color_t color) {
+    return colors[color].name;
 }
 
 const char *led_get_name(led_t led) {
