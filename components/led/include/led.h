@@ -9,7 +9,6 @@
 #pragma once
 
 #include <stdint.h>
-#include "colors.h"
 #include "led_strip.h"
 #include "pinout.h"
 
