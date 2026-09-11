@@ -99,13 +99,13 @@ void led_init(void) {
     esp_err_t ret;
 
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
-        led_config_t led = led_array.leds[i];
+        led_config_t *led = &led_array.leds[i];
 
-        led.brightness      = LED_BRIGHTNESS_MAX;
-        led.color           = LED_COLOR_WHITE;
-        led.state           = LED_STATE_IDLE;
-        led.interval_us     = 0;
-        led.last_time_us    = 0;
+        led->brightness     = LED_BRIGHTNESS_MAX;
+        led->color           = LED_COLOR_WHITE;
+        led->state           = LED_STATE_IDLE;
+        led->interval_us     = 0;
+        led->last_time_us    = 0;
     };
 
     led_strip_config_t strip_config = {
@@ -167,36 +167,36 @@ void led_set_color_all(led_color_t color) {
 }
 
 void led_set_toggle(led_t led, uint32_t interval_ms) {
-    led_config_t led_config = led_array.leds[led];
+    led_config_t *led_config = &led_array.leds[led];
 
-    led_brightness_t brightness = led_config.brightness;
-    led_config.brightness = LED_BRIGHTNESS_MAX - brightness;
+    led_brightness_t brightness = led_config->brightness;
+    led_config->brightness = LED_BRIGHTNESS_MAX - brightness;
 
-    led_config.state        = LED_STATE_TOGGLE;
-    led_config.interval_us  = interval_ms * 1000;
-    led_config.last_time_us = esp_timer_get_time();
+    led_config->state        = LED_STATE_TOGGLE;
+    led_config->interval_us  = interval_ms * 1000;
+    led_config->last_time_us = esp_timer_get_time();
 
     led_refresh();
 }
 
 void led_step(void) {
     for (uint8_t i = 0; i < NUMBER_OF_LEDS; i++) {
-        led_config_t led = led_array.leds[i];
+        led_config_t *led = &led_array.leds[i];
 
-        switch (led.state) {
+        switch (led->state) {
             case LED_STATE_IDLE:
                 break;
 
             case LED_STATE_TOGGLE:
                 int64_t now_us = esp_timer_get_time();
 
-                if (now_us > led.last_time_us + led.interval_us) {
-                    led_brightness_t brightness = led.brightness;
-                    led.brightness  = LED_BRIGHTNESS_MAX - brightness;
+                if (now_us > led->last_time_us + led->interval_us) {
+                    led_brightness_t brightness = led->brightness;
+                    led->brightness  = LED_BRIGHTNESS_MAX - brightness;
 
-                    led.state           = LED_STATE_IDLE;
-                    led.interval_us     = 0;
-                    led.last_time_us    = 0;
+                    led->state           = LED_STATE_IDLE;
+                    led->interval_us     = 0;
+                    led->last_time_us    = 0;
 
                     led_refresh();
                 }
