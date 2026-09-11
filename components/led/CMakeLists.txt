@@ -3,6 +3,7 @@ idf_component_register(
         "led.c"
     INCLUDE_DIRS
         "include"
+        "colors/include"
     REQUIRES
         esp_timer
         led_strip
