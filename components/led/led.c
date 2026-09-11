@@ -64,9 +64,9 @@ static void led_refresh(void) {
         ret = led_strip_set_pixel(
             led_array.strip,
             i,
-            (led.color.r * led_brightness_rescale(led.brightness)) >> 8,
-            (led.color.g * led_brightness_rescale(led.brightness)) >> 8,
-            (led.color.b * led_brightness_rescale(led.brightness)) >> 8
+            (colors[led.color].r * led_brightness_rescale(led.brightness)) >> 8,
+            (colors[led.color].g * led_brightness_rescale(led.brightness)) >> 8,
+            (colors[led.color].b * led_brightness_rescale(led.brightness)) >> 8
         );
         if (ret != ESP_OK) {
             LOG_E(
