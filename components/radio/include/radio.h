@@ -94,9 +94,8 @@ const char *radio_get_status_name(void);
 /**
  * @brief Initialize Radio Receiver interrupts.
  *
- * @note
- * After initialization, channels start at @ref PWM_NEUTRAL_US until pulses are
- * received.
+ * @note After initialization, channels start at @ref PWM_NEUTRAL_US until
+ * pulses are received.
  */
 void radio_init(void);
 

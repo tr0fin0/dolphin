@@ -53,3 +53,19 @@ typedef enum config_control_mode {
  * **Default Value:** "dolphin"
  */
 #define CONFIG_PROJECT_NAME     "dolphin"
+
+/**
+ * @def CONFIG_WHEEL_RADIUS_M
+ * @brief Project wheel radius in meters
+ *
+ * **Default Value:** 0.0225
+ */
+#define CONFIG_WHEEL_RADIUS_M   0.0225f
+
+/**
+ * @def CONFIG_WHEELBASE_M
+ * @brief Project distance between wheels center in meters.
+ *
+ * **Default Value:** 0.1400
+ */
+#define CONFIG_WHEELBASE_M      0.1400f

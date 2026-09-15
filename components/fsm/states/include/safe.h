@@ -22,7 +22,7 @@ void safe_entry(void);
  *
  * When Radio Controller is connected, transition to @ref STATE_COUNTDOWN if in
  * @ref CONFIG_CONTROL_AUTONOMOUS and to @ref STATE_MANUAL or @ref STATE_OPENING
- * if in CONFIG_CONTROL_RADIO.
+ * if in @ref CONFIG_CONTROL_RADIO.
  *
  * @note
  * - If Radio Controller is disconnected during opening selection,

@@ -35,8 +35,7 @@ static volatile radio_t radio = {
  *
  * @param arg Radio Receiver channel encoded as void*.
  *
- * @note
- * GPIO level is read with direct ESP32 register access `REG_READ(GPIO_IN_REG)`
+ * @note GPIO level is read with direct ESP32 register access `REG_READ(GPIO_IN_REG)`
  * providing faster and ISR-safe input sampling.
  */
 static void IRAM_ATTR radio_isr(void *arg) {

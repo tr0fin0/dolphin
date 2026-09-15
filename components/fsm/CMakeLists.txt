@@ -17,6 +17,7 @@ idf_component_register(
         esc
         led
         logging
+        odometry
         pwm
         radio
 )

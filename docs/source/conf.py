@@ -41,6 +41,10 @@ primary_domain = 'c'
 templates_path = ['_templates']
 exclude_patterns = []
 
+import os
+os.environ['DOCUTILSCONFIG'] = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)), 'docutils.conf'
+)
 
 
 # -- Options for HTML output -------------------------------------------------
