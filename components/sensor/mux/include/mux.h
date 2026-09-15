@@ -53,6 +53,9 @@ typedef struct mux {
     adc_oneshot_unit_handle_t adc_handle;   /**< Multiplexer ADC unit handler. */
     pin_t address[NUMBER_OF_MUX_ADDRESSES]; /**< Multiplexer address pins. */
     pin_t common;                           /**< Multiplexer common pin. */
+#if defined(CONFIG_MAINBOARD_V1)
+    pin_t enable;                           /**< Multiplexer enable pin. */
+#endif
 } mux_t;
 
 /**
@@ -83,9 +86,9 @@ typedef struct mux {
  * @def MUX_ADC_RESOLUTION
  * @brief Multiplexer ADC resolution.
  *
- * **Default Value:** 4095
+ * **Default Value:** 4095.0f
  */
-#define MUX_ADC_RESOLUTION  4095
+#define MUX_ADC_RESOLUTION  4095.0f
 
 /**
  * @def MUX_ADC_UNIT

@@ -2,6 +2,7 @@
 #include "esp_err.h"
 #include "logging.h"
 #include "mux.h"
+#include "pinout.h"
 #include <stdint.h>
 
 static mux_t multiplexer = {
@@ -13,7 +14,10 @@ static mux_t multiplexer = {
         PIN_MUX_ADDR2,
         PIN_MUX_ADDR3
     },
-    .common = PIN_MUX_COMMON
+    .common = PIN_MUX_COMMON,
+#if defined(CONFIG_MAINBOARD_V1)
+    .enable = PIN_MUX_ENABLE,
+#endif
 };
 
 const char *mux_get_name(void) {
@@ -21,6 +25,19 @@ const char *mux_get_name(void) {
 }
 
 void mux_init(void) {
+#if defined(CONFIG_MAINBOARD_V1)
+    gpio_config_t pin_config = {
+        .pin_bit_mask   = (1ULL << multiplexer.enable),
+        .mode           = GPIO_MODE_OUTPUT,
+        .pull_up_en     = GPIO_PULLUP_DISABLE,
+        .pull_down_en   = GPIO_PULLDOWN_DISABLE,
+        .intr_type      = GPIO_INTR_DISABLE
+    };
+    ESP_ERROR_CHECK(gpio_config(&pin_config));
+
+    ESP_ERROR_CHECK(gpio_set_level(multiplexer.enable, (uint32_t) 0));
+#endif
+
     for (uint8_t i = 0; i < NUMBER_OF_MUX_ADDRESSES; i++) {
         gpio_config_t pin_config = {
             .pin_bit_mask   = (1ULL << multiplexer.address[i]),
