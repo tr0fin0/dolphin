@@ -56,7 +56,7 @@ typedef struct ir {
  * @def IR_RMT_CLOCK_RESOLUTION_HZ
  * @brief RMT clock resolution in hertz.
  *
- * **Default Value:** 1 MHz
+ * **Default Value:** 1 MHz, i.e., 1 tick = 1 µs
  */
 #define IR_RMT_CLOCK_RESOLUTION_HZ  1000000
 
@@ -80,9 +80,9 @@ typedef struct ir {
  * @def IR_RMT_SIGNAL_MIN_NS
  * @brief RMT signal minimum duration in nano-seconds.
  *
- * **Default Value:** 125 us
+ * **Default Value:** 1.25 us
  */
-#define IR_RMT_SIGNAL_MIN_NS 125000
+#define IR_RMT_SIGNAL_MIN_NS 1250
 
 /**
  * @brief Returns the infrared name.

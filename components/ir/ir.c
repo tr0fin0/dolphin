@@ -140,7 +140,7 @@ void ir_init(void) {
     ESP_ERROR_CHECK(
         rmt_receive(
             ir.rx_channel,
-            &ir.rx_buffer,
+            ir.rx_buffer,
             sizeof(ir.rx_buffer),
             &rmt_receive_config
         )
@@ -162,7 +162,7 @@ void ir_poll(void) {
         }
 
         // Re-arm RMT receiver for next pulse frame
-        rmt_receive_config_t receive_config = {
+        rmt_receive_config_t rmt_receive_config = {
             .signal_range_max_ns = IR_RMT_SIGNAL_MAX_NS,
             .signal_range_min_ns = IR_RMT_SIGNAL_MIN_NS,
         };
@@ -170,7 +170,7 @@ void ir_poll(void) {
             ir.rx_channel,
             ir.rx_buffer,
             sizeof(ir.rx_buffer),
-            &receive_config
+            &rmt_receive_config
         );
     }
 }
