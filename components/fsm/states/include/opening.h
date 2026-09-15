@@ -25,7 +25,7 @@
 typedef uint16_t opening_code_t;
 
 /**
- * @brief Opening interation step.
+ * @brief Opening iteration step.
  */
 typedef uint8_t opening_step_t;
 

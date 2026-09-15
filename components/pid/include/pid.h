@@ -26,9 +26,9 @@
  * @brief Proportial Integral Derivative controller parameters.
  */
 typedef struct pid {
-    float kp;               /**< Constaint gain for **Proportional** error. */
-    float ki;               /**< Constaint gain for **Integral** error. */
-    float kd;               /**< Constaint gain for **Derivative** error. */
+    float kp;               /**< Constraint gain for **Proportional** error. */
+    float ki;               /**< Constraint gain for **Integral** error. */
+    float kd;               /**< Constraint gain for **Derivative** error. */
 
     float current;          /**< Current controlled value. */
     float setpoint;         /**< Desired controlled value. */
@@ -46,7 +46,7 @@ typedef struct pid {
 } pid_t;
 
 /**
- * @brief Computes a Proportional Integral Derivative controller interation.
+ * @brief Computes a Proportional Integral Derivative controller iteration.
  *
  * Calculations occur at a @ref PID_PERIOD_MIN_US period based on elapsed time since
  * the last update.
