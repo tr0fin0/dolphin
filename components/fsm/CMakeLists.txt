@@ -15,6 +15,7 @@ idf_component_register(
     REQUIRES
         config
         esc
+        ir
         led
         logging
         pwm

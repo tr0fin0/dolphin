@@ -1,5 +1,6 @@
 #include "esc.h"
 #include "fsm.h"
+#include "ir.h"
 #include "led.h"
 #include "logging.h"
 #include "pwm.h"
@@ -100,6 +101,7 @@ const char *fsm_get_state_name(fsm_state_t state) {
 
 void fsm_init(void) {
     esc_init();
+    ir_init();
     radio_init();
 
     current_state = STATE_BOOT;
