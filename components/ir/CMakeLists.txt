@@ -1,12 +1,11 @@
 idf_component_register(
     SRCS
         "ir.c"
-        "protocol/protocol.c"
     INCLUDE_DIRS
         "include"
-        "protocol/include"
     REQUIRES
-        esp_driver_rmt
+        esp_driver_gpio
         logging
         pinout
+        soc
 )
