@@ -20,8 +20,8 @@ void app_main(void) {
 
         LOG_E(
             "encoder values %.04f | %.04f",
-            encoder_read_angle(ENCODER_L),
-            encoder_read_angle(ENCODER_R)
+            encoder_get_angle(ENCODER_L),
+            encoder_get_angle(ENCODER_R)
         );
 
         vTaskDelay(10);
