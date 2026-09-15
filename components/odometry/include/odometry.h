@@ -14,7 +14,7 @@
 /**
  * @def DEG2RAD(x)
  * @brief Converts an angle from degrees to radians.
- * 
+ *
  * @param[in] x Angle in degrees between 0 and 360 degrees.
  * @return Angle in radians between 0 and 2PI radians.
  */
