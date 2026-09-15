@@ -9,20 +9,41 @@
 #pragma once
 
 #include <stdint.h>
-#include "colors.h"
 #include "led_strip.h"
 #include "pinout.h"
 
 /**
- * @brief LED brightness in percentage.
- *
- * Where:
- *
- * - **minimal** brightness with `0%`.
- *
- * - **maximal** brightness with `100%`.
+ * @brief LED brightnesses in percentage.
  */
-typedef uint8_t led_brightness_t;
+typedef enum led_brightness {
+    LED_BRIGHTNESS_MIN = 0,         /**< LED brightness at ``  0 %``. */
+    LED_BRIGHTNESS_MED = 50,        /**< LED brightness at `` 50 %``. */
+    LED_BRIGHTNESS_MAX = 100,       /**< LED brightness at ``100 %``. */
+    NUMBER_OF_LED_BRIGHTNESSES = 3  /**< Number of LED brightnesses. */
+} led_brightness_t;
+
+/**
+ * @brief LED colors in RGB.
+ */
+typedef enum led_color {
+    LED_COLOR_BLACK = 0,    /**< ``{.r=  0, .g=  0, .b=  0}`` */
+    LED_COLOR_BLUE,         /**< ``{.r=  0, .g=  0, .b=255}`` */
+    LED_COLOR_BLUE_LIGHT,   /**< ``{.r=  0, .g= 90, .b=255}`` */
+    LED_COLOR_CYAN,         /**< ``{.r=  0, .g=255, .b=255}`` */
+    LED_COLOR_EMERALD,      /**< ``{.r=  0, .g=250, .b= 40}`` */
+    LED_COLOR_GREEN,        /**< ``{.r=  0, .g=230, .b=  0}`` */
+    LED_COLOR_GREEN_LIGHT,  /**< ``{.r=  0, .g=220, .b= 20}`` */
+    LED_COLOR_GREEN_LIME,   /**< ``{.r=163, .g=251, .b=  0}`` */
+    LED_COLOR_ORANGE_DARK,  /**< ``{.r=254, .g= 23, .b=  0}`` */
+    LED_COLOR_ORANGE_LIGHT, /**< ``{.r=255, .g= 48, .b=  0}`` */
+    LED_COLOR_PINK,         /**< ``{.r=240, .g=  0, .b= 80}`` */
+    LED_COLOR_PURPLE,       /**< ``{.r=252, .g=  3, .b=232}`` */
+    LED_COLOR_RED,          /**< ``{.r=255, .g=  0, .b=  0}`` */
+    LED_COLOR_SCARLET,      /**< ``{.r=255, .g=  0, .b=  6}`` */
+    LED_COLOR_WHITE,        /**< ``{.r=255, .g=255, .b=255}`` */
+    LED_COLOR_YELLOW,       /**< ``{.r=255, .g=115, .b=  0}`` */
+    NUMBER_OF_LED_COLORS    /**< Number of LED colors. */
+} led_color_t;
 
 /**
  * @brief LED operation state.
@@ -43,42 +64,26 @@ typedef enum led {
 } led_t;
 
 /**
+ * @brief LED configuration.
+ */
+typedef struct led_config {
+    const char *name;               /**< Human-readable null-terminated LED name.*/
+    led_brightness_t brightness;    /**< LED brightness in percentage. */
+    led_color_t color;              /**< LED RGB color. */
+    led_state_t state;              /**< LED operation state. */
+    int64_t interval_us;            /**< LED animation interval in microseconds. */
+    int64_t last_time_us;           /**< LED last update time in microseconds. */
+} led_config_t;
+
+/**
  * @brief LED array configuration.
  */
 typedef struct led_array {
-    const char *name;                               /**< Human-readable null-terminated LED array name.*/
-    pin_t pin;                                      /**< LED array pin connection. */
-    led_strip_handle_t strip;                       /**< LED strip handle. */
-    led_brightness_t brightness[NUMBER_OF_LEDS];    /**< LEDs brightness in percentage. */
-    led_color_t colors[NUMBER_OF_LEDS];             /**< LEDs color in RGB. */
-    led_state_t states[NUMBER_OF_LEDS];             /**< LEDs operation  states. */
-    int64_t intervals_us[NUMBER_OF_LEDS];           /**< LEDs animation interval in microseconds. */
-    int64_t last_time_us[NUMBER_OF_LEDS];           /**< LEDs last update time in microseconds. */
+    const char *name;                   /**< Human-readable null-terminated LED array name.*/
+    pin_t pin;                          /**< LED array pin connection. */
+    led_strip_handle_t strip;           /**< LED strip handle. */
+    led_config_t leds[NUMBER_OF_LEDS];  /**< LEDs configurations. */
 } led_array_t;
-
-/**
- * @def LED_BRIGHTNESS_MIN
- * @brief LED minimal brightness percentage.
- *
- * **Default Value:** 0%
- */
-#define LED_BRIGHTNESS_MIN  0
-
-/**
- * @def LED_BRIGHTNESS_MED
- * @brief LED medium brightness percentage.
- *
- * **Default Value:** 50%
- */
-#define LED_BRIGHTNESS_MED  50
-
-/**
- * @def LED_BRIGHTNESS_MAX
- * @brief LED maximal brightness percentage.
- *
- * **Default Value:** 100%
- */
-#define LED_BRIGHTNESS_MAX  100
 
 /**
  * @def LED_RESOLUTION_HZ
@@ -87,6 +92,29 @@ typedef struct led_array {
  * **Default Value:** 10 MHz
  */
 #define LED_RESOLUTION_HZ   10000000
+
+/**
+ * @brief Returns the LED array name.
+ *
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_array_name(void);
+
+/**
+ * @brief Returns the LED color name.
+ *
+ * @param[in] color LED color.
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_color_name(led_color_t color);
+
+/**
+ * @brief Returns the LED name.
+ *
+ * @param[in] led LED name.
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *led_get_name(led_t led);
 
 /**
  * @brief Initialization of all individual LEDs on the strip.

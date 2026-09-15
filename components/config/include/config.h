@@ -30,6 +30,21 @@ typedef enum config_control_mode {
 #define CONFIG_CONTROL_MODE     CONFIG_CONTROL_RADIO
 
 /**
+ * @def CONFIG_MAINBOARD_V1
+ * @def CONFIG_MAINBOARD_V2
+ * @brief Current mainboard version.
+ *
+ * Basically modifying the @ref pin enumerate.
+ *
+ * @note Available versions:
+ * - ``CONFIG_MAINBOARD_V1``: made in Altium
+ * - ``CONFIG_MAINBOARD_V2``: made in KiCAD
+ *
+ * **Default Value:** ``CONFIG_MAINBOARD_V2``
+ */
+#define CONFIG_MAINBOARD_V2
+
+/**
  * @def CONFIG_PROJECT_NAME
  * @brief Project name identifier.
  *
