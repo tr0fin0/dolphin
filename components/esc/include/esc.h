@@ -61,6 +61,14 @@ typedef enum esc {
 #define ESC_PERIOD_US       20000
 
 /**
+ * @brief Returns the ESC name.
+ *
+ * @param[in] esc ESC position.
+ * @return Human-readable null-terminated string representing the name.
+ */
+const char *esc_get_name(esc_t esc);
+
+/**
  * @brief Initialize all ESCs to the same MCPWM driver.
  *
  * Uses MCPWM Unit 0 on Timer 0 for standard RC timing of 50 Hz, 20 ms period.
