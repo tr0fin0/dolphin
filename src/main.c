@@ -1,7 +1,7 @@
+#include "freertos/FreeRTOS.h"
 #include "fsm.h"
 #include "led.h"
 #include "logging.h"
-#include "freertos/FreeRTOS.h"
 
 void app_main(void) {
     logging_init_async();

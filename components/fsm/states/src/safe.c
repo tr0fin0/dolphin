@@ -1,6 +1,7 @@
 #include "config.h"
 #include "esc.h"
 #include "fsm.h"
+#include "ir.h"
 #include "opening.h"
 #include "radio.h"
 #include "safe.h"
@@ -12,15 +13,24 @@ void safe_entry(void) {
 }
 
 void safe_run(void) {
-    if (radio_get_status() == RADIO_CONNECTED) {
-        if (CONFIG_CONTROL_MODE == CONFIG_CONTROL_AUTONOMOUS) {
-            fsm_transition(STATE_COUNTDOWN);
-        } else {
-            if (opening_step == OPENING_ITERATIONS) {
-                fsm_transition(STATE_MANUAL);
-            } else {
-                fsm_transition(STATE_OPENING);
+    switch (CONFIG_CONTROL_MODE) {
+        case CONFIG_CONTROL_AUTONOMOUS:
+            if (ir_get_state() == IR_STATE_START) {
+                fsm_transition(STATE_SEARCH);
             }
-        }
+            break;
+
+        case CONFIG_CONTROL_RADIO:
+            if (radio_get_status() == RADIO_CONNECTED) {
+                if (opening_step == OPENING_ITERATIONS) {
+                    fsm_transition(STATE_MANUAL);
+                } else {
+                    fsm_transition(STATE_OPENING);
+                }
+            }
+            break;
+
+        default:
+            break;
     }
 }
