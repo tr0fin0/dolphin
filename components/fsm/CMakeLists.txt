@@ -3,7 +3,6 @@ idf_component_register(
         "fsm.c"
         "states/src/attack.c"
         "states/src/boot.c"
-        "states/src/countdown.c"
         "states/src/manual.c"
         "states/src/opening.c"
         "states/src/safe.c"
@@ -15,6 +14,7 @@ idf_component_register(
     REQUIRES
         config
         esc
+        ir
         led
         logging
         pwm

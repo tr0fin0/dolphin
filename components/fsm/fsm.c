@@ -1,12 +1,12 @@
 #include "esc.h"
 #include "fsm.h"
+#include "ir.h"
 #include "led.h"
 #include "logging.h"
 #include "pwm.h"
 #include "radio.h"
 #include "states/include/attack.h"
 #include "states/include/boot.h"
-#include "states/include/countdown.h"
 #include "states/include/manual.h"
 #include "states/include/opening.h"
 #include "states/include/safe.h"
@@ -38,13 +38,6 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
         .color      = LED_COLOR_WHITE,
         .on_entry   = NULL,
         .on_run     = boot_run,
-        .on_exit    = NULL
-    },
-    [STATE_COUNTDOWN] = {
-        .name       = "COUNTDOWN",
-        .color      = LED_COLOR_ORANGE_LIGHT,
-        .on_entry   = NULL,
-        .on_run     = countdown_run,
         .on_exit    = NULL
     },
     [STATE_MANUAL] = {
@@ -100,6 +93,7 @@ const char *fsm_get_state_name(fsm_state_t state) {
 
 void fsm_init(void) {
     esc_init();
+    ir_init();
     radio_init();
 
     current_state = STATE_BOOT;
