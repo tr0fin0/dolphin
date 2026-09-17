@@ -13,6 +13,8 @@
 
 /**
  * @brief Multiplexer address pins.
+ *
+ * @note Each @ref mux_channel is accessed via a binary address combination.
  */
 typedef enum mux_address {
     MUX_ADDRESS_0 = 0,          /**< Multiplexer address ``0`` pin. */
@@ -24,24 +26,26 @@ typedef enum mux_address {
 
 /**
  * @brief Multiplexer channels pins.
+ *
+ * @note Each @ref mux_address represent a bit in the channel address.
  */
 typedef enum mux_channel {
-    MUX_CHANNEL_00 = 0,     /**< Multiplexer channel ``00``. */
-    MUX_CHANNEL_01,         /**< Multiplexer channel ``01``. */
-    MUX_CHANNEL_02,         /**< Multiplexer channel ``02``. */
-    MUX_CHANNEL_03,         /**< Multiplexer channel ``03``. */
-    MUX_CHANNEL_04,         /**< Multiplexer channel ``04``. */
-    MUX_CHANNEL_05,         /**< Multiplexer channel ``05``. */
-    MUX_CHANNEL_06,         /**< Multiplexer channel ``06``. */
-    MUX_CHANNEL_07,         /**< Multiplexer channel ``07``. */
-    MUX_CHANNEL_08,         /**< Multiplexer channel ``08``. */
-    MUX_CHANNEL_09,         /**< Multiplexer channel ``09``. */
-    MUX_CHANNEL_10,         /**< Multiplexer channel ``10``. */
-    MUX_CHANNEL_11,         /**< Multiplexer channel ``11``. */
-    MUX_CHANNEL_12,         /**< Multiplexer channel ``12``. */
-    MUX_CHANNEL_13,         /**< Multiplexer channel ``13``. */
-    MUX_CHANNEL_14,         /**< Multiplexer channel ``14``. */
-    MUX_CHANNEL_15,         /**< Multiplexer channel ``15``. */
+    MUX_CHANNEL_00 = 0,     /**< Multiplexer channel ``00`` address ``0b0000``. */
+    MUX_CHANNEL_01,         /**< Multiplexer channel ``01`` address ``0b0001``. */
+    MUX_CHANNEL_02,         /**< Multiplexer channel ``02`` address ``0b0010``. */
+    MUX_CHANNEL_03,         /**< Multiplexer channel ``03`` address ``0b0011``. */
+    MUX_CHANNEL_04,         /**< Multiplexer channel ``04`` address ``0b0100``. */
+    MUX_CHANNEL_05,         /**< Multiplexer channel ``05`` address ``0b0101``. */
+    MUX_CHANNEL_06,         /**< Multiplexer channel ``06`` address ``0b0110``. */
+    MUX_CHANNEL_07,         /**< Multiplexer channel ``07`` address ``0b0111``. */
+    MUX_CHANNEL_08,         /**< Multiplexer channel ``08`` address ``0b1000``. */
+    MUX_CHANNEL_09,         /**< Multiplexer channel ``09`` address ``0b1001``. */
+    MUX_CHANNEL_10,         /**< Multiplexer channel ``10`` address ``0b1010``. */
+    MUX_CHANNEL_11,         /**< Multiplexer channel ``11`` address ``0b1011``. */
+    MUX_CHANNEL_12,         /**< Multiplexer channel ``12`` address ``0b1100``. */
+    MUX_CHANNEL_13,         /**< Multiplexer channel ``13`` address ``0b1101``. */
+    MUX_CHANNEL_14,         /**< Multiplexer channel ``14`` address ``0b1110``. */
+    MUX_CHANNEL_15,         /**< Multiplexer channel ``15`` address ``0b1111``. */
     NUMBER_OF_MUX_CHANNELS, /**< Number of multiplexer channels pins. */
 } mux_channel_t;
 
