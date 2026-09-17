@@ -1,3 +1,7 @@
+# Documentation
+
+_index.md
+
 # Firmware
 
 ## exclusions
@@ -15,6 +19,9 @@ docs/build/
 docs/source/firmware/api/rst
 docs/source/firmware/api/xml
 
+# Global
+
+temp/
 
 # Hardware KiCad.gitignore by https://gitignore.org
 
