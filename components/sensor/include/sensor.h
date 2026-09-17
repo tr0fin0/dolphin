@@ -33,22 +33,16 @@ typedef struct sensor_config {
  * @brief Sensor positions.
  */
 typedef enum sensor {
-    SENSOR_01 = 0,      /**< Sensor on the position ``01``. */
-    SENSOR_JS2_FR,      /**< Obstacle sensor on the front right position. */
+    SENSOR_JS2_DL = 0,  /**< Obstacle sensor on the diagonal left position. */
     SENSOR_JS2_DR,      /**< Obstacle sensor on the diagonal right position. */
-    SENSOR_JS2_LR,      /**< Obstacle sensor on the lateral right position. */
-    SENSOR_QRE_FR,      /**< Line sensor on the front right position. */
-    SENSOR_QRE_BR,      /**< Line sensor on the back right position. */
-    SENSOR_07,          /**< Sensor on the position ``07``. */
-    SENSOR_08,          /**< Sensor on the position ``08``. */
-    SENSOR_09,          /**< Sensor on the position ``09``. */
-    SENSOR_10,          /**< Sensor on the position ``10``. */
-    SENSOR_QRE_BL,      /**< Line sensor on the back left position. */
-    SENSOR_QRE_FL,      /**< Line sensor on the front left position. */
-    SENSOR_JS2_LL,      /**< Obstacle sensor on the lateral left position. */
-    SENSOR_JS2_DL,      /**< Obstacle sensor on the diagonal left position. */
     SENSOR_JS2_FL,      /**< Obstacle sensor on the front left position. */
-    SENSOR_16,          /**< Sensor on the position ``16``. */
+    SENSOR_JS2_FR,      /**< Obstacle sensor on the front right position. */
+    SENSOR_JS2_LL,      /**< Obstacle sensor on the lateral left position. */
+    SENSOR_JS2_LR,      /**< Obstacle sensor on the lateral right position. */
+    SENSOR_QRE_BL,      /**< Line sensor on the back left position. */
+    SENSOR_QRE_BR,      /**< Line sensor on the back right position. */
+    SENSOR_QRE_FL,      /**< Line sensor on the front left position. */
+    SENSOR_QRE_FR,      /**< Line sensor on the front right position. */
     NUMBER_OF_SENSORS   /**< Number of sensor positions. */
 } sensor_t;
 
