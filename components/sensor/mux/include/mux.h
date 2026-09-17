@@ -74,6 +74,7 @@ typedef struct mux {
  */
 #define MUX_ADC_BITWIDTH    ADC_BITWIDTH_DEFAULT
 
+#if defined(CONFIG_MAINBOARD_V2)
 /**
  * @def MUX_ADC_CHANNEL
  * @brief Multiplexer ADC channel.
@@ -81,6 +82,15 @@ typedef struct mux {
  * **Default Value:** ``ADC_CHANNEL_5``
  */
 #define MUX_ADC_CHANNEL     ADC_CHANNEL_5
+#elif defined(CONFIG_MAINBOARD_V1)
+/**
+ * @def MUX_ADC_CHANNEL
+ * @brief Multiplexer ADC channel.
+ *
+ * **Default Value:** ``ADC_CHANNEL_6``
+ */
+#define MUX_ADC_CHANNEL     ADC_CHANNEL_6
+#endif
 
 /**
  * @def MUX_ADC_RESOLUTION
@@ -90,6 +100,7 @@ typedef struct mux {
  */
 #define MUX_ADC_RESOLUTION  4095.0f
 
+#if defined(CONFIG_MAINBOARD_V2)
 /**
  * @def MUX_ADC_UNIT
  * @brief Multiplexer ADC unit.
@@ -97,6 +108,15 @@ typedef struct mux {
  * **Default Value:** ``ADC_UNIT_2``
  */
 #define MUX_ADC_UNIT        ADC_UNIT_2
+#elif defined(CONFIG_MAINBOARD_V1)
+/**
+ * @def MUX_ADC_UNIT
+ * @brief Multiplexer ADC unit.
+ *
+ * **Default Value:** ``ADC_UNIT_1``
+ */
+#define MUX_ADC_UNIT        ADC_UNIT_1
+#endif
 
 /**
  * @brief Return the Multiplexer name.
