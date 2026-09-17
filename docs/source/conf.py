@@ -29,11 +29,11 @@ breathe_projects = {
 breathe_default_project = "firmware"
 
 exhale_args = {
-    "createTreeView":        True,
-    "containmentFolder":     "./firmware/api/rst",
-    "doxygenStripFromPath":  "./firmware/api/xml",
-    "rootFileName":          "index.rst",
-    "rootFileTitle":         "API",
+    "createTreeView":       True,
+    "containmentFolder":    "./firmware/api/rst",
+    "doxygenStripFromPath": "./firmware/api/xml",
+    "rootFileName":         "index.rst",
+    "rootFileTitle":        "API",
 }
 
 primary_domain = 'c'
