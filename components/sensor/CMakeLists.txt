@@ -6,6 +6,7 @@ idf_component_register(
         "include"
         "mux/include"
     REQUIRES
+        ema
         esp_driver_gpio
         esp_adc
         logging

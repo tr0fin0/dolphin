@@ -50,15 +50,32 @@ typedef enum mux_channel {
 } mux_channel_t;
 
 /**
+ * @def MUX_BUFFER_SIZE
+ * @brief Multiplexer measurements buffer size.
+ *
+ * **Default Value:** ``5``
+ */
+#define MUX_BUFFER_SIZE 5
+
+/**
+ * @brief Multiplexer circular buffer.
+ */
+typedef struct mux_buffer {
+    uint16_t measures[MUX_BUFFER_SIZE]; /**< ADC measurements. */
+    uint8_t head;                       /**< Current buffer head. */
+} mux_buffer_t;
+
+/**
  * @brief Multiplexer abstraction.
  */
 typedef struct mux {
-    const char *name;                       /**< Human-readable null-terminated Multiplexer name. */
-    adc_oneshot_unit_handle_t adc_handle;   /**< Multiplexer ADC unit handler. */
-    pin_t address[NUMBER_OF_MUX_ADDRESSES]; /**< Multiplexer address pins. */
-    pin_t common;                           /**< Multiplexer common pin. */
+    const char *name;                               /**< Human-readable null-terminated Multiplexer name. */
+    adc_oneshot_unit_handle_t adc_handle;           /**< Multiplexer ADC unit handler. */
+    mux_buffer_t buffers[NUMBER_OF_MUX_CHANNELS];  /**< Multiplexer ADC measurements. */
+    pin_t address[NUMBER_OF_MUX_ADDRESSES];         /**< Multiplexer address pins. */
+    pin_t common;                                   /**< Multiplexer common pin. */
 #if defined(CONFIG_MAINBOARD_V1)
-    pin_t enable;                           /**< Multiplexer enable pin. */
+    pin_t enable;                                   /**< Multiplexer enable pin. */
 #endif
 } mux_t;
 

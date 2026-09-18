@@ -1,4 +1,5 @@
 #include "driver/gpio.h"
+#include "ema.h"
 #include "esp_err.h"
 #include "logging.h"
 #include "mux.h"
@@ -50,6 +51,14 @@ void mux_init(void) {
     }
     LOG_I("%s address pins initialized.", mux_get_name());
 
+    for(uint8_t channel = 0; channel < NUMBER_OF_MUX_CHANNELS; channel++) {
+        multiplexer.buffers[channel].head = 0;
+        for(uint8_t i = 0; i < MUX_BUFFER_SIZE; i++) {
+            multiplexer.buffers[channel].measures[i] = 0;
+        }
+    }
+    multiplexer.current_channel = 0;
+
     adc_oneshot_unit_init_cfg_t adc_unit_config = {
         .unit_id = MUX_ADC_UNIT,
     };
@@ -76,18 +85,12 @@ void mux_init(void) {
 }
 
 float mux_read_channel(mux_channel_t channel) {
-    for (uint8_t i = 0; i < NUMBER_OF_MUX_ADDRESSES; i++) {
-        ESP_ERROR_CHECK(
-            gpio_set_level(multiplexer.address[i], ((channel >> i) & 1))
-        );
-    }
-    esp_rom_delay_us(1);
-    LOG_V("%s reading channel %02d.", mux_get_name(), channel);
-
-    int adc_value;
-    ESP_ERROR_CHECK(
-        adc_oneshot_read(multiplexer.adc_handle, MUX_ADC_CHANNEL, &adc_value)
+    uint16_t channel_value = ema_compute_circular(
+        (uint16_t *) &multiplexer.buffers[channel].measures,
+        MUX_BUFFER_SIZE,
+        multiplexer.buffers[channel].head,
+        0.3333f
     );
 
-    return ((float) (adc_value / MUX_ADC_RESOLUTION));
+    return ((float) (channel_value / MUX_ADC_RESOLUTION));
 }
