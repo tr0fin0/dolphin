@@ -9,6 +9,7 @@
 #pragma once
 
 #include "esp_adc/adc_oneshot.h"
+#include "esp_timer.h"
 #include "pinout.h"
 
 /**
@@ -71,7 +72,9 @@ typedef struct mux_buffer {
 typedef struct mux {
     const char *name;                               /**< Human-readable null-terminated Multiplexer name. */
     adc_oneshot_unit_handle_t adc_handle;           /**< Multiplexer ADC unit handler. */
+    esp_timer_handle_t timer_handle;                /**< . */
     mux_buffer_t buffers[NUMBER_OF_MUX_CHANNELS];  /**< Multiplexer ADC measurements. */
+    mux_channel_t current_channel;                  /**< . */
     pin_t address[NUMBER_OF_MUX_ADDRESSES];         /**< Multiplexer address pins. */
     pin_t common;                                   /**< Multiplexer common pin. */
 #if defined(CONFIG_MAINBOARD_V1)
@@ -127,6 +130,9 @@ typedef struct mux {
  * @brief Multiplexer ADC unit.
  *
  * **Default Value:** ``ADC_UNIT_2``
+ *
+ * @note ADC2 is shared with the Wi-Fi. Therefore, only one may be used at a
+ * time.
  */
 #define MUX_ADC_UNIT        ADC_UNIT_2
 #elif defined(CONFIG_MAINBOARD_V1)
@@ -138,6 +144,17 @@ typedef struct mux {
  */
 #define MUX_ADC_UNIT        ADC_UNIT_1
 #endif
+
+/**
+ * @def MUX_TIMER_PERIOD_US
+ * @brief Multiplexer Timer Period in microseconds.
+ *
+ * @note Enure timer period is set to at least 3 to 4 times the duration of that
+ * logged execution time.
+ *
+ * **Default Value:** ``1000 us``
+ */
+#define MUX_TIMER_PERIOD_US 1000
 
 /**
  * @brief Return the Multiplexer name.

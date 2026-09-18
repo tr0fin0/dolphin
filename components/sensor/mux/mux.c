@@ -21,6 +21,33 @@ static mux_t multiplexer = {
 #endif
 };
 
+/**
+ * @brief Multiplexer Timer Callback
+ *
+ * Every @ref MUX_TIMER_PERIOD_US this function is called, storing the ADC
+ * measure in the respective @ref mux_buffer_t channel.
+ */
+static void mux_timer_callback(void* arg) {
+    int adc_value = 0;
+    ESP_ERROR_CHECK(
+        adc_oneshot_read(multiplexer.adc_handle, MUX_ADC_CHANNEL, &adc_value)
+    );
+
+    mux_channel_t channel = multiplexer.current_channel;
+    mux_buffer_t *buffer  = &multiplexer.buffers[channel];
+
+    buffer->measures[buffer->head] = (uint16_t) adc_value;
+
+    buffer->head                = (buffer->head + 1) % MUX_BUFFER_SIZE;
+    multiplexer.current_channel = (channel + 1) % NUMBER_OF_MUX_CHANNELS;
+
+    for (uint8_t i = 0; i < NUMBER_OF_MUX_ADDRESSES; i++) {
+        gpio_set_level(
+            multiplexer.address[i], ((multiplexer.current_channel >> i) & 0x1)
+        );
+    }
+}
+
 const char *mux_get_name(void) {
     return multiplexer.name;
 }
@@ -74,6 +101,16 @@ void mux_init(void) {
         adc_oneshot_config_channel(
             multiplexer.adc_handle, MUX_ADC_CHANNEL, &adc_channel_config
         )
+    );
+
+    const esp_timer_create_args_t timer_args = {
+        .name            = "MUX ADC Timer",
+        .callback        = &mux_timer_callback,
+        .dispatch_method = ESP_TIMER_TASK
+    };
+    ESP_ERROR_CHECK(esp_timer_create(&timer_args, &multiplexer.timer_handle));
+    ESP_ERROR_CHECK(
+        esp_timer_start_periodic(multiplexer.timer_handle, MUX_TIMER_PERIOD_US)
     );
 
     LOG_I(

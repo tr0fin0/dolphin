@@ -7,8 +7,9 @@ idf_component_register(
         "mux/include"
     REQUIRES
         ema
-        esp_driver_gpio
         esp_adc
+        esp_driver_gpio
+        esp_timer
         logging
         pinout
 )
