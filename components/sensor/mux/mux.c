@@ -28,18 +28,26 @@ static mux_t multiplexer = {
  * measure in the respective @ref mux_buffer_t channel.
  */
 static void mux_timer_callback(void* arg) {
-    int adc_value = 0;
-    ESP_ERROR_CHECK(
-        adc_oneshot_read(multiplexer.adc_handle, MUX_ADC_CHANNEL, &adc_value)
-    );
-
     mux_channel_t channel = multiplexer.current_channel;
     mux_buffer_t *buffer  = &multiplexer.buffers[channel];
 
-    buffer->measures[buffer->head] = (uint16_t) adc_value;
+    if (buffer->active) {
+        int adc_value = 0;
+        ESP_ERROR_CHECK(
+            adc_oneshot_read(
+                multiplexer.adc_handle, MUX_ADC_CHANNEL, &adc_value
+            )
+        );
 
-    buffer->head                = (buffer->head + 1) % MUX_BUFFER_SIZE;
-    multiplexer.current_channel = (channel + 1) % NUMBER_OF_MUX_CHANNELS;
+        buffer->measures[buffer->head] = (uint16_t) adc_value;
+        buffer->head                   = (buffer->head + 1) % MUX_BUFFER_SIZE;
+    }
+
+    do {
+        channel = (channel + 1) % NUMBER_OF_MUX_CHANNELS;
+    } while (!multiplexer.buffers[channel].active);
+
+    multiplexer.current_channel = channel;
 
     for (uint8_t i = 0; i < NUMBER_OF_MUX_ADDRESSES; i++) {
         gpio_set_level(
@@ -52,7 +60,7 @@ const char *mux_get_name(void) {
     return multiplexer.name;
 }
 
-void mux_init(void) {
+void mux_init(mux_buffer_t *buffers_config) {
 #if defined(CONFIG_MAINBOARD_V1)
     gpio_config_t pin_config = {
         .pin_bit_mask   = (1ULL << multiplexer.enable),
@@ -78,8 +86,15 @@ void mux_init(void) {
     }
     LOG_I("%s address pins initialized.", mux_get_name());
 
+    uint8_t active_buffers = 0;
     for(uint8_t channel = 0; channel < NUMBER_OF_MUX_CHANNELS; channel++) {
+        multiplexer.buffers[channel].active = buffers_config[channel].active;
+        if (multiplexer.buffers[channel].active) {
+            active_buffers++;
+        }
+
         multiplexer.buffers[channel].head = 0;
+
         for(uint8_t i = 0; i < MUX_BUFFER_SIZE; i++) {
             multiplexer.buffers[channel].measures[i] = 0;
         }
@@ -103,15 +118,21 @@ void mux_init(void) {
         )
     );
 
-    const esp_timer_create_args_t timer_args = {
-        .name            = "MUX ADC Timer",
-        .callback        = &mux_timer_callback,
-        .dispatch_method = ESP_TIMER_TASK
-    };
-    ESP_ERROR_CHECK(esp_timer_create(&timer_args, &multiplexer.timer_handle));
-    ESP_ERROR_CHECK(
-        esp_timer_start_periodic(multiplexer.timer_handle, MUX_TIMER_PERIOD_US)
-    );
+    if (active_buffers > 0) {
+        const esp_timer_create_args_t timer_args = {
+            .name            = "MUX ADC Timer",
+            .callback        = &mux_timer_callback,
+            .dispatch_method = ESP_TIMER_TASK
+        };
+        ESP_ERROR_CHECK(
+            esp_timer_create(&timer_args, &multiplexer.timer_handle)
+        );
+        ESP_ERROR_CHECK(
+            esp_timer_start_periodic(
+                multiplexer.timer_handle, MUX_TIMER_PERIOD_US
+            )
+        );
+    }
 
     LOG_I(
         "%s common pin ADC%dCH%d initialized.",

@@ -85,5 +85,14 @@ float sensor_get_value(sensor_t sensor) {
 }
 
 void sensor_init(void) {
-    mux_init();
+    mux_buffer_t buffers_config[NUMBER_OF_MUX_CHANNELS];
+    for (uint8_t i = 0; i < NUMBER_OF_MUX_CHANNELS; i++) {
+        buffers_config[i].active = false;
+    }
+
+    for (uint8_t j = 0; j < NUMBER_OF_SENSORS; j++) {
+        buffers_config[sensors[j].channel].active = true;
+    }
+
+    mux_init(buffers_config);
 }

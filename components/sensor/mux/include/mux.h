@@ -62,6 +62,7 @@ typedef enum mux_channel {
  * @brief Multiplexer circular buffer.
  */
 typedef struct mux_buffer {
+    bool active;                        /**< When active is ``true``, ADC buffer measurements are stored. */
     uint16_t measures[MUX_BUFFER_SIZE]; /**< ADC buffer measurements. */
     uint8_t head;                       /**< Position of the oldest value in the buffer. */
 } mux_buffer_t;
@@ -182,8 +183,10 @@ const char *mux_get_name(void);
 
 /**
  * @brief Initialization of the Multiplexer.
+ * 
+ * @param[in] buffers_config Array of multiplexer channel buffer configurations.
  */
-void mux_init(void);
+void mux_init(mux_buffer_t *buffers_config);
 
 /**
  * @brief Return the Multiplexer channel value as percentage of @ref MUX_ADC_RESOLUTION.
