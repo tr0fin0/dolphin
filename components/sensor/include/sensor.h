@@ -66,6 +66,7 @@ typedef enum sensor {
  * @brief Returns the sensor name.
  *
  * @param[in] sensor Sensor position.
+ *
  * @return Human-readable null-terminated string representing the sensor name.
  */
 const char *sensor_get_name(sensor_t sensor);
@@ -81,6 +82,7 @@ const char *sensor_get_name(sensor_t sensor);
  * threshold.
  *
  * @param[in] sensor Sensor position.
+ *
  * @return Measured sensor value
  */
 float sensor_get_value(sensor_t sensor);

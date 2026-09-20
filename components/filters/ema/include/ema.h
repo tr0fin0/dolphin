@@ -29,7 +29,7 @@
  * @param[in] head Position of the oldest value in the buffer.
  * @param[in] alpha Filter smoothing factor between 0 and 1.
  *
- * @note If alpha value is not in ``[0, 1]``, @ref EMA_ALPHA_CALCULATED applies.
+ * @note If alpha value is not in ``(0, 1)``, @ref EMA_ALPHA_CALCULATED applies.
  *
  * @return Exponential moving average of the circular buffer as ``uint16_t``.
  */

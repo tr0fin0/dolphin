@@ -62,8 +62,8 @@ typedef enum mux_channel {
  * @brief Multiplexer circular buffer.
  */
 typedef struct mux_buffer {
-    uint16_t measures[MUX_BUFFER_SIZE]; /**< ADC measurements. */
-    uint8_t head;                       /**< Current buffer head. */
+    uint16_t measures[MUX_BUFFER_SIZE]; /**< ADC buffer measurements. */
+    uint8_t head;                       /**< Position of the oldest value in the buffer. */
 } mux_buffer_t;
 
 /**
@@ -72,9 +72,9 @@ typedef struct mux_buffer {
 typedef struct mux {
     const char *name;                               /**< Human-readable null-terminated Multiplexer name. */
     adc_oneshot_unit_handle_t adc_handle;           /**< Multiplexer ADC unit handler. */
-    esp_timer_handle_t timer_handle;                /**< . */
-    mux_buffer_t buffers[NUMBER_OF_MUX_CHANNELS];  /**< Multiplexer ADC measurements. */
-    mux_channel_t current_channel;                  /**< . */
+    esp_timer_handle_t timer_handle;                /**< Multiplexer Timer handler. */
+    mux_buffer_t buffers[NUMBER_OF_MUX_CHANNELS];   /**< Multiplexer ADC measurements buffer. */
+    mux_channel_t current_channel;                  /**< Multiplexer current measured channel. */
     pin_t address[NUMBER_OF_MUX_ADDRESSES];         /**< Multiplexer address pins. */
     pin_t common;                                   /**< Multiplexer common pin. */
 #if defined(CONFIG_MAINBOARD_V1)
@@ -94,9 +94,11 @@ typedef struct mux {
  * @def MUX_ADC_BITWIDTH
  * @brief Multiplexer ADC bitwidth in bits.
  *
- * **Default Value:** ``ADC_BITWIDTH_DEFAULT``
+ * **Default Value:** ``ADC_BITWIDTH_12``
+ *
+ * @note ESP32S3 has a 12 bit resolution ADC.
  */
-#define MUX_ADC_BITWIDTH    ADC_BITWIDTH_DEFAULT
+#define MUX_ADC_BITWIDTH    ADC_BITWIDTH_12
 
 #if defined(CONFIG_MAINBOARD_V2)
 /**
@@ -104,6 +106,9 @@ typedef struct mux {
  * @brief Multiplexer ADC channel.
  *
  * **Default Value:** ``ADC_CHANNEL_5``
+ *
+ * @note Depending on the @ref PIN_MUX_COMMON , a different ADC channel is
+ * available.
  */
 #define MUX_ADC_CHANNEL     ADC_CHANNEL_5
 #elif defined(CONFIG_MAINBOARD_V1)
@@ -112,6 +117,9 @@ typedef struct mux {
  * @brief Multiplexer ADC channel.
  *
  * **Default Value:** ``ADC_CHANNEL_6``
+ *
+ * @note Depending on the @ref PIN_MUX_COMMON , a different ADC channel is
+ * available.
  */
 #define MUX_ADC_CHANNEL     ADC_CHANNEL_6
 #endif
@@ -120,7 +128,9 @@ typedef struct mux {
  * @def MUX_ADC_RESOLUTION
  * @brief Multiplexer ADC resolution.
  *
- * **Default Value:** 4095.0f
+ * **Default Value:** ``4095.0f``
+ *
+ * @note Based in the @ref MUX_ADC_BITWIDTH value: \f[ 4095 = 2^{12} - 1 \f]
  */
 #define MUX_ADC_RESOLUTION  4095.0f
 
@@ -131,7 +141,10 @@ typedef struct mux {
  *
  * **Default Value:** ``ADC_UNIT_2``
  *
- * @note ADC2 is shared with the Wi-Fi. Therefore, only one may be used at a
+ * @note Depending on the @ref PIN_MUX_COMMON , a different ADC unit is
+ * available.
+ *
+ * @warning ADC2 is shared with the Wi-Fi. Therefore, only one may be used at a
  * time.
  */
 #define MUX_ADC_UNIT        ADC_UNIT_2
@@ -141,6 +154,9 @@ typedef struct mux {
  * @brief Multiplexer ADC unit.
  *
  * **Default Value:** ``ADC_UNIT_1``
+ *
+ * @note Depending on the @ref PIN_MUX_COMMON , a different ADC unit is
+ * available.
  */
 #define MUX_ADC_UNIT        ADC_UNIT_1
 #endif
@@ -149,8 +165,8 @@ typedef struct mux {
  * @def MUX_TIMER_PERIOD_US
  * @brief Multiplexer Timer Period in microseconds.
  *
- * @note Enure timer period is set to at least 3 to 4 times the duration of that
- * logged execution time.
+ * @note Ensure timer period is set to at least 3 to 4 times the duration of the
+ * logging execution time.
  *
  * **Default Value:** ``1000 us``
  */
@@ -176,6 +192,7 @@ void mux_init(void);
  * percentage of the maximum 3V3 voltage supported.
  *
  * @param[in] channel Multiplexer channel.
- * @return Measured Multiplexer channel value.
+ *
+ * @return Measured multiplexer channel value.
  */
 float mux_read_channel(mux_channel_t channel);
