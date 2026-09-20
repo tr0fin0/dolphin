@@ -122,12 +122,12 @@ void mux_init(void) {
 }
 
 float mux_read_channel(mux_channel_t channel) {
-    uint16_t channel_value = ema_compute_circular(
-        (uint16_t *) &multiplexer.buffers[channel].measures,
+    uint16_t measure = ema_compute_circular(
+        multiplexer.buffers[channel].measures,
         MUX_BUFFER_SIZE,
         multiplexer.buffers[channel].head,
         0.3333f
     );
 
-    return ((float) (channel_value / MUX_ADC_RESOLUTION));
+    return ((float) measure / MUX_ADC_RESOLUTION);
 }

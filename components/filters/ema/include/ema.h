@@ -13,23 +13,23 @@
 #include <stdint.h>
 
 /**
- * @def EMA_ALPHA_DEFAULT
- * @brief Exponential Moving Average with smoothing factor alpha.
+ * @def EMA_ALPHA_CALCULATED
+ * @brief EMA smoothing factor alpha calculated with buffer capacity.
  *
- * @note Smoothing factor is computed as: \f[ \alpha = \frac{2}{N + 1} \f] With
- * \f$ N \f$ being the number of periods in the average.
- *
- * **Default Value:** ``0.3333``
+ * @note Smoothing factor is calculated as: \f[ \alpha = \frac{2}{N + 1} \f]
+ * With \f$ N \f$ being the buffer capacity.
  */
-#define EMA_ALPHA_DEFAULT 0.3333f
+#define EMA_ALPHA_CALCULATED -1.0f
 
 /**
  * @brief Computes the exponential moving average of a circular buffer.
  *
  * @param[in] buffer Pointer to a measurements buffer.
- * @param[in] capacity Capacity of the buffer.
- * @param[in] head Oldest value in the buffer.
- * @param[in] alpha Filter smoothing factor.
+ * @param[in] capacity Number of measurements in the buffer.
+ * @param[in] head Position of the oldest value in the buffer.
+ * @param[in] alpha Filter smoothing factor between 0 and 1.
+ *
+ * @note If alpha value is not in ``[0, 1]``, @ref EMA_ALPHA_CALCULATED applies.
  *
  * @return Exponential moving average of the circular buffer as ``uint16_t``.
  */
