@@ -15,7 +15,7 @@
 /**
  * @def EMA_ALPHA_DEFAULT
  * @brief Exponential Moving Average with smoothing factor alpha.
- * 
+ *
  * @note Smoothing factor is computed as: \f[ \alpha = \frac{2}{N + 1} \f] With
  * \f$ N \f$ being the number of periods in the average.
  *
