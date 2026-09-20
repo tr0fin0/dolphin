@@ -183,7 +183,7 @@ const char *mux_get_name(void);
 
 /**
  * @brief Initialization of the Multiplexer.
- * 
+ *
  * @param[in] buffers_config Array of multiplexer channel buffer configurations.
  */
 void mux_init(mux_buffer_t *buffers_config);
