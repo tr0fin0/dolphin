@@ -5,6 +5,7 @@
 #include "logging.h"
 #include "pwm.h"
 #include "radio.h"
+#include "sensor.h"
 #include "states/include/attack.h"
 #include "states/include/autonomous.h"
 #include "states/include/boot.h"
@@ -103,6 +104,7 @@ void fsm_init(void) {
     esc_init();
     ir_init();
     radio_init();
+    sensor_init();
 
     current_state = STATE_BOOT;
 }
