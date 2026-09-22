@@ -2,6 +2,7 @@ idf_component_register(
     SRCS
         "fsm.c"
         "states/src/attack.c"
+        "states/src/autonomous.c"
         "states/src/boot.c"
         "states/src/manual.c"
         "states/src/opening.c"

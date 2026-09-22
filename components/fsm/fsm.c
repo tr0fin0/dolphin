@@ -6,6 +6,7 @@
 #include "pwm.h"
 #include "radio.h"
 #include "states/include/attack.h"
+#include "states/include/autonomous.h"
 #include "states/include/boot.h"
 #include "states/include/manual.h"
 #include "states/include/opening.h"
@@ -32,6 +33,13 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
         .on_entry   = NULL,
         .on_run     = attack_run,
         .on_exit    = attack_exit
+    },
+    [STATE_AUTONOMOUS] = {
+        .name       = "AUTONOMOUS",
+        .color      = LED_COLOR_ORANGE_DARK,
+        .on_entry   = NULL,
+        .on_run     = autonomous_run,
+        .on_exit    = autonomous_exit
     },
     [STATE_BOOT] = {
         .name       = "BOOT",
