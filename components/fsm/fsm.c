@@ -58,7 +58,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_OPENING] = {
         .name       = "OPENING",
-        .color      = LED_COLOR_PURPLE,
+        .color      = LED_COLOR_BLUE,
         .on_entry   = opening_entry,
         .on_run     = opening_run,
         .on_exit    = NULL,
@@ -72,7 +72,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_SEARCH] = {
         .name       = "SEARCH",
-        .color      = LED_COLOR_BLUE,
+        .color      = LED_COLOR_PURPLE,
         .on_entry   = NULL,
         .on_run     = search_run,
         .on_exit    = NULL

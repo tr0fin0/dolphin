@@ -6,8 +6,6 @@
 #include "radio.h"
 #include "safe.h"
 
-extern uint8_t opening_step;
-
 void safe_entry(void) {
     esc_set_pwm_mix_neutral();
 }
@@ -15,14 +13,20 @@ void safe_entry(void) {
 void safe_run(void) {
     switch (CONFIG_CONTROL_MODE) {
         case CONFIG_CONTROL_AUTONOMOUS:
-            if (ir_get_state() == IR_STATE_START) {
-                fsm_transition(STATE_SEARCH);
+            if (opening_get_status() == OPENING_STATUS_FINISHED) {
+                if (ir_get_state() == IR_STATE_START) {
+                    fsm_transition(STATE_AUTONOMOUS);
+                }
+            } else {
+                if (ir_get_state() == IR_STATE_STANDBY) {
+                    fsm_transition(STATE_OPENING);
+                }
             }
             break;
 
         case CONFIG_CONTROL_RADIO:
             if (radio_get_status() == RADIO_CONNECTED) {
-                if (opening_step == OPENING_ITERATIONS) {
+                if (opening_get_status() == OPENING_STATUS_FINISHED) {
                     fsm_transition(STATE_MANUAL);
                 } else {
                     fsm_transition(STATE_OPENING);

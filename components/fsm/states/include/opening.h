@@ -9,30 +9,82 @@
 
 #pragma once
 
+#include "pwm.h"
+
+/**
+ * @brief Open
+ */
+typedef enum opening_status {
+    OPENING_STATUS_EXECUTION = 0,      /**< . */
+    OPENING_STATUS_FINISHED,           /**< . */
+    OPENING_STATUS_RELEASE,            /**< . */
+    OPENING_STATUS_SELECTION,          /**< . */
+    NUMBER_OF_OPENING_STATUS,   /**< . */
+} opening_status_t;
+
 /**
  * @brief Radio Controlled possible opening moves.
  *
  * Each digit from left to right represents the measure throttle value at the
  * respective iteration.
  *
- * An opening strategy of value `210` is obtained by having a throttle
- * channel value of `2` in the first measure, `1` in the second measure and `0`
- * in the third measure.
- *
- * @note Omitted digits should be considered as `0`.
+ * @note An opening strategy of value ``321`` is obtained by having a throttle
+ * channel value of ``3`` in the first measure, ``2`` in the second measure and
+ * ``1`` in the third measure.
  */
 typedef enum opening {
-    OPENING_STATIC =   0, /**< Remains in the initial position and rotation. */
-    OPENING_DRAW   =   1, /**< Remains in the initial position and rotate 180 degrees. */
-    OPENING_NE     = 221, /**< From the initial position goes to north-east. */
-    OPENING_NN     = 20,  /**< From the initial position goes to north. */
-    OPENING_NW     = 122, /**< From the initial position goes to north-west. */
-    OPENING_SEN    = 210, /**< From the initial position goes to south-east with neutral rotation. */
-    OPENING_SE     = 212, /**< From the initial position goes to south-east. */
-    OPENING_SS     =  10, /**< From the initial position goes to south. */
-    OPENING_SW     = 111, /**< From the initial position goes to south-west. */
-    OPENING_SWN    = 110, /**< From the initial position goes to south-west with neutral rotation. */
+    OPENING_STATIC = 0, /**< ``222``: Remains in the initial position and rotation. */
+    OPENING_DRAW,       /**< ``221``: Remains in the initial position and rotate 180 degrees. */
+    OPENING_NE,         /**< ``331``: Goes to north-east. */
+    OPENING_NN,         /**< ``232``: Goes to north. */
+    OPENING_NW,         /**< ``133``: Goes to north-west. */
+    OPENING_SEN,        /**< ``312``: Goes to south-east with neutral rotation. */
+    OPENING_SE,         /**< ``313``: Goes to south-east. */
+    OPENING_SS,         /**< ``212``: Goes to south. */
+    OPENING_SW,         /**< ``111``: Goes to south-west. */
+    OPENING_SWN,        /**< ``112``: Goes to south-west with neutral rotation. */
+    NUMBER_OF_OPENINGS  /**< Number of openings positions. */
 } opening_t;
+
+/**
+ * @brief Opening strategy code.
+ *
+ * Each code is composed by 3 digits where individual digit values may be:
+ *
+ * - `3` if radio receiver channel is `> (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2`.
+ *
+ * - `1` if radio receiver channel is `< (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2`.
+ *
+ * - `2` if radio receiver channel is not in the previous intervals.
+ */
+typedef uint16_t opening_code_t;
+
+/**
+ * @brief Opening iteration step.
+ */
+typedef uint8_t opening_step_t;
+
+/**
+ * @brief Opening configuration.
+ */
+typedef struct opening_config {
+    const char *name;               /**< Human-readable null-terminated Opening name. */
+    const opening_code_t code;      /**< Opening code. */
+} opening_config_t;
+
+/**
+ * @brief 
+ */
+typedef struct opening_manager {
+    const char *name;                                   /**< . */
+    opening_t strategy;                                 /**< . */
+    opening_code_t code;                                /**< . */
+    opening_step_t step;                                /**< . */
+    opening_status_t status;                            /**< . */
+    const char *status_names[NUMBER_OF_OPENING_STATUS]; /**< . */
+    opening_config_t openings[NUMBER_OF_OPENINGS];      /**< . */
+    pwm_norm_t last_button;                             /**< . */
+} opening_manager_t;
 
 /**
  * @def OPENING_ITERATIONS
@@ -46,22 +98,20 @@ typedef enum opening {
 /**
  * @brief Entry handler for @ref STATE_OPENING.
  *
- * Set @ref LED_STATE to @ref COLOR_PURPLE and captures current Radio Controller
+ * Set @ref LED_STATE to @ref LED_COLOR_PURPLE and captures current Radio Controller
  * button value.
  */
 void opening_entry(void);
+
+/**
+ * @brief 
+ */
+opening_status_t opening_get_status(void);
 
 /**
  * @brief Run handler for @ref STATE_OPENING.
  *
  * While Radio Controller is connected, 3 sequential reads of the throttle
  * channel are used to determine the opening move.
- *
- * @note
- * - `2` if throttle is more than `PWM_PERCENTAGE_P50`.
- *
- * - `0` if throttle is between `PWM_PERCENTAGE_M50` and `PWM_PERCENTAGE_P50`.
- *
- * - `1` if throttle is less than `PWM_PERCENTAGE_M50`.
  */
 void opening_run(void);
