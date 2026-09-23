@@ -22,7 +22,6 @@ typedef enum fsm_state {
     STATE_ATTACK = 0,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, attacks adversary. */
     STATE_AUTONOMOUS,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, manage the autonomous strategy. */
     STATE_BOOT,         /**< FSM entry point. */
-    STATE_COUNTDOWN,    /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, waits 5 seconds. */
     STATE_MANUAL,       /**< In the @ref CONFIG_CONTROL_RADIO, receives radio signals and control motors. */
     STATE_OPENING,      /**< In the @ref CONFIG_CONTROL_RADIO, selects and execute an opening move. */
     STATE_SAFE,         /**< In either control mode, freezes the system for safety handle. */
