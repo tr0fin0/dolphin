@@ -15,8 +15,8 @@
 /**
  * @brief Finite State Machine states.
  *
- * Each state handler callback functions are defined in an independent `.c` and
- * `.h` files under the states folder.
+ * Each state handler callback functions are defined in an independent ``.c``
+ * and ``.h`` files under the states folder.
  */
 typedef enum fsm_state {
     STATE_ATTACK = 0,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, attacks adversary. */
@@ -39,16 +39,16 @@ typedef void (*fsm_action_t)(void);
 /**
  * @brief Finite State Machine State table.
  *
- * Defines the behaviour of a single FSM state using three optional
- * lifecycle callbacks:
+ * Defines the behaviour of a single FSM state using three optional lifecycle
+ * callbacks:
  *
- * - `on_entry`: Executed once immediately after a transition INTO this state.
+ * - ``on_entry``: Executed once immediately after a transition INTO this state.
  *
- * - `on_run`: Executed repeatedly while the FSM remains in this state.
+ * - ``on_run``: Executed repeatedly while the FSM remains in this state.
  *
- * - `on_exit`:  Executed once immediately before a transition OUT OF this state.
+ * - ``on_exit``:  Executed once immediately before a transition OUT OF this state.
  *
- * Any callback may be `NULL` if not required.
+ * Any callback may be ``NULL`` if not required.
  *
  * @note All callbacks must be deterministic and non-blocking.
  */
@@ -61,9 +61,9 @@ typedef struct fsm_table {
 } fsm_table_t;
 
 /**
- * @brief Get current FSM state enumerated value.
+ * @brief Get current FSM state.
  *
- * @return Current FSM state enumerated value.
+ * @return Current FSM state.
  */
 fsm_state_t fsm_get_current_state(void);
 
@@ -71,6 +71,7 @@ fsm_state_t fsm_get_current_state(void);
  * @brief Get the FSM state name as a null-terminated string.
  *
  * @param[in] state A FSM state.
+ *
  * @return Human-readable null-terminated FSM name.
  */
 const char *fsm_get_state_name(fsm_state_t state);
@@ -83,7 +84,7 @@ void fsm_init(void);
 /**
  * @brief Run one FSM step.
  *
- * Executes the `on_run` callback of the currently active state.
+ * Executes the ``on_run`` callback of the currently active state.
  */
 void fsm_step(void);
 
