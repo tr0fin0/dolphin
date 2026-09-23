@@ -1,0 +1,15 @@
+idf_component_register(
+    SRCS
+        "sensor.c"
+        "mux/mux.c"
+    INCLUDE_DIRS
+        "include"
+        "mux/include"
+    REQUIRES
+        ema
+        esp_adc
+        esp_driver_gpio
+        esp_timer
+        logging
+        pinout
+)
