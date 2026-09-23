@@ -12,15 +12,15 @@
 #include "pwm.h"
 
 /**
- * @brief Open
+ * @brief Opening Finite State Machine states.
  */
-typedef enum opening_status {
-    OPENING_STATUS_EXECUTION = 0,      /**< . */
-    OPENING_STATUS_FINISHED,           /**< . */
-    OPENING_STATUS_RELEASE,            /**< . */
-    OPENING_STATUS_SELECTION,          /**< . */
-    NUMBER_OF_OPENING_STATUS,   /**< . */
-} opening_status_t;
+typedef enum opening_state {
+    OPENING_STATE_EXECUTION = 0,    /**< In either @ref config_control_mode_t , opening strategy is executed. */
+    OPENING_STATE_FINISHED,         /**< In either @ref config_control_mode_t , opening strategy execution is finished. */
+    OPENING_STATE_RELEASE,          /**< In either @ref config_control_mode_t , opening strategy execution is waiting release commad. */
+    OPENING_STATE_SELECTION,        /**< In either @ref config_control_mode_t , opening strategy is selected. */
+    NUMBER_OF_OPENING_STATES,       /**< Number of opening FSM states. */
+} opening_state_t;
 
 /**
  * @brief Radio Controlled possible opening moves.
@@ -73,18 +73,18 @@ typedef struct opening_config {
 } opening_config_t;
 
 /**
- * @brief 
+ * @brief Opening strategy handler.
  */
-typedef struct opening_manager {
-    const char *name;                                   /**< . */
-    opening_t strategy;                                 /**< . */
-    opening_code_t code;                                /**< . */
-    opening_step_t step;                                /**< . */
-    opening_status_t status;                            /**< . */
-    const char *status_names[NUMBER_OF_OPENING_STATUS]; /**< . */
-    opening_config_t openings[NUMBER_OF_OPENINGS];      /**< . */
-    pwm_norm_t last_button;                             /**< . */
-} opening_manager_t;
+typedef struct opening_handler {
+    const char *name;                                   /**< Human-readable null-terminated opening handler name. */
+    opening_t strategy;                                 /**< Opening handler strategy selected. */
+    opening_config_t strategies[NUMBER_OF_OPENINGS];    /**< Opening handler strategies configurations. */
+    opening_code_t code;                                /**< Opening handler strategy selected code. */
+    opening_step_t step;                                /**< Opening handler strategy selection step. */
+    opening_state_t state;                              /**< Opening handler state. */
+    const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable null-terminated opening handler states names. */
+    pwm_norm_t last_button;                             /**< Opening handler last button measure. */
+} opening_handler_t;
 
 /**
  * @def OPENING_ITERATIONS
@@ -106,7 +106,7 @@ void opening_entry(void);
 /**
  * @brief 
  */
-opening_status_t opening_get_status(void);
+opening_state_t opening_get_status(void);
 
 /**
  * @brief Run handler for @ref STATE_OPENING.

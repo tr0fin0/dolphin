@@ -13,7 +13,7 @@ void safe_entry(void) {
 void safe_run(void) {
     switch (CONFIG_CONTROL_MODE) {
         case CONFIG_CONTROL_AUTONOMOUS:
-            if (opening_get_status() == OPENING_STATUS_FINISHED) {
+            if (opening_get_status() == OPENING_STATE_FINISHED) {
                 if (ir_get_state() == IR_STATE_START) {
                     fsm_transition(STATE_AUTONOMOUS);
                 }
@@ -26,7 +26,7 @@ void safe_run(void) {
 
         case CONFIG_CONTROL_RADIO:
             if (radio_get_status() == RADIO_CONNECTED) {
-                if (opening_get_status() == OPENING_STATUS_FINISHED) {
+                if (opening_get_status() == OPENING_STATE_FINISHED) {
                     fsm_transition(STATE_MANUAL);
                 } else {
                     fsm_transition(STATE_OPENING);

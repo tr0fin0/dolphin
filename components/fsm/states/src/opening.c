@@ -7,28 +7,14 @@
 #include "opening.h"
 #include "radio.h"
 
-/**
- * @brief 
- */
-static opening_manager_t opening_manager = {
-    .name = "Opening Manager",
-    .openings = {
-        [OPENING_STATIC] = { .name = "STATIC",              .code = 222, },
-        [OPENING_DRAW]   = { .name = "DRAW",                .code = 221, },
-        [OPENING_NE]     = { .name = "NORTH-EAST",          .code = 331, },
-        [OPENING_NN]     = { .name = "NORTH-NORTH",         .code = 232, },
-        [OPENING_NW]     = { .name = "NORTH-WEST",          .code = 133, },
-        [OPENING_SEN]    = { .name = "SOUTH-EAST-NEUTRAL",  .code = 312, },
-        [OPENING_SE]     = { .name = "SOUTH-EAST",          .code = 313, },
-        [OPENING_SS]     = { .name = "SOUTH-SOUTH",         .code = 212, },
-        [OPENING_SW]     = { .name = "SOUTH-WEST",          .code = 111, },
-        [OPENING_SWN]    = { .name = "SOUTH-WEST-NEUTRAL",  .code = 112, },
-    },
-    .status = OPENING_STATUS_SELECTION,
-    .status_names = {
-        [OPENING_STATUS_EXECUTION] = "EXECUTING",
-        [OPENING_STATUS_FINISHED]  = "FINISHED",
-        [OPENING_STATUS_SELECTION] = "SELECTING",
+static opening_handler_t opening_handler = {
+    .name = "Opening Handler",
+    .state = OPENING_STATE_SELECTION,
+    .states_names = {
+        [OPENING_STATE_EXECUTION] = "EXECUTING",
+        [OPENING_STATE_FINISHED]  = "FINISHED",
+        [OPENING_STATE_RELEASE]   = "RELEASE",
+        [OPENING_STATE_SELECTION] = "SELECTING",
     },
     .step = 0,
     .strategy = OPENING_STATIC,
@@ -49,29 +35,29 @@ static void opening_selection(void) {
     // ensure initial button value is not PWM_NEUTRAL_US
     if (
         (current_button != PWM_NEUTRAL_US) &&
-        (opening_manager.last_button == PWM_NEUTRAL_US)
+        (opening_handler.last_button == PWM_NEUTRAL_US)
     ) {
-        opening_manager.last_button = current_button;
+        opening_handler.last_button = current_button;
     }
 
     // opening selection via sequential throttle value measures
-    if (opening_manager.last_button != current_button) {
-        opening_manager.step++;
-        opening_manager.last_button = current_button;
+    if (opening_handler.last_button != current_button) {
+        opening_handler.step++;
+        opening_handler.last_button = current_button;
         led_set_toggle(LED_STATE, 100);
 
         uint8_t increase = 2;
         if (current_throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) increase = 3;
         if (current_throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) increase = 1;
 
-        opening_manager.code = (
-            (opening_code_t) (10 * opening_manager.code + increase)
+        opening_handler.code = (
+            (opening_code_t) (10 * opening_handler.code + increase)
         );
-        LOG_I("opening strategy code is %d", opening_manager.code);
+        LOG_I("opening strategy code is %d", opening_handler.code);
     }
 
-    if (opening_manager.step == OPENING_ITERATIONS) {
-        opening_manager.status = OPENING_STATUS_RELEASE;
+    if (opening_handler.step == OPENING_ITERATIONS) {
+        opening_handler.state = OPENING_STATE_RELEASE;
 
         led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);
     }
@@ -86,15 +72,15 @@ static void opening_release(void) {
     switch (CONFIG_CONTROL_MODE) {
         case CONFIG_CONTROL_AUTONOMOUS:
             if (ir_get_state() == IR_STATE_START) {
-                opening_manager.status = OPENING_STATUS_EXECUTION;
+                opening_handler.state = OPENING_STATE_EXECUTION;
             }
             break;
 
         case CONFIG_CONTROL_RADIO:
             pwm_norm_t current_button = radio_read_channel(RADIO_CHANNEL_3);
 
-            if (opening_manager.last_button != current_button) {
-                opening_manager.status = OPENING_STATUS_EXECUTION;
+            if (opening_handler.last_button != current_button) {
+                opening_handler.state = OPENING_STATE_EXECUTION;
             }
             break;
 
@@ -108,8 +94,8 @@ static void opening_release(void) {
  */
 static void opening_execution(void) {
     for (uint8_t i = 0; i < NUMBER_OF_OPENINGS; i++) {
-        if (opening_manager.code == opening_manager.openings[i].code) {
-            opening_manager.strategy = (opening_t) i;
+        if (opening_handler.code == opening_handler.strategies[i].code) {
+            opening_handler.strategy = (opening_t) i;
             LOG_I(
                 "opening strategy selected is %s",
                 opening_manager.openings[i].name
@@ -119,7 +105,7 @@ static void opening_execution(void) {
         }
     }
 
-    switch (opening_manager.strategy) {
+    switch (opening_handler.strategy) {
         case OPENING_STATIC:
             break;
 
@@ -287,15 +273,15 @@ static void opening_execution(void) {
             break;
     }
 
-    opening_manager.status = OPENING_STATUS_FINISHED;
+    opening_handler.state = OPENING_STATE_FINISHED;
 }
 
 void opening_entry(void) {
-    opening_manager.last_button = radio_read_channel(RADIO_CHANNEL_3);
+    opening_handler.last_button = radio_read_channel(RADIO_CHANNEL_3);
 }
 
-opening_status_t opening_get_status(void) {
-    return opening_manager.status;
+opening_state_t opening_get_status(void) {
+    return opening_handler.state;
 }
 
 void opening_run(void) {
@@ -313,12 +299,12 @@ void opening_run(void) {
             break;
     }
 
-    switch (opening_manager.status) {
-        case OPENING_STATUS_EXECUTION:
+    switch (opening_handler.state) {
+        case OPENING_STATE_EXECUTION:
             opening_execution();
             break;
 
-        case OPENING_STATUS_FINISHED:
+        case OPENING_STATE_FINISHED:
             switch (CONFIG_CONTROL_MODE) {
                 case CONFIG_CONTROL_AUTONOMOUS:
                     if (ir_get_state() == IR_STATE_START) {
@@ -337,11 +323,11 @@ void opening_run(void) {
             }
             break;
 
-        case OPENING_STATUS_RELEASE:
+        case OPENING_STATE_RELEASE:
             opening_release();
             break;
 
-        case OPENING_STATUS_SELECTION:
+        case OPENING_STATE_SELECTION:
             opening_selection();
             break;
 
