@@ -18,8 +18,10 @@ void safe_run(void) {
                     fsm_transition(STATE_AUTONOMOUS);
                 }
             } else {
-                if (ir_get_state() == IR_STATE_STANDBY) {
-                    fsm_transition(STATE_OPENING);
+                if (radio_get_status() == RADIO_CONNECTED) {
+                    if (ir_get_state() == IR_STATE_STANDBY) {
+                        fsm_transition(STATE_OPENING);
+                    }
                 }
             }
             break;

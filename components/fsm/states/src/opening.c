@@ -332,18 +332,8 @@ opening_state_t opening_get_status(void) {
 }
 
 void opening_run(void) {
-    switch (CONFIG_CONTROL_MODE) {
-        case CONFIG_CONTROL_AUTONOMOUS:
-            break;
-
-        case CONFIG_CONTROL_RADIO:
-            if (radio_get_status() == RADIO_DISCONNECTED) {
-                fsm_transition(STATE_SAFE);
-            }
-            break;
-
-        default:
-            break;
+    if (radio_get_status() == RADIO_DISCONNECTED) {
+        fsm_transition(STATE_SAFE);
     }
 
     switch (opening_handler.state) {
