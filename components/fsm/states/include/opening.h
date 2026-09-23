@@ -172,15 +172,18 @@ typedef uint16_t opening_code_t;
 
 /**
  * @brief Opening iteration step.
+ *
+ * Opening strategy selecting is performed in 3 sequencial measures of the @ref
+ * radio_t channel values.
  */
 typedef uint8_t opening_step_t;
 
 /**
- * @brief Opening configuration.
+ * @brief Opening strategy configuration.
  */
 typedef struct opening_config {
-    const char *name;               /**< Human-readable null-terminated Opening name. */
-    const opening_code_t code;      /**< Opening code. */
+    const char *name;           /**< Human-readable null-terminated opening strategy name. */
+    const opening_code_t code;  /**< Opening strategy code. */
 } opening_config_t;
 
 /**
@@ -257,8 +260,7 @@ typedef struct opening_handler {
 
 /**
  * @def OPENING_ITERATIONS
- * @brief Quantity of iterations required to select the opening strategy when in
- * the @ref CONFIG_CONTROL_RADIO.
+ * @brief Quantity of iterations required to select the opening strategy.
  *
  * **Default Value:** 3
  */
@@ -273,14 +275,13 @@ typedef struct opening_handler {
 void opening_entry(void);
 
 /**
- * @brief 
+ * @brief Get current opening FSM state.
+ *
+ * @return Current opening FSM state.
  */
 opening_state_t opening_get_status(void);
 
 /**
  * @brief Run handler for @ref STATE_OPENING.
- *
- * While Radio Controller is connected, 3 sequential reads of the throttle
- * channel are used to determine the opening move.
  */
 void opening_run(void);

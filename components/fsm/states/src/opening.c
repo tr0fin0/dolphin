@@ -69,7 +69,7 @@ static opening_handler_t opening_handler = {
  *
  * Available radio receiver models are:
  *
- * - `FS-GT2`: iterative measures of a single radio receiver channel.
+ * - ``FS-GT2``: iterative measures of a single radio receiver channel.
  */
 static void opening_selection(void) {
     pwm_norm_t current_button   = radio_read_channel(RADIO_CHANNEL_3);
