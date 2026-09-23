@@ -18,7 +18,48 @@ static opening_handler_t opening_handler = {
     },
     .step = 0,
     .strategy = OPENING_STATIC,
-    .last_button = 0,
+    .strategies = {
+        [OPENING_STATIC] = {
+            .name = "STATIC",
+            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_N + 100*OPENING_CODE_N,
+        },
+        [OPENING_DRAW]   = {
+            .name = "DRAW",
+            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_N + 100*OPENING_CODE_N,
+        },
+        [OPENING_NE]     = {
+            .name = "NORTH-EAST",
+            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_H + 100*OPENING_CODE_H,
+        },
+        [OPENING_NN]     = {
+            .name = "NORTH-NORTH",
+            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_H + 100*OPENING_CODE_N,
+        },
+        [OPENING_NW]     = {
+            .name = "NORTH-WEST",
+            .code = 001*OPENING_CODE_H + 010*OPENING_CODE_H + 100*OPENING_CODE_L,
+        },
+        [OPENING_SEN]    = {
+            .name = "SOUTH-EAST-NEUTRAL",
+            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_H,
+        },
+        [OPENING_SE]     = {
+            .name = "SOUTH-EAST",
+            .code = 001*OPENING_CODE_H + 010*OPENING_CODE_L + 100*OPENING_CODE_H,
+        },
+        [OPENING_SS]     = {
+            .name = "SOUTH-SOUTH",
+            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_N,
+        },
+        [OPENING_SW]     = {
+            .name = "SOUTH-WEST",
+            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_L + 100*OPENING_CODE_L,
+        },
+        [OPENING_SWN]    = {
+            .name = "SOUTH-WEST-NEUTRAL",
+            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_L,
+        },
+    },
 };
 
 /**
@@ -46,9 +87,13 @@ static void opening_selection(void) {
         opening_handler.last_button = current_button;
         led_set_toggle(LED_STATE, 100);
 
-        uint8_t increase = 2;
-        if (current_throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) increase = 3;
-        if (current_throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) increase = 1;
+        uint8_t increase = OPENING_CODE_N;
+        if (current_throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) {
+            increase = OPENING_CODE_H;
+        }
+        if (current_throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) {
+            increase = OPENING_CODE_L;
+        }
 
         opening_handler.code = (
             (opening_code_t) (10 * opening_handler.code + increase)
@@ -98,9 +143,9 @@ static void opening_execution(void) {
             opening_handler.strategy = (opening_t) i;
             LOG_I(
                 "opening strategy selected is %s",
-                opening_manager.openings[i].name
+                opening_handler.strategies[i].name
             );
-            
+
             break;
         }
     }

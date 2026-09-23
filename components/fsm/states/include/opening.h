@@ -23,39 +23,150 @@ typedef enum opening_state {
 } opening_state_t;
 
 /**
- * @brief Radio Controlled possible opening moves.
+ * @brief Opening strategies.
  *
- * Each digit from left to right represents the measure throttle value at the
- * respective iteration.
- *
- * @note An opening strategy of value ``321`` is obtained by having a throttle
- * channel value of ``3`` in the first measure, ``2`` in the second measure and
- * ``1`` in the third measure.
+ * Each strategy has an unique @ref opening_code_t identifier as presented
+ * below with it's brief description.
  */
 typedef enum opening {
-    OPENING_STATIC = 0, /**< ``222``: Remains in the initial position and rotation. */
-    OPENING_DRAW,       /**< ``221``: Remains in the initial position and rotate 180 degrees. */
-    OPENING_NE,         /**< ``331``: Goes to north-east. */
-    OPENING_NN,         /**< ``232``: Goes to north. */
-    OPENING_NW,         /**< ``133``: Goes to north-west. */
-    OPENING_SEN,        /**< ``312``: Goes to south-east with neutral rotation. */
-    OPENING_SE,         /**< ``313``: Goes to south-east. */
-    OPENING_SS,         /**< ``212``: Goes to south. */
-    OPENING_SW,         /**< ``111``: Goes to south-west. */
-    OPENING_SWN,        /**< ``112``: Goes to south-west with neutral rotation. */
+    /**
+     * @brief Remains in the initial position and rotation.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_N
+     *
+     * - 2: @ref OPENING_CODE_N
+     *
+     * - 3: @ref OPENING_CODE_N
+     */
+    OPENING_STATIC = 0,
+    /**
+     * @brief Remains in the initial position and rotate 180 degrees.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_L
+     *
+     * - 2: @ref OPENING_CODE_N
+     *
+     * - 3: @ref OPENING_CODE_N
+     */
+    OPENING_DRAW,
+    /**
+     * @brief Goes to north-east position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_L
+     *
+     * - 2: @ref OPENING_CODE_H
+     *
+     * - 3: @ref OPENING_CODE_H
+     */
+    OPENING_NE,
+    /**
+     * @brief Goes to north position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_N
+     *
+     * - 2: @ref OPENING_CODE_H
+     *
+     * - 3: @ref OPENING_CODE_N
+     */
+    OPENING_NN,
+    /**
+     * @brief Goes to north-west position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_H
+     *
+     * - 2: @ref OPENING_CODE_H
+     *
+     * - 3: @ref OPENING_CODE_L
+     */
+    OPENING_NW,
+    /**
+     * @brief Goes to south-east with neutral rotation position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_N
+     *
+     * - 2: @ref OPENING_CODE_L
+     *
+     * - 3: @ref OPENING_CODE_H
+     */
+    OPENING_SEN,
+    /**
+     * @brief Goes to south-east position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_H
+     *
+     * - 2: @ref OPENING_CODE_L
+     *
+     * - 3: @ref OPENING_CODE_H
+     */
+    OPENING_SE,
+    /**
+     * @brief Goes to south position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_N
+     *
+     * - 2: @ref OPENING_CODE_L
+     *
+     * - 3: @ref OPENING_CODE_N
+     */
+    OPENING_SS,
+    /**
+     * @brief Goes to south-west position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_L
+     *
+     * - 2: @ref OPENING_CODE_L
+     *
+     * - 3: @ref OPENING_CODE_L
+     */
+    OPENING_SW,
+    /**
+     * @brief Goes to south-west with neutral rotation position.
+     *
+     * Obtained when in each step:
+     *
+     * - 1: @ref OPENING_CODE_N
+     *
+     * - 2: @ref OPENING_CODE_L
+     *
+     * - 3: @ref OPENING_CODE_L
+     */
+    OPENING_SWN,
     NUMBER_OF_OPENINGS  /**< Number of openings positions. */
 } opening_t;
 
 /**
  * @brief Opening strategy code.
  *
- * Each code is composed by 3 digits where individual digit values may be:
+ * Uses @ref radio_t signals from 2 channels to determine the 3 digit opening
+ * code where each individual digit value may be:
  *
- * - `3` if radio receiver channel is `> (PWM_NEUTRAL_US + PWM_MAXIMUM_US) / 2`.
+ * - @ref OPENING_CODE_H
  *
- * - `1` if radio receiver channel is `< (PWM_NEUTRAL_US + PWM_MINIMUM_US) / 2`.
+ * - @ref OPENING_CODE_L
  *
- * - `2` if radio receiver channel is not in the previous intervals.
+ * - @ref OPENING_CODE_N
+ *
+ * The @ref radio_t channel value is measured when the signal another channel
+ * changes. Typically, the throttle channel value is measured when the button
+ * channel is pressed.
  */
 typedef uint16_t opening_code_t;
 
@@ -85,6 +196,41 @@ typedef struct opening_handler {
     const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable null-terminated opening handler states names. */
     pwm_norm_t last_button;                             /**< Opening handler last button measure. */
 } opening_handler_t;
+
+/**
+ * @def OPENING_CODE_H
+ * @brief Opening code digit representing @ref pwm_norm_t high value.
+ *
+ * If radio receiver channel is ``> ( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``.
+ *
+ * **Default Value:** 3
+ */
+#define OPENING_CODE_H 3
+
+/**
+ * @def OPENING_CODE_L
+ * @brief Opening code digit representing @ref pwm_norm_t low value.
+ *
+ * If radio receiver channel is ``< ( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``.
+ *
+ * **Default Value:** 1
+ */
+#define OPENING_CODE_L 1
+
+/**
+ * @def OPENING_CODE_N
+ * @brief Opening code digit representing @ref pwm_norm_t neutral value.
+ *
+ * If radio receiver channel is between:
+ *
+ * - ``( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``
+ *
+ * - ``( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``
+ *
+ * **Default Value:** 2
+ */
+#define OPENING_CODE_N 2
+
 
 /**
  * @def OPENING_ITERATIONS
