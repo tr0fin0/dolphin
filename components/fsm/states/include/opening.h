@@ -231,6 +231,29 @@ typedef struct opening_handler {
  */
 #define OPENING_CODE_N 2
 
+/**
+ * @def OPENING_INITIAL_BUTTON
+ * @brief Initial button value to select the opening strategy.
+ *
+ * **Default Value:** 0
+ */
+#define OPENING_INITIAL_BUTTON 0
+
+/**
+ * @def OPENING_INITIAL_CODE
+ * @brief Initial code value to select the opening strategy.
+ *
+ * **Default Value:** 0
+ */
+#define OPENING_INITIAL_CODE 0
+
+/**
+ * @def OPENING_INITIAL_ITERATION
+ * @brief Initial iteration value to select the opening strategy.
+ *
+ * **Default Value:** 0
+ */
+#define OPENING_INITIAL_ITERATION 0
 
 /**
  * @def OPENING_ITERATIONS

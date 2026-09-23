@@ -9,6 +9,7 @@
 
 static opening_handler_t opening_handler = {
     .name = "Opening Handler",
+    .code = OPENING_INITIAL_CODE,
     .state = OPENING_STATE_SELECTION,
     .states_names = {
         [OPENING_STATE_EXECUTION] = "EXECUTING",
@@ -16,7 +17,7 @@ static opening_handler_t opening_handler = {
         [OPENING_STATE_RELEASE]   = "RELEASE",
         [OPENING_STATE_SELECTION] = "SELECTING",
     },
-    .step = 0,
+    .step = OPENING_INITIAL_ITERATION,
     .strategy = OPENING_STATIC,
     .strategies = {
         [OPENING_STATIC] = {
@@ -60,6 +61,7 @@ static opening_handler_t opening_handler = {
             .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_L,
         },
     },
+    .last_button = OPENING_INITIAL_BUTTON,
 };
 
 /**
