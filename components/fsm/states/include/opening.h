@@ -12,17 +12,6 @@
 #include "pwm.h"
 
 /**
- * @brief Opening Finite State Machine states.
- */
-typedef enum opening_state {
-    OPENING_STATE_EXECUTION = 0,    /**< In either @ref config_control_mode_t , opening strategy is executed. */
-    OPENING_STATE_FINISHED,         /**< In either @ref config_control_mode_t , opening strategy execution is finished. */
-    OPENING_STATE_RELEASE,          /**< In either @ref config_control_mode_t , opening strategy execution is waiting release commad. */
-    OPENING_STATE_SELECTION,        /**< In either @ref config_control_mode_t , opening strategy is selected. */
-    NUMBER_OF_OPENING_STATES,       /**< Number of opening FSM states. */
-} opening_state_t;
-
-/**
  * @brief Opening strategies.
  *
  * Each strategy is identified by a unique sequence of @ref opening_code_t
@@ -155,20 +144,19 @@ typedef enum opening {
 /**
  * @brief Opening strategy code.
  *
- * Uses @ref radio_t signals from 2 channels to determine the 3 digit opening
- * code where each individual digit value may be:
+
+/**
+ * @brief Opening Finite State Machine states.
  *
- * - @ref OPENING_CODE_H
- *
- * - @ref OPENING_CODE_L
- *
- * - @ref OPENING_CODE_N
- *
- * The @ref radio_t channel value is measured when the signal another channel
- * changes. Typically, the throttle channel value is measured when the button
- * channel is pressed.
+ * The opening strategy is executed regardless of the selected @ref config_control_mode_t.
  */
-typedef uint16_t opening_code_t;
+typedef enum opening_state {
+    OPENING_STATE_EXECUTION = 0,    /**< The selected opening strategy is being executed. */
+    OPENING_STATE_FINISHED,         /**< The selected opening strategy has finished executing. */
+    OPENING_STATE_RELEASE,          /**< The opening strategy has finished executing and the FSM is waiting for the release command. */
+    OPENING_STATE_SELECTION,        /**< The opening strategy is being selected. */
+    NUMBER_OF_OPENING_STATES,       /**< Number of opening FSM states. */
+} opening_state_t;
 
 /**
  * @brief Opening strategy selection step.
