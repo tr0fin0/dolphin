@@ -17,48 +17,88 @@ static opening_handler_t opening_handler = {
         [OPENING_STATE_RELEASE]   = "RELEASE",
         [OPENING_STATE_SELECTION] = "SELECTING",
     },
-    .step = OPENING_INITIAL_ITERATION,
+    .step = OPENING_STEP_0,
     .strategy = OPENING_STATIC,
     .strategies = {
         [OPENING_STATIC] = {
             .name = "STATIC",
-            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_N + 100*OPENING_CODE_N,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_N,
+                [OPENING_STEP_2] = OPENING_CODE_N,
+            }
         },
         [OPENING_DRAW]   = {
             .name = "DRAW",
-            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_N + 100*OPENING_CODE_N,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_L,
+                [OPENING_STEP_1] = OPENING_CODE_N,
+                [OPENING_STEP_2] = OPENING_CODE_N,
+            }
         },
         [OPENING_NE]     = {
             .name = "NORTH-EAST",
-            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_H + 100*OPENING_CODE_H,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_L,
+                [OPENING_STEP_1] = OPENING_CODE_H,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            }
         },
         [OPENING_NN]     = {
             .name = "NORTH-NORTH",
-            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_H + 100*OPENING_CODE_N,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_H,
+                [OPENING_STEP_2] = OPENING_CODE_N,
+            }
         },
         [OPENING_NW]     = {
             .name = "NORTH-WEST",
-            .code = 001*OPENING_CODE_H + 010*OPENING_CODE_H + 100*OPENING_CODE_L,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_H,
+                [OPENING_STEP_1] = OPENING_CODE_H,
+                [OPENING_STEP_2] = OPENING_CODE_L,
+            }
         },
         [OPENING_SEN]    = {
             .name = "SOUTH-EAST-NEUTRAL",
-            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_H,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            }
         },
         [OPENING_SE]     = {
             .name = "SOUTH-EAST",
-            .code = 001*OPENING_CODE_H + 010*OPENING_CODE_L + 100*OPENING_CODE_H,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_H,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            }
         },
         [OPENING_SS]     = {
             .name = "SOUTH-SOUTH",
-            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_N,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_N,
+            }
         },
         [OPENING_SW]     = {
             .name = "SOUTH-WEST",
-            .code = 001*OPENING_CODE_L + 010*OPENING_CODE_L + 100*OPENING_CODE_L,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_L,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_L,
+            }
         },
         [OPENING_SWN]    = {
             .name = "SOUTH-WEST-NEUTRAL",
-            .code = 001*OPENING_CODE_N + 010*OPENING_CODE_L + 100*OPENING_CODE_L,
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_L,
+            }
         },
     },
     .last_button = OPENING_INITIAL_BUTTON,
@@ -103,7 +143,7 @@ static void opening_selection(void) {
         LOG_I("opening strategy code is %d", opening_handler.code);
     }
 
-    if (opening_handler.step == OPENING_ITERATIONS) {
+    if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
         opening_handler.state = OPENING_STATE_RELEASE;
 
         led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);

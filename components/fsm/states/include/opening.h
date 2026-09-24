@@ -25,128 +25,128 @@ typedef enum opening_state {
 /**
  * @brief Opening strategies.
  *
- * Each strategy has an unique @ref opening_code_t identifier as presented
- * below with it's brief description.
+ * Each strategy is identified by a unique sequence of @ref opening_code_t
+ * values, as described below.
  */
 typedef enum opening {
     /**
-     * @brief Remains in the initial position and rotation.
+     * @brief Maintains the initial position and rotation.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
      *
-     * - 2: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_N
      *
-     * - 3: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
     OPENING_STATIC = 0,
     /**
-     * @brief Remains in the initial position and rotate 180 degrees.
+     * @brief Remains in the initial position and rotates 180 degrees.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
      *
-     * - 2: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_N
      *
-     * - 3: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
     OPENING_DRAW,
     /**
-     * @brief Goes to north-east position.
+     * @brief Moves to the north-east position.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
      *
-     * - 2: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
      *
-     * - 3: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
      */
     OPENING_NE,
     /**
-     * @brief Goes to north position.
+     * @brief Moves to the north position.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
      *
-     * - 2: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
      *
-     * - 3: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
     OPENING_NN,
     /**
-     * @brief Goes to north-west position.
+     * @brief Moves to the north-west position
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_H
      *
-     * - 2: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
      *
-     * - 3: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
      */
     OPENING_NW,
     /**
-     * @brief Goes to south-east with neutral rotation position.
+     * @brief Moves to the south-east position while maintaining neutral rotation.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
      *
-     * - 2: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - 3: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
      */
     OPENING_SEN,
     /**
-     * @brief Goes to south-east position.
+     * @brief Moves to the south-east position.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_H
      *
-     * - 2: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - 3: @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
      */
     OPENING_SE,
     /**
-     * @brief Goes to south position.
+     * @brief Moves to the south position.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
      *
-     * - 2: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - 3: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
     OPENING_SS,
     /**
-     * @brief Goes to south-west position.
+     * @brief Moves to the south-west position.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
      *
-     * - 2: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - 3: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
      */
     OPENING_SW,
     /**
-     * @brief Goes to south-west with neutral rotation position.
+     * @brief Moves to the south-west position while maintaining neutral rotation.
      *
-     * Obtained when in each step:
+     * Selected by the following code sequence:
      *
-     * - 1: @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
      *
-     * - 2: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - 3: @ref OPENING_CODE_L
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
      */
     OPENING_SWN,
     NUMBER_OF_OPENINGS  /**< Number of openings positions. */
@@ -171,19 +171,21 @@ typedef enum opening {
 typedef uint16_t opening_code_t;
 
 /**
- * @brief Opening iteration step.
+ * @brief Opening strategy selection step.
  *
- * Opening strategy selecting is performed in 3 sequencial measures of the @ref
- * radio_t channel values.
+ * The opening strategy is selected by sequentially measuring the @ref radio_t
+ * channel values.
  */
-typedef uint8_t opening_step_t;
-
-/**
- * @brief Opening strategy configuration.
+typedef enum opening_step {
+    OPENING_STEP_0 = 0,     /**< Opening strategy selection step 0. */
+    OPENING_STEP_1,         /**< Opening strategy selection step 1. */
+    OPENING_STEP_2,         /**< Opening strategy selection step 2. */
+    NUMBER_OF_OPENING_STEPS /**< Number of opening steps. */
+} opening_step_t;
  */
 typedef struct opening_config {
     const char *name;           /**< Human-readable null-terminated opening strategy name. */
-    const opening_code_t code;  /**< Opening strategy code. */
+    const opening_code_t code[NUMBER_OF_OPENING_STEPS]; /**< Opening strategy code. */
 } opening_config_t;
 
 /**
@@ -191,9 +193,7 @@ typedef struct opening_config {
  */
 typedef struct opening_handler {
     const char *name;                                   /**< Human-readable null-terminated opening handler name. */
-    opening_t strategy;                                 /**< Opening handler strategy selected. */
-    opening_config_t strategies[NUMBER_OF_OPENINGS];    /**< Opening handler strategies configurations. */
-    opening_code_t code;                                /**< Opening handler strategy selected code. */
+    opening_code_t code[NUMBER_OF_OPENING_STEPS];       /**< Code sequence of the currently selected opening strategy. */
     opening_step_t step;                                /**< Opening handler strategy selection step. */
     opening_state_t state;                              /**< Opening handler state. */
     const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable null-terminated opening handler states names. */
