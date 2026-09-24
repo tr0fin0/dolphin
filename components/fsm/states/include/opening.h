@@ -144,6 +144,39 @@ typedef enum opening {
 /**
  * @brief Opening strategy code.
  *
+ * Uses @ref radio_t signals from 2 channels to determine the opening code.
+ * Typically, the throttle channel value is measured when the button channel is
+ * pressed.
+ */
+typedef enum opening_code {
+    /**
+     * @brief Represents the high @ref pwm_norm_t level.
+     *
+     * Selected when the radio receiver channel value is greater than:
+     *
+     * - ``( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``.
+     */
+    OPENING_CODE_H = 0,
+    /**
+     * @brief Represents the low @ref pwm_norm_t level.
+     *
+     * Selected when the radio receiver channel value is less than:
+     *
+     * - ``( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``.
+     */
+    OPENING_CODE_L,
+    /**
+     * @brief Represents the neutral @ref pwm_norm_t level.
+     *
+     * Selected when the radio receiver channel value is between inclusive:
+     *
+     * - ``( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``
+     *
+     * - ``( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``
+     */
+    OPENING_CODE_N,
+    NUMBER_OF_OPENING_CODES /**< Number of openings codes. */
+} opening_code_t;
 
 /**
  * @brief Opening Finite State Machine states.
@@ -170,9 +203,12 @@ typedef enum opening_step {
     OPENING_STEP_2,         /**< Opening strategy selection step 2. */
     NUMBER_OF_OPENING_STEPS /**< Number of opening steps. */
 } opening_step_t;
+
+/**
+ * @brief Configuration for an opening strategy.
  */
 typedef struct opening_config {
-    const char *name;           /**< Human-readable null-terminated opening strategy name. */
+    const char *name;                                   /**< Human-readable, null-terminated name of the opening strategy. */
     const opening_code_t code[NUMBER_OF_OPENING_STEPS]; /**< Opening strategy code. */
 } opening_config_t;
 
@@ -182,45 +218,12 @@ typedef struct opening_config {
 typedef struct opening_handler {
     const char *name;                                   /**< Human-readable null-terminated opening handler name. */
     opening_code_t code[NUMBER_OF_OPENING_STEPS];       /**< Code sequence of the currently selected opening strategy. */
+    const char *codes_names[NUMBER_OF_OPENING_CODES];   /**< Human-readable, null-terminated names of the opening codes. */
     opening_step_t step;                                /**< Opening handler strategy selection step. */
     opening_state_t state;                              /**< Opening handler state. */
     const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable null-terminated opening handler states names. */
     pwm_norm_t last_button;                             /**< Opening handler last button measure. */
 } opening_handler_t;
-
-/**
- * @def OPENING_CODE_H
- * @brief Opening code digit representing @ref pwm_norm_t high value.
- *
- * If radio receiver channel is ``> ( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``.
- *
- * **Default Value:** 3
- */
-#define OPENING_CODE_H 3
-
-/**
- * @def OPENING_CODE_L
- * @brief Opening code digit representing @ref pwm_norm_t low value.
- *
- * If radio receiver channel is ``< ( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``.
- *
- * **Default Value:** 1
- */
-#define OPENING_CODE_L 1
-
-/**
- * @def OPENING_CODE_N
- * @brief Opening code digit representing @ref pwm_norm_t neutral value.
- *
- * If radio receiver channel is between:
- *
- * - ``( PWM_NEUTRAL_US + PWM_MINIMUM_US ) / 2``
- *
- * - ``( PWM_NEUTRAL_US + PWM_MAXIMUM_US ) / 2``
- *
- * **Default Value:** 2
- */
-#define OPENING_CODE_N 2
 
 /**
  * @def OPENING_INITIAL_BUTTON
@@ -239,12 +242,11 @@ typedef struct opening_handler {
 #define OPENING_INITIAL_CODE 0
 
 /**
- * @def OPENING_INITIAL_ITERATION
- * @brief Initial iteration value to select the opening strategy.
+ * @brief Returns the opening code name.
  *
- * **Default Value:** 0
+ * @return Human-readable null-terminated string representing the code name.
  */
-#define OPENING_INITIAL_ITERATION 0
+const char *opening_get_code_name(opening_code_t code);
 
 /**
  * @def OPENING_ITERATIONS

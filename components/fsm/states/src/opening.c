@@ -9,7 +9,11 @@
 
 static opening_handler_t opening_handler = {
     .name = "Opening Handler",
-    .code = OPENING_INITIAL_CODE,
+    .codes_names = {
+        [OPENING_CODE_H] = "CODE_H",
+        [OPENING_CODE_L] = "CODE_L",
+        [OPENING_CODE_N] = "CODE_N",
+    },
     .state = OPENING_STATE_SELECTION,
     .states_names = {
         [OPENING_STATE_EXECUTION] = "EXECUTING",
@@ -112,35 +116,30 @@ static opening_handler_t opening_handler = {
  * - ``FS-GT2``: iterative measures of a single radio receiver channel.
  */
 static void opening_selection(void) {
-    pwm_norm_t current_button   = radio_read_channel(RADIO_CHANNEL_3);
-    pwm_norm_t current_throttle = radio_read_channel(RADIO_CHANNEL_2);
+    pwm_norm_t button   = radio_read_channel(RADIO_CHANNEL_3);
+    pwm_norm_t throttle = radio_read_channel(RADIO_CHANNEL_2);
 
     // ensure initial button value is not PWM_NEUTRAL_US
     if (
-        (current_button != PWM_NEUTRAL_US) &&
+        (button != PWM_NEUTRAL_US) &&
         (opening_handler.last_button == PWM_NEUTRAL_US)
     ) {
-        opening_handler.last_button = current_button;
+        opening_handler.last_button = button;
     }
 
     // opening selection via sequential throttle value measures
-    if (opening_handler.last_button != current_button) {
-        opening_handler.step++;
-        opening_handler.last_button = current_button;
+    if (opening_handler.last_button != button) {
+        opening_handler.last_button  = button;
         led_set_toggle(LED_STATE, 100);
 
-        uint8_t increase = OPENING_CODE_N;
-        if (current_throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) {
-            increase = OPENING_CODE_H;
-        }
-        if (current_throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) {
-            increase = OPENING_CODE_L;
-        }
+        opening_code_t code = OPENING_CODE_N;
+        if (throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) code = OPENING_CODE_H;
+        if (throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) code = OPENING_CODE_L;
 
-        opening_handler.code = (
-            (opening_code_t) (10 * opening_handler.code + increase)
-        );
-        LOG_I("opening strategy code is %d", opening_handler.code);
+        opening_handler.code[opening_handler.step] = code;
+        LOG_I("received opening %s", opening_get_code_name(code));
+
+        opening_handler.step++;
     }
 
     if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
@@ -164,9 +163,9 @@ static void opening_release(void) {
             break;
 
         case CONFIG_CONTROL_RADIO:
-            pwm_norm_t current_button = radio_read_channel(RADIO_CHANNEL_3);
+            pwm_norm_t button = radio_read_channel(RADIO_CHANNEL_3);
 
-            if (opening_handler.last_button != current_button) {
+            if (opening_handler.last_button != button) {
                 opening_handler.state = OPENING_STATE_EXECUTION;
             }
             break;
@@ -367,7 +366,14 @@ void opening_entry(void) {
     opening_handler.last_button = radio_read_channel(RADIO_CHANNEL_3);
 }
 
-opening_state_t opening_get_status(void) {
+const char *opening_get_code_name(opening_code_t code) {
+    if (code >= NUMBER_OF_OPENING_CODES) {
+        return NULL;
+    }
+
+    return opening_handler.codes_names[code];
+}
+
     return opening_handler.state;
 }
 
