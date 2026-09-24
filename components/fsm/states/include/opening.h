@@ -236,12 +236,12 @@ typedef struct opening_handler {
 #define OPENING_INITIAL_BUTTON 0
 
 /**
- * @def OPENING_INITIAL_CODE
- * @brief Initial code value to select the opening strategy.
+ * @brief Entry handler for @ref STATE_OPENING.
  *
- * **Default Value:** 0
+ * Set @ref LED_STATE to @ref LED_COLOR_BLUE and captures the current @ref radio_t
+ * button value.
  */
-#define OPENING_INITIAL_CODE 0
+void opening_entry(void);
 
 /**
  * @brief Returns the opening code name.
@@ -251,20 +251,18 @@ typedef struct opening_handler {
 const char *opening_get_code_name(opening_code_t code);
 
 /**
- * @def OPENING_ITERATIONS
- * @brief Quantity of iterations required to select the opening strategy.
+ * @brief Gets the current opening FSM state.
  *
- * **Default Value:** 3
+ * @return The current @ref opening_state_t.
  */
-#define OPENING_ITERATIONS 3
+opening_state_t opening_get_state(void);
 
 /**
- * @brief Entry handler for @ref STATE_OPENING.
+ * @brief Returns the current opening FSM state name.
  *
- * Set @ref LED_STATE to @ref LED_COLOR_PURPLE and captures current Radio Controller
- * button value.
+ * @return Human-readable null-terminated string representing the state name.
  */
-void opening_entry(void);
+const char *opening_get_state_name(void);
 
 /**
  * @brief Returns the opening strategy name.
@@ -275,6 +273,6 @@ void opening_entry(void);
 const char *opening_get_strategy_name(opening_t strategy);
 
 /**
- * @brief Run handler for @ref STATE_OPENING.
+ * @brief Run callback for @ref STATE_OPENING.
  */
 void opening_run(void);

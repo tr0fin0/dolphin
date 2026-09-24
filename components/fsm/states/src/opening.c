@@ -381,7 +381,20 @@ const char *opening_get_code_name(opening_code_t code) {
     return opening_handler.codes_names[code];
 }
 
+opening_state_t opening_get_state(void) {
     return opening_handler.state;
+}
+
+const char *opening_get_state_name(void) {
+    return opening_handler.states_names[opening_handler.state];
+}
+
+const char *opening_get_strategy_name(opening_t strategy) {
+    if (strategy >= NUMBER_OF_OPENINGS) {
+        return NULL;
+    }
+
+    return opening_handler.strategies[strategy].name;
 }
 
 void opening_run(void) {
