@@ -102,16 +102,7 @@ const char *radio_get_status_name(void) {
 void radio_init() {
     esp_err_t ret;
 
-    ret = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
-    if (ret != ESP_OK) {
-        LOG_E(
-            "%s ISR install service failed with error %s.",
-            radio_get_name(),
-            esp_err_to_name(ret)
-        );
-
-        return;
-    }
+    ESP_ERROR_CHECK_WITHOUT_ABORT(gpio_install_isr_service(ESP_INTR_FLAG_IRAM));
 
     int64_t now = esp_timer_get_time();
     for (uint8_t channel = 0; channel < NUMBER_OF_RADIO_CHANNELS; channel++) {

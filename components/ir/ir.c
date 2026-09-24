@@ -62,7 +62,7 @@ const char *ir_get_state_name(void) {
 };
 
 void ir_init(void) {
-    ESP_ERROR_CHECK(gpio_install_isr_service(ESP_INTR_FLAG_IRAM));
+    ESP_ERROR_CHECK_WITHOUT_ABORT(gpio_install_isr_service(ESP_INTR_FLAG_IRAM));
 
     gpio_config_t pin_config = {
         .pin_bit_mask   = (1ULL << ir.pin),

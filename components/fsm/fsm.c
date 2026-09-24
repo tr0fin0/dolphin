@@ -5,7 +5,9 @@
 #include "logging.h"
 #include "pwm.h"
 #include "radio.h"
+#include "sensor.h"
 #include "states/include/attack.h"
+#include "states/include/autonomous.h"
 #include "states/include/boot.h"
 #include "states/include/manual.h"
 #include "states/include/opening.h"
@@ -33,6 +35,13 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
         .on_run     = attack_run,
         .on_exit    = attack_exit
     },
+    [STATE_AUTONOMOUS] = {
+        .name       = "AUTONOMOUS",
+        .color      = LED_COLOR_ORANGE_DARK,
+        .on_entry   = NULL,
+        .on_run     = autonomous_run,
+        .on_exit    = autonomous_exit
+    },
     [STATE_BOOT] = {
         .name       = "BOOT",
         .color      = LED_COLOR_WHITE,
@@ -49,7 +58,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_OPENING] = {
         .name       = "OPENING",
-        .color      = LED_COLOR_PURPLE,
+        .color      = LED_COLOR_BLUE,
         .on_entry   = opening_entry,
         .on_run     = opening_run,
         .on_exit    = NULL,
@@ -63,7 +72,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     },
     [STATE_SEARCH] = {
         .name       = "SEARCH",
-        .color      = LED_COLOR_BLUE,
+        .color      = LED_COLOR_PURPLE,
         .on_entry   = NULL,
         .on_run     = search_run,
         .on_exit    = NULL
@@ -95,6 +104,7 @@ void fsm_init(void) {
     esc_init();
     ir_init();
     radio_init();
+    sensor_init();
 
     current_state = STATE_BOOT;
 }
