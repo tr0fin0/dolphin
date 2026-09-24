@@ -400,6 +400,8 @@ const char *opening_get_strategy_name(opening_t strategy) {
 void opening_run(void) {
     if (radio_get_status() == RADIO_DISCONNECTED) {
         fsm_transition(STATE_SAFE);
+
+        return;
     }
 
     switch (opening_handler.state) {
