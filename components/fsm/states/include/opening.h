@@ -213,16 +213,18 @@ typedef struct opening_config {
 } opening_config_t;
 
 /**
- * @brief Opening strategy handler.
+ * @brief Handler for the opening FSM.
  */
 typedef struct opening_handler {
     const char *name;                                   /**< Human-readable null-terminated opening handler name. */
+    opening_t strategy;                                 /**< Currently selected opening strategy. */
+    opening_config_t strategies[NUMBER_OF_OPENINGS];    /**< Configurations for all available opening strategies. */
     opening_code_t code[NUMBER_OF_OPENING_STEPS];       /**< Code sequence of the currently selected opening strategy. */
     const char *codes_names[NUMBER_OF_OPENING_CODES];   /**< Human-readable, null-terminated names of the opening codes. */
     opening_step_t step;                                /**< Opening handler strategy selection step. */
     opening_state_t state;                              /**< Opening handler state. */
-    const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable null-terminated opening handler states names. */
-    pwm_norm_t last_button;                             /**< Opening handler last button measure. */
+    const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable, null-terminated names of the opening FSM states. */
+    pwm_norm_t last_button;                             /**< Last measured button-channel value. */
 } opening_handler_t;
 
 /**
@@ -265,11 +267,12 @@ const char *opening_get_code_name(opening_code_t code);
 void opening_entry(void);
 
 /**
- * @brief Get current opening FSM state.
+ * @brief Returns the opening strategy name.
  *
- * @return Current opening FSM state.
+ * @return Human-readable null-terminated string representing the strategy name.
+ * @retval NULL If strategy is invalid.
  */
-opening_state_t opening_get_status(void);
+const char *opening_get_strategy_name(opening_t strategy);
 
 /**
  * @brief Run handler for @ref STATE_OPENING.

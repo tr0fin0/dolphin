@@ -179,12 +179,19 @@ static void opening_release(void) {
  * @brief Opening strategy execution.
  */
 static void opening_execution(void) {
-    for (uint8_t i = 0; i < NUMBER_OF_OPENINGS; i++) {
-        if (opening_handler.code == opening_handler.strategies[i].code) {
-            opening_handler.strategy = (opening_t) i;
+    for (opening_t strategy = 0; strategy < NUMBER_OF_OPENINGS; strategy++) {
+        if (
+            memcmp(
+                opening_handler.code,
+                opening_handler.strategies[strategy].code,
+                sizeof(opening_handler.code)
+            ) == 0
+        ) {
+            opening_handler.strategy = strategy;
+
             LOG_I(
                 "opening strategy selected is %s",
-                opening_handler.strategies[i].name
+                opening_get_strategy_name(opening_handler.strategy)
             );
 
             break;
