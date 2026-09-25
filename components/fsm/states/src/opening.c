@@ -109,6 +109,35 @@ static opening_handler_t opening_handler = {
 };
 
 /**
+ * @brief Decodes sequence of @ref opening_code_t into @ref opening_t.
+ */
+static void opening_decode_strategy(void) {
+    for (opening_t strategy = 0; strategy < NUMBER_OF_OPENINGS; strategy++) {
+        bool strategy_match = true;
+        for (opening_step_t step = 0; step < NUMBER_OF_OPENING_STEPS; step++) {
+            if (
+                opening_handler.code[step] !=
+                opening_handler.strategies[strategy].code[step]
+            ) {
+                strategy_match = false;
+                break;
+            }
+        }
+
+        if (strategy_match) {
+            opening_handler.strategy = strategy;
+
+            LOG_I(
+                "opening strategy selected is %s",
+                opening_get_strategy_name(opening_handler.strategy)
+            );
+
+            break;
+        }
+    }
+}
+
+/**
  * @brief Opening strategy selection depending on radio receiver model.
  *
  * Available radio receiver models are:
@@ -143,6 +172,7 @@ static void opening_selection(void) {
     }
 
     if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
+        opening_decode_strategy();
         opening_handler.state = OPENING_STATE_RELEASE;
 
         led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);
@@ -150,9 +180,13 @@ static void opening_selection(void) {
 }
 
 /**
- * @brief Opening strategy wait release command from radio receiver.
+ * @brief Opening strategy wait release command.
  *
- * Opening strategy is executed upon user confirmation.
+ * The @ref config_control_mode_t defines the release condition:
+ *
+ * - In @ref CONFIG_CONTROL_AUTONOMOUS wait for @ref IR_STATE_START
+ *
+ * - In @ref CONFIG_CONTROL_RADIO wait for another button press.
  */
 static void opening_release(void) {
     switch (CONFIG_CONTROL_MODE) {
@@ -179,25 +213,6 @@ static void opening_release(void) {
  * @brief Opening strategy execution.
  */
 static void opening_execution(void) {
-    for (opening_t strategy = 0; strategy < NUMBER_OF_OPENINGS; strategy++) {
-        if (
-            memcmp(
-                opening_handler.code,
-                opening_handler.strategies[strategy].code,
-                sizeof(opening_handler.code)
-            ) == 0
-        ) {
-            opening_handler.strategy = strategy;
-
-            LOG_I(
-                "opening strategy selected is %s",
-                opening_get_strategy_name(opening_handler.strategy)
-            );
-
-            break;
-        }
-    }
-
     switch (opening_handler.strategy) {
         case OPENING_STATIC:
             break;
