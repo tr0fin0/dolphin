@@ -138,78 +138,6 @@ static void opening_decode_strategy(void) {
 }
 
 /**
- * @brief Opening strategy selection depending on radio receiver model.
- *
- * Available radio receiver models are:
- *
- * - ``FS-GT2``: iterative measures of a single radio receiver channel.
- */
-static void opening_selection(void) {
-    pwm_norm_t button   = radio_read_channel(RADIO_CHANNEL_3);
-    pwm_norm_t throttle = radio_read_channel(RADIO_CHANNEL_2);
-
-    // ensure initial button value is not PWM_NEUTRAL_US
-    if (
-        (button != PWM_NEUTRAL_US) &&
-        (opening_handler.last_button == PWM_NEUTRAL_US)
-    ) {
-        opening_handler.last_button = button;
-    }
-
-    // opening selection via sequential throttle value measures
-    if (opening_handler.last_button != button) {
-        opening_handler.last_button  = button;
-        led_set_toggle(LED_STATE, 100);
-
-        opening_code_t code = OPENING_CODE_N;
-        if (throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) code = OPENING_CODE_H;
-        if (throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) code = OPENING_CODE_L;
-
-        opening_handler.code[opening_handler.step] = code;
-        LOG_I("received opening %s", opening_get_code_name(code));
-
-        opening_handler.step++;
-    }
-
-    if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
-        opening_decode_strategy();
-        opening_handler.state = OPENING_STATE_RELEASE;
-
-        led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);
-    }
-}
-
-/**
- * @brief Opening strategy wait release command.
- *
- * The @ref config_control_mode_t defines the release condition:
- *
- * - In @ref CONFIG_CONTROL_AUTONOMOUS wait for @ref IR_STATE_START
- *
- * - In @ref CONFIG_CONTROL_RADIO wait for another button press.
- */
-static void opening_release(void) {
-    switch (CONFIG_CONTROL_MODE) {
-        case CONFIG_CONTROL_AUTONOMOUS:
-            if (ir_get_state() == IR_STATE_START) {
-                opening_handler.state = OPENING_STATE_EXECUTION;
-            }
-            break;
-
-        case CONFIG_CONTROL_RADIO:
-            pwm_norm_t button = radio_read_channel(RADIO_CHANNEL_3);
-
-            if (opening_handler.last_button != button) {
-                opening_handler.state = OPENING_STATE_EXECUTION;
-            }
-            break;
-
-        default:
-            break;
-    }
-}
-
-/**
  * @brief Opening strategy execution.
  */
 static void opening_execution(void) {
@@ -382,6 +310,78 @@ static void opening_execution(void) {
     }
 
     opening_handler.state = OPENING_STATE_FINISHED;
+}
+
+/**
+ * @brief Opening strategy wait release command.
+ *
+ * The @ref config_control_mode_t defines the release condition:
+ *
+ * - In @ref CONFIG_CONTROL_AUTONOMOUS wait for @ref IR_STATE_START
+ *
+ * - In @ref CONFIG_CONTROL_RADIO wait for another button press.
+ */
+static void opening_release(void) {
+    switch (CONFIG_CONTROL_MODE) {
+        case CONFIG_CONTROL_AUTONOMOUS:
+            if (ir_get_state() == IR_STATE_START) {
+                opening_handler.state = OPENING_STATE_EXECUTION;
+            }
+            break;
+
+        case CONFIG_CONTROL_RADIO:
+            pwm_norm_t button = radio_read_channel(RADIO_CHANNEL_3);
+
+            if (opening_handler.last_button != button) {
+                opening_handler.state = OPENING_STATE_EXECUTION;
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
+/**
+ * @brief Opening strategy selection depending on radio receiver model.
+ *
+ * Available radio receiver models are:
+ *
+ * - ``FS-GT2``: iterative measures of a single radio receiver channel.
+ */
+static void opening_selection(void) {
+    pwm_norm_t button   = radio_read_channel(RADIO_CHANNEL_3);
+    pwm_norm_t throttle = radio_read_channel(RADIO_CHANNEL_2);
+
+    // ensure initial button value is not PWM_NEUTRAL_US
+    if (
+        (button != PWM_NEUTRAL_US) &&
+        (opening_handler.last_button == PWM_NEUTRAL_US)
+    ) {
+        opening_handler.last_button = button;
+    }
+
+    // opening selection via sequential throttle value measures
+    if (opening_handler.last_button != button) {
+        opening_handler.last_button  = button;
+        led_set_toggle(LED_STATE, 100);
+
+        opening_code_t code = OPENING_CODE_N;
+        if (throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) code = OPENING_CODE_H;
+        if (throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) code = OPENING_CODE_L;
+
+        opening_handler.code[opening_handler.step] = code;
+        LOG_I("received opening %s", opening_get_code_name(code));
+
+        opening_handler.step++;
+    }
+
+    if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
+        opening_decode_strategy();
+        opening_handler.state = OPENING_STATE_RELEASE;
+
+        led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);
+    }
 }
 
 void opening_entry(void) {
