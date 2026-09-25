@@ -14,6 +14,7 @@ idf_component_register(
         "states/include"
     REQUIRES
         config
+        controller
         esc
         ir
         led

@@ -1,4 +1,5 @@
 #include "config.h"
+#include "controller.h"
 #include "esc.h"
 #include "fsm.h"
 #include "ir.h"
@@ -146,163 +147,49 @@ static void opening_execution(void) {
             break;
 
         case OPENING_DRAW:
-            // rotation     +180
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(80);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(+90, 80);       // +180
             break;
 
         case OPENING_NE:
-            // rotation     +045
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(25);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  +50
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(140);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // rotation     -090
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(65);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(+90, 25);       // +045
+            controller_set_translation(+90, 140);   // +50
+            controller_set_rotation(-90, 65);       // -090
             break;
 
         case OPENING_N:
-            // translation  +50
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(140);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_translation(+90, 140);   // +50
             break;
 
         case OPENING_NW:
-            // rotation     -045
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(25);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  +50
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(140);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // rotation     +090
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(65);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(-90, 25);       // -045
+            controller_set_translation(+90, 140);   // +50
+            controller_set_rotation(+90, 65);       // +090
             break;
 
         case OPENING_SE:
-            // rotation     -045
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(30);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  -50
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(120);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // rotation     +090
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(60);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(-90, 25);       // -045
+            controller_set_translation(-90, 120);   // -50
+            controller_set_rotation(+90, 60);       // +090
             break;
 
         case OPENING_SEN:
-            // rotation     -045
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(30);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  -50
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(120);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(-90, 30);       // -045
+            controller_set_translation(-90, 120);   // -50
             break;
 
         case OPENING_S:
-            // translation  -50
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(120);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_translation(-90, 120);   // -50
             break;
 
         case OPENING_SW:
-            // rotation     +045
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(30);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  -50
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(120);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // rotation     -090
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(-90), ESC_R);
-            // // delay(60);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(+90, 30);       // +045
+            controller_set_translation(-90, 120);   // -50
+            controller_set_rotation(-90, 60);       // -090
             break;
 
         case OPENING_SWN:
-            // rotation     +045
-            // esc_set_pwm(pwm_percentage(+90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(20);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
-            // translation  -50
-            // esc_set_pwm(pwm_percentage(-90), ESC_L);
-            // esc_set_pwm(pwm_percentage(+90), ESC_R);
-            // // delay(120);
-            // esc_set_pwm_mix_neutral();
-            // // delay(1);
-
+            controller_set_rotation(+90, 30);       // +045
+            controller_set_translation(-90, 120);   // -50
             break;
 
         default:
