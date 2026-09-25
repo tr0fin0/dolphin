@@ -14,15 +14,15 @@ static opening_handler_t opening_handler = {
         [OPENING_CODE_L] = "CODE_L",
         [OPENING_CODE_N] = "CODE_N",
     },
-    .state = OPENING_STATE_SELECTION,
-    .states_names = {
+    .state          = OPENING_STATE_SELECTION,
+    .states_names   = {
         [OPENING_STATE_EXECUTION] = "EXECUTING",
         [OPENING_STATE_FINISHED]  = "FINISHED",
         [OPENING_STATE_RELEASE]   = "RELEASE",
         [OPENING_STATE_SELECTION] = "SELECTING",
     },
     .step = OPENING_STEP_0,
-    .strategy = OPENING_STATIC,
+    .strategy   = OPENING_STATIC,
     .strategies = {
         [OPENING_STATIC] = {
             .name = "STATIC",
@@ -48,8 +48,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_2] = OPENING_CODE_H,
             }
         },
-        [OPENING_NN]     = {
-            .name = "NORTH-NORTH",
+        [OPENING_N]      = {
+            .name = "NORTH",
             .code = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_H,
@@ -80,8 +80,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_2] = OPENING_CODE_H,
             }
         },
-        [OPENING_SS]     = {
-            .name = "SOUTH-SOUTH",
+        [OPENING_S]      = {
+            .name = "SOUTH",
             .code = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_L,
@@ -236,7 +236,7 @@ static void opening_execution(void) {
 
             break;
 
-        case OPENING_NN:
+        case OPENING_N:
             // translation  +50
             // esc_set_pwm(pwm_percentage(+90), ESC_L);
             // esc_set_pwm(pwm_percentage(-90), ESC_R);
@@ -311,7 +311,7 @@ static void opening_execution(void) {
 
             break;
 
-        case OPENING_SS:
+        case OPENING_S:
             // translation  -50
             // esc_set_pwm(pwm_percentage(-90), ESC_L);
             // esc_set_pwm(pwm_percentage(+90), ESC_R);

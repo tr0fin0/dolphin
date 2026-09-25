@@ -65,7 +65,7 @@ typedef enum opening {
      *
      * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
-    OPENING_NN,
+    OPENING_N,
     /**
      * @brief Moves to the north-west position
      *
@@ -113,7 +113,7 @@ typedef enum opening {
      *
      * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
-    OPENING_SS,
+    OPENING_S,
     /**
      * @brief Moves to the south-west position.
      *
