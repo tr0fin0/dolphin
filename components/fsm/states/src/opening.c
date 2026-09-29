@@ -8,6 +8,93 @@
 #include "opening.h"
 #include "radio.h"
 
+static const controller_sequence_t opening_static_sequence = {
+    .commands = NULL,
+    .length = 0,
+};
+
+static const controller_command_t opening_draw_commands[] = {
+    {.duration_us =  80000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+};
+static const controller_sequence_t opening_draw_sequence = {
+    .commands = opening_draw_commands,
+    .length = sizeof(opening_draw_commands) / sizeof(opening_draw_commands[0]),
+};
+
+static const controller_command_t opening_n_commands[] = {
+    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
+};
+static const controller_sequence_t opening_n_sequence = {
+    .commands = opening_n_commands,
+    .length = sizeof(opening_n_commands) / sizeof(opening_n_commands[0]),
+};
+
+static const controller_command_t opening_ne_commands[] = {
+    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
+    {.duration_us =  65000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+};
+static const controller_sequence_t opening_ne_sequence = {
+    .commands = opening_ne_commands,
+    .length = sizeof(opening_ne_commands) / sizeof(opening_ne_commands[0]),
+};
+
+static const controller_command_t opening_nw_commands[] = {
+    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
+    {.duration_us =  65000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+};
+static const controller_sequence_t opening_nw_sequence = {
+    .commands = opening_nw_commands,
+    .length = sizeof(opening_nw_commands) / sizeof(opening_nw_commands[0]),
+};
+
+static const controller_command_t opening_s_commands[] = {
+    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+};
+static const controller_sequence_t opening_s_sequence = {
+    .commands = opening_s_commands,
+    .length = sizeof(opening_s_commands) / sizeof(opening_s_commands[0]),
+};
+
+static const controller_command_t opening_se_commands[] = {
+    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+    {.duration_us =  60000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+};
+static const controller_sequence_t opening_se_sequence = {
+    .commands = opening_se_commands,
+    .length = sizeof(opening_se_commands) / sizeof(opening_se_commands[0]),
+};
+
+static const controller_command_t opening_sen_commands[] = {
+    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+};
+static const controller_sequence_t opening_sen_sequence = {
+    .commands = opening_sen_commands,
+    .length = sizeof(opening_sen_commands) / sizeof(opening_sen_commands[0]),
+};
+
+static const controller_command_t opening_sw_commands[] = {
+    {.duration_us =  30000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+    {.duration_us =  60000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+};
+static const controller_sequence_t opening_sw_sequence = {
+    .commands = opening_sw_commands,
+    .length = sizeof(opening_sw_commands) / sizeof(opening_sw_commands[0]),
+};
+
+static const controller_command_t opening_swn_commands[] = {
+    {.duration_us =  30000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+};
+static const controller_sequence_t opening_swn_sequence = {
+    .commands = opening_swn_commands,
+    .length = sizeof(opening_sw_commands) / sizeof(opening_swn_commands[0]),
+};
+
 static opening_handler_t opening_handler = {
     .name = "Opening Handler",
     .codes_names = {
@@ -31,7 +118,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_N,
                 [OPENING_STEP_2] = OPENING_CODE_N,
-            }
+            },
+            .sequence = &opening_static_sequence,
         },
         [OPENING_DRAW]   = {
             .name = "DRAW",
@@ -39,15 +127,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_L,
                 [OPENING_STEP_1] = OPENING_CODE_N,
                 [OPENING_STEP_2] = OPENING_CODE_N,
-            }
-        },
-        [OPENING_NE]     = {
-            .name = "NORTH-EAST",
-            .code = {
-                [OPENING_STEP_0] = OPENING_CODE_L,
-                [OPENING_STEP_1] = OPENING_CODE_H,
-                [OPENING_STEP_2] = OPENING_CODE_H,
-            }
+            },
+            .sequence = &opening_draw_sequence,
         },
         [OPENING_N]      = {
             .name = "NORTH",
@@ -55,7 +136,17 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_H,
                 [OPENING_STEP_2] = OPENING_CODE_N,
-            }
+            },
+            .sequence = &opening_n_sequence,
+        },
+        [OPENING_NE]     = {
+            .name = "NORTH-EAST",
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_L,
+                [OPENING_STEP_1] = OPENING_CODE_H,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            },
+            .sequence = &opening_ne_sequence,
         },
         [OPENING_NW]     = {
             .name = "NORTH-WEST",
@@ -63,23 +154,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_H,
                 [OPENING_STEP_1] = OPENING_CODE_H,
                 [OPENING_STEP_2] = OPENING_CODE_L,
-            }
-        },
-        [OPENING_SEN]    = {
-            .name = "SOUTH-EAST-NEUTRAL",
-            .code = {
-                [OPENING_STEP_0] = OPENING_CODE_N,
-                [OPENING_STEP_1] = OPENING_CODE_L,
-                [OPENING_STEP_2] = OPENING_CODE_H,
-            }
-        },
-        [OPENING_SE]     = {
-            .name = "SOUTH-EAST",
-            .code = {
-                [OPENING_STEP_0] = OPENING_CODE_H,
-                [OPENING_STEP_1] = OPENING_CODE_L,
-                [OPENING_STEP_2] = OPENING_CODE_H,
-            }
+            },
+            .sequence = &opening_nw_sequence,
         },
         [OPENING_S]      = {
             .name = "SOUTH",
@@ -87,7 +163,26 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_L,
                 [OPENING_STEP_2] = OPENING_CODE_N,
-            }
+            },
+            .sequence = &opening_s_sequence,
+        },
+        [OPENING_SE]     = {
+            .name = "SOUTH-EAST",
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_H,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            },
+            .sequence = &opening_se_sequence,
+        },
+        [OPENING_SEN]    = {
+            .name = "SOUTH-EAST-NEUTRAL",
+            .code = {
+                [OPENING_STEP_0] = OPENING_CODE_N,
+                [OPENING_STEP_1] = OPENING_CODE_L,
+                [OPENING_STEP_2] = OPENING_CODE_H,
+            },
+            .sequence = &opening_sen_sequence,
         },
         [OPENING_SW]     = {
             .name = "SOUTH-WEST",
@@ -95,7 +190,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_L,
                 [OPENING_STEP_1] = OPENING_CODE_L,
                 [OPENING_STEP_2] = OPENING_CODE_L,
-            }
+            },
+            .sequence = &opening_sw_sequence,
         },
         [OPENING_SWN]    = {
             .name = "SOUTH-WEST-NEUTRAL",
@@ -103,7 +199,8 @@ static opening_handler_t opening_handler = {
                 [OPENING_STEP_0] = OPENING_CODE_N,
                 [OPENING_STEP_1] = OPENING_CODE_L,
                 [OPENING_STEP_2] = OPENING_CODE_L,
-            }
+            },
+            .sequence = &opening_swn_sequence,
         },
     },
     .last_button = OPENING_INITIAL_BUTTON,
@@ -142,61 +239,21 @@ static void opening_decode_strategy(void) {
  * @brief Opening strategy execution.
  */
 static void opening_execution(void) {
-    switch (opening_handler.strategy) {
-        case OPENING_STATIC:
-            break;
+    const controller_sequence_t *sequence = opening_handler.strategies[
+        opening_handler.strategy
+    ].sequence;
 
-        case OPENING_DRAW:
-            controller_set_rotation(+90, 80);       // +180
-            break;
-
-        case OPENING_NE:
-            controller_set_rotation(+90, 25);       // +045
-            controller_set_translation(+90, 140);   // +50
-            controller_set_rotation(-90, 65);       // -090
-            break;
-
-        case OPENING_N:
-            controller_set_translation(+90, 140);   // +50
-            break;
-
-        case OPENING_NW:
-            controller_set_rotation(-90, 25);       // -045
-            controller_set_translation(+90, 140);   // +50
-            controller_set_rotation(+90, 65);       // +090
-            break;
-
-        case OPENING_SE:
-            controller_set_rotation(-90, 25);       // -045
-            controller_set_translation(-90, 120);   // -50
-            controller_set_rotation(+90, 60);       // +090
-            break;
-
-        case OPENING_SEN:
-            controller_set_rotation(-90, 30);       // -045
-            controller_set_translation(-90, 120);   // -50
-            break;
-
-        case OPENING_S:
-            controller_set_translation(-90, 120);   // -50
-            break;
-
-        case OPENING_SW:
-            controller_set_rotation(+90, 30);       // +045
-            controller_set_translation(-90, 120);   // -50
-            controller_set_rotation(-90, 60);       // -090
-            break;
-
-        case OPENING_SWN:
-            controller_set_rotation(+90, 30);       // +045
-            controller_set_translation(-90, 120);   // -50
-            break;
-
-        default:
-            break;
+    if (controller_get_state() == CONTROLLER_STATE_IDLE) {
+        if (!controller_start(sequence)) {
+            return;
+        }
     }
 
-    opening_handler.state = OPENING_STATE_FINISHED;
+    controller_step();
+
+    if (controller_get_state() == CONTROLLER_STATE_IDLE) {
+        opening_handler.state = OPENING_STATE_FINISHED;
+    }
 }
 
 /**

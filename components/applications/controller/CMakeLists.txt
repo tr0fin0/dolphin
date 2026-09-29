@@ -5,6 +5,7 @@ idf_component_register(
         "include"
     REQUIRES
         esc
-        esp_rom_sys
+        esp_timer
+        logging
         pwm
 )

@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "controller.h"
 #include "pwm.h"
 
 /**
@@ -43,18 +44,6 @@ typedef enum opening {
      */
     OPENING_DRAW,
     /**
-     * @brief Moves to the north-east position.
-     *
-     * Selected by the following code sequence:
-     *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
-     *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
-     *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
-     */
-    OPENING_NE,
-    /**
      * @brief Moves to the north position.
      *
      * Selected by the following code sequence:
@@ -66,6 +55,18 @@ typedef enum opening {
      * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
     OPENING_N,
+    /**
+     * @brief Moves to the north-east position.
+     *
+     * Selected by the following code sequence:
+     *
+     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
+     *
+     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
+     *
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
+     */
+    OPENING_NE,
     /**
      * @brief Moves to the north-west position
      *
@@ -79,7 +80,7 @@ typedef enum opening {
      */
     OPENING_NW,
     /**
-     * @brief Moves to the south-east position while maintaining neutral rotation.
+     * @brief Moves to the south position.
      *
      * Selected by the following code sequence:
      *
@@ -87,9 +88,9 @@ typedef enum opening {
      *
      * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
      */
-    OPENING_SEN,
+    OPENING_S,
     /**
      * @brief Moves to the south-east position.
      *
@@ -103,7 +104,7 @@ typedef enum opening {
      */
     OPENING_SE,
     /**
-     * @brief Moves to the south position.
+     * @brief Moves to the south-east position while maintaining neutral rotation.
      *
      * Selected by the following code sequence:
      *
@@ -111,9 +112,9 @@ typedef enum opening {
      *
      * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
+     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
      */
-    OPENING_S,
+    OPENING_SEN,
     /**
      * @brief Moves to the south-west position.
      *
@@ -210,6 +211,7 @@ typedef enum opening_step {
 typedef struct opening_config {
     const char *name;                                   /**< Human-readable, null-terminated name of the opening strategy. */
     const opening_code_t code[NUMBER_OF_OPENING_STEPS]; /**< Opening strategy code. */
+    const controller_sequence_t *sequence;              /**< Controller command sequence. */
 } opening_config_t;
 
 /**
