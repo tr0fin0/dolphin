@@ -1,5 +1,5 @@
 #include "config.h"
-#include "esc.h"
+#include "controller.h"
 #include "fsm.h"
 #include "ir.h"
 #include "opening.h"
@@ -7,7 +7,7 @@
 #include "safe.h"
 
 void safe_entry(void) {
-    esc_set_pwm_mix_neutral();
+    controller_stop();
 }
 
 void safe_run(void) {
