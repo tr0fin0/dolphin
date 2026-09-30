@@ -1,7 +1,7 @@
 /**
  * @file opening.h
- * @brief STATE_OPENING definition of the FSM callback functions `on_entry()`
- * and `on_run()`.
+ * @brief STATE_OPENING definition of the FSM callback functions ``on_entry()``
+ * and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -240,8 +240,7 @@ typedef struct opening_handler {
 /**
  * @brief Entry handler for @ref STATE_OPENING.
  *
- * Set @ref LED_STATE to @ref LED_COLOR_BLUE and captures the current @ref radio_t
- * button value.
+ * Calls @ref controller_stop and captures current @ref radio_t button value.
  */
 void opening_entry(void);
 

@@ -15,7 +15,11 @@ static const controller_sequence_t opening_static_sequence = {
 };
 
 static const controller_command_t opening_draw_commands[] = {
-    {.duration_us =  80000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+    {
+        .duration_us =  80000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = +90
+    },
 };
 static const controller_sequence_t opening_draw_sequence = {
     .commands = opening_draw_commands,
@@ -24,7 +28,11 @@ static const controller_sequence_t opening_draw_sequence = {
 };
 
 static const controller_command_t opening_n_commands[] = {
-    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
+    {
+        .duration_us = 140000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = +90
+    },
 };
 static const controller_sequence_t opening_n_sequence = {
     .commands = opening_n_commands,
@@ -33,9 +41,21 @@ static const controller_sequence_t opening_n_sequence = {
 };
 
 static const controller_command_t opening_ne_commands[] = {
-    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
-    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
-    {.duration_us =  65000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {
+        .duration_us =  25000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = +90
+    },
+    {
+        .duration_us = 140000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = +90
+    },
+    {
+        .duration_us =  65000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
 };
 static const controller_sequence_t opening_ne_sequence = {
     .commands = opening_ne_commands,
@@ -44,9 +64,21 @@ static const controller_sequence_t opening_ne_sequence = {
 };
 
 static const controller_command_t opening_nw_commands[] = {
-    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
-    {.duration_us = 140000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +90},
-    {.duration_us =  65000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+    {
+        .duration_us =  25000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
+    {
+        .duration_us = 140000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = +90
+    },
+    {
+        .duration_us =  65000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = +90
+    },
 };
 static const controller_sequence_t opening_nw_sequence = {
     .commands = opening_nw_commands,
@@ -55,7 +87,11 @@ static const controller_sequence_t opening_nw_sequence = {
 };
 
 static const controller_command_t opening_s_commands[] = {
-    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+    {
+        .duration_us = 120000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = -90
+    },
 };
 static const controller_sequence_t opening_s_sequence = {
     .commands = opening_s_commands,
@@ -64,9 +100,21 @@ static const controller_sequence_t opening_s_sequence = {
 };
 
 static const controller_command_t opening_se_commands[] = {
-    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
-    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
-    {.duration_us =  60000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
+    {
+        .duration_us =  25000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
+    {
+        .duration_us = 120000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = -90
+    },
+    {
+        .duration_us =  60000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = +90
+    },
 };
 static const controller_sequence_t opening_se_sequence = {
     .commands = opening_se_commands,
@@ -75,8 +123,16 @@ static const controller_sequence_t opening_se_sequence = {
 };
 
 static const controller_command_t opening_sen_commands[] = {
-    {.duration_us =  25000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
-    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+    {
+        .duration_us =  25000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
+    {
+        .duration_us = 120000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = -90
+    },
 };
 static const controller_sequence_t opening_sen_sequence = {
     .commands = opening_sen_commands,
@@ -85,9 +141,21 @@ static const controller_sequence_t opening_sen_sequence = {
 };
 
 static const controller_command_t opening_sw_commands[] = {
-    {.duration_us =  30000, .motion = CONTROLLER_MOTION_ROTATION,    .power = +90},
-    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
-    {.duration_us =  60000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
+    {
+        .duration_us =  30000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = +90
+    },
+    {
+        .duration_us = 120000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = -90
+    },
+    {
+        .duration_us =  60000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
 };
 static const controller_sequence_t opening_sw_sequence = {
     .commands = opening_sw_commands,
@@ -96,8 +164,16 @@ static const controller_sequence_t opening_sw_sequence = {
 };
 
 static const controller_command_t opening_swn_commands[] = {
-    {.duration_us =  30000, .motion = CONTROLLER_MOTION_ROTATION,    .power = -90},
-    {.duration_us = 120000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = -90},
+    {
+        .duration_us =  30000,
+        .motion = CONTROLLER_MOTION_ROTATION,
+        .power = -90
+    },
+    {
+        .duration_us = 120000,
+        .motion = CONTROLLER_MOTION_TRANSLATION,
+        .power = -90
+    },
 };
 static const controller_sequence_t opening_swn_sequence = {
     .commands = opening_swn_commands,
@@ -339,7 +415,10 @@ static void opening_selection(void) {
 }
 
 void opening_entry(void) {
+    controller_stop();
+
     opening_handler.last_button = radio_read_channel(RADIO_CHANNEL_3);
+
 }
 
 const char *opening_get_code_name(opening_code_t code) {
@@ -368,9 +447,7 @@ const char *opening_get_strategy_name(opening_t strategy) {
 
 void opening_run(void) {
     if (radio_get_status() == RADIO_DISCONNECTED) {
-        fsm_transition(STATE_SAFE);
-
-        return;
+        return fsm_transition(STATE_SAFE);
     }
 
     switch (opening_handler.state) {
