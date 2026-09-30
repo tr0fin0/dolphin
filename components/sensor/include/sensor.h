@@ -9,6 +9,24 @@
 #pragma once
 
 #include "mux.h"
+#include <stdbool.h>
+
+/**
+ * @brief Sensor positions.
+ */
+typedef enum sensor {
+    SENSOR_JS2_DL = 0,  /**< Obstacle sensor on the diagonal left position. */
+    SENSOR_JS2_DR,      /**< Obstacle sensor on the diagonal right position. */
+    SENSOR_JS2_FL,      /**< Obstacle sensor on the front left position. */
+    SENSOR_JS2_FR,      /**< Obstacle sensor on the front right position. */
+    SENSOR_JS2_LL,      /**< Obstacle sensor on the lateral left position. */
+    SENSOR_JS2_LR,      /**< Obstacle sensor on the lateral right position. */
+    SENSOR_QRE_BL,      /**< Line sensor on the back left position. */
+    SENSOR_QRE_BR,      /**< Line sensor on the back right position. */
+    SENSOR_QRE_FL,      /**< Line sensor on the front left position. */
+    SENSOR_QRE_FR,      /**< Line sensor on the front right position. */
+    NUMBER_OF_SENSORS   /**< Number of sensor positions. */
+} sensor_t;
 
 /**
  * @brief Sensor operating modes.
@@ -28,23 +46,6 @@ typedef struct sensor_config {
     sensor_mode_t mode;     /**< Sensor operating mode. */
     float threshold;        /**< Sensor @ref SENSOR_MODE_DIGITAL high threshold. */
 } sensor_config_t;
-
-/**
- * @brief Sensor positions.
- */
-typedef enum sensor {
-    SENSOR_JS2_DL = 0,  /**< Obstacle sensor on the diagonal left position. */
-    SENSOR_JS2_DR,      /**< Obstacle sensor on the diagonal right position. */
-    SENSOR_JS2_FL,      /**< Obstacle sensor on the front left position. */
-    SENSOR_JS2_FR,      /**< Obstacle sensor on the front right position. */
-    SENSOR_JS2_LL,      /**< Obstacle sensor on the lateral left position. */
-    SENSOR_JS2_LR,      /**< Obstacle sensor on the lateral right position. */
-    SENSOR_QRE_BL,      /**< Line sensor on the back left position. */
-    SENSOR_QRE_BR,      /**< Line sensor on the back right position. */
-    SENSOR_QRE_FL,      /**< Line sensor on the front left position. */
-    SENSOR_QRE_FR,      /**< Line sensor on the front right position. */
-    NUMBER_OF_SENSORS   /**< Number of sensor positions. */
-} sensor_t;
 
 /**
  * @def SENSOR_MAX_VALUE
