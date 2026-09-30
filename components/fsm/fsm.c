@@ -31,7 +31,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_ATTACK] = {
         .name       = "ATTACK",
         .color      = LED_COLOR_SCARLET,
-        .on_entry   = NULL,
+        .on_entry   = attack_entry,
         .on_run     = attack_run,
         .on_exit    = attack_exit
     },

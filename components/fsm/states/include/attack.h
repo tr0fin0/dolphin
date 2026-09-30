@@ -1,7 +1,7 @@
 /**
  * @file attack.h
- * @brief STATE_ATTACK definition of the FSM callback functions `on_exit()`
- * and `on_run()`.
+ * @brief STATE_ATTACK definition of the FSM callback functions ``on_entry()``
+ * , ``on_exit()`` and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -10,10 +10,16 @@
 #pragma once
 
 /**
+ * @brief Entry handler for @ref STATE_ATTACK.
+ *
+ * Calls @ref controller_stop .
+ */
+void attack_entry(void);
+
+/**
  * @brief Exit handler for @ref STATE_ATTACK.
  *
- * Ensures both motors are driven to @ref PWM_NEUTRAL_US, preventing unintended
- * motion during transition.
+ * Calls @ref controller_stop .
  */
 void attack_exit(void);
 
