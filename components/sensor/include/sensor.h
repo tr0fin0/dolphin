@@ -64,6 +64,54 @@ typedef struct sensor_config {
 #define SENSOR_MIN_VALUE 0.0000f
 
 /**
+ * @brief Returns true if any line sensors are @ref SENSOR_MAX_VALUE .
+ *
+ * Line sensors are:
+ * 
+ * - @ref SENSOR_QRE_BL
+ *
+ * - @ref SENSOR_QRE_BR
+ *
+ * - @ref SENSOR_QRE_FL
+ *
+ * - @ref SENSOR_QRE_FR
+ */
+bool sensor_detected_line(void);
+
+/**
+ * @brief Returns true if any front obstacle sensors are @ref SENSOR_MAX_VALUE .
+ *
+ * Front obstacle sensors are:
+ *
+ * - @ref SENSOR_JS2_FL
+ *
+ * - @ref SENSOR_JS2_FR
+ */
+bool sensor_detected_obstacle_front(void);
+
+/**
+ * @brief Returns true if both front obstacle sensors are @ref SENSOR_MIN_VALUE
+ * and any side obstacle sensors are @ref SENSOR_MAX_VALUE .
+ *
+ * Front obstacle sensors are:
+ *
+ * - @ref SENSOR_JS2_FL
+ *
+ * - @ref SENSOR_JS2_FR
+ *
+ * Side obstacle sensors are:
+ *
+ * - @ref SENSOR_JS2_DL
+ *
+ * - @ref SENSOR_JS2_DR
+ *
+ * - @ref SENSOR_JS2_LL
+ *
+ * - @ref SENSOR_JS2_LR
+ */
+bool sensor_detected_obstacle_sides(void);
+
+/**
  * @brief Returns the sensor name.
  *
  * @param[in] sensor Sensor position.
