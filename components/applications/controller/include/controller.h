@@ -36,7 +36,7 @@ typedef enum controller_state {
  */
 typedef struct controller_command {
     controller_motion_t motion; /**< Type of motion to perform. */
-    pwm_percentage_t power;     /**< Signed PWM comand. */
+    pwm_percentage_t power;     /**< Signed PWM command. */
     int64_t duration_us;        /**< Command duration in microseconds. */
 } controller_command_t;
 
