@@ -67,7 +67,7 @@ typedef struct sensor_config {
  * @brief Returns true if any line sensors are @ref SENSOR_MAX_VALUE .
  *
  * Line sensors are:
- * 
+ *
  * - @ref SENSOR_QRE_BL
  *
  * - @ref SENSOR_QRE_BR

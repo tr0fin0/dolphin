@@ -27,7 +27,7 @@ typedef enum survive_move {
     SURVIVE_MOVE_R,             /**< . */
     NUMBER_OF_SURVIVE_MOVES     /**< . */
 } survive_move_t;
- 
+
 /**
  * @brief
  */

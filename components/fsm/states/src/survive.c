@@ -239,10 +239,10 @@ static void survive_decode_move(void) {
             }
 
             if (
-                survive.sensors_values[sensor] != 
+                survive.sensors_values[sensor] !=
                 survive.moves[move].sensors_states[sensor]
             ) {
-                move_match = false; 
+                move_match = false;
                 break;
             }
         }

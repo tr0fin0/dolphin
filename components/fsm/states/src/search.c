@@ -1,4 +1,4 @@
-#include "controller.h" 
+#include "controller.h"
 #include "fsm.h"
 #include "ir.h"
 #include "search.h"
