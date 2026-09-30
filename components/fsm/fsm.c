@@ -38,7 +38,7 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_AUTONOMOUS] = {
         .name       = "AUTONOMOUS",
         .color      = LED_COLOR_ORANGE_DARK,
-        .on_entry   = NULL,
+        .on_entry   = autonomous_entry,
         .on_run     = autonomous_run,
         .on_exit    = autonomous_exit
     },

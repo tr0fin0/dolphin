@@ -1,7 +1,7 @@
 /**
  * @file autonomous.h
- * @brief STATE_AUTONOMOUS definition of the FSM callback functions `on_exit()`
- * and `on_run()`.
+ * @brief STATE_AUTONOMOUS definition of the FSM callback functions ``on_entry()``
+ * , ``on_exit()`` and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-09-22
@@ -9,9 +9,29 @@
 
 #pragma once
 
+#include "controller.h"
+#include <stdint.h>
+
+/**
+ * @brief Autonous state.
+ */
+typedef struct autonomous {
+    const char *name;                       /**< Human-readable, null-terminated name of the autonomous state. */
+    int64_t interval_us;                    /**< . */
+    int64_t last_time_us;                   /**< . */
+} autonomous_t;
+
+/**
+ * @brief Entry handler for @ref STATE_AUTONOMOUS.
+ *
+ * Calls @ref controller_stop and initialize time measurements.
+ */
+void autonomous_entry(void);
+
 /**
  * @brief Exit handler for @ref STATE_AUTONOMOUS.
  *
+ * Calls @ref controller_stop .
  */
 void autonomous_exit(void);
 

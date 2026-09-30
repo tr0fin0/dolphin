@@ -16,6 +16,7 @@ idf_component_register(
         config
         controller
         esc
+        esp_timer
         ir
         led
         logging
