@@ -10,7 +10,8 @@
 
 static const controller_sequence_t opening_static_sequence = {
     .commands = NULL,
-    .length = 0,
+    .length   = 0,
+    .repeat   = false,
 };
 
 static const controller_command_t opening_draw_commands[] = {
@@ -18,7 +19,8 @@ static const controller_command_t opening_draw_commands[] = {
 };
 static const controller_sequence_t opening_draw_sequence = {
     .commands = opening_draw_commands,
-    .length = sizeof(opening_draw_commands) / sizeof(opening_draw_commands[0]),
+    .length   = sizeof(opening_draw_commands) / sizeof(opening_draw_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_n_commands[] = {
@@ -26,7 +28,8 @@ static const controller_command_t opening_n_commands[] = {
 };
 static const controller_sequence_t opening_n_sequence = {
     .commands = opening_n_commands,
-    .length = sizeof(opening_n_commands) / sizeof(opening_n_commands[0]),
+    .length   = sizeof(opening_n_commands) / sizeof(opening_n_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_ne_commands[] = {
@@ -36,7 +39,8 @@ static const controller_command_t opening_ne_commands[] = {
 };
 static const controller_sequence_t opening_ne_sequence = {
     .commands = opening_ne_commands,
-    .length = sizeof(opening_ne_commands) / sizeof(opening_ne_commands[0]),
+    .length   = sizeof(opening_ne_commands) / sizeof(opening_ne_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_nw_commands[] = {
@@ -46,7 +50,8 @@ static const controller_command_t opening_nw_commands[] = {
 };
 static const controller_sequence_t opening_nw_sequence = {
     .commands = opening_nw_commands,
-    .length = sizeof(opening_nw_commands) / sizeof(opening_nw_commands[0]),
+    .length   = sizeof(opening_nw_commands) / sizeof(opening_nw_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_s_commands[] = {
@@ -54,7 +59,8 @@ static const controller_command_t opening_s_commands[] = {
 };
 static const controller_sequence_t opening_s_sequence = {
     .commands = opening_s_commands,
-    .length = sizeof(opening_s_commands) / sizeof(opening_s_commands[0]),
+    .length   = sizeof(opening_s_commands) / sizeof(opening_s_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_se_commands[] = {
@@ -64,7 +70,8 @@ static const controller_command_t opening_se_commands[] = {
 };
 static const controller_sequence_t opening_se_sequence = {
     .commands = opening_se_commands,
-    .length = sizeof(opening_se_commands) / sizeof(opening_se_commands[0]),
+    .length   = sizeof(opening_se_commands) / sizeof(opening_se_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_sen_commands[] = {
@@ -73,7 +80,8 @@ static const controller_command_t opening_sen_commands[] = {
 };
 static const controller_sequence_t opening_sen_sequence = {
     .commands = opening_sen_commands,
-    .length = sizeof(opening_sen_commands) / sizeof(opening_sen_commands[0]),
+    .length   = sizeof(opening_sen_commands) / sizeof(opening_sen_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_sw_commands[] = {
@@ -83,7 +91,8 @@ static const controller_command_t opening_sw_commands[] = {
 };
 static const controller_sequence_t opening_sw_sequence = {
     .commands = opening_sw_commands,
-    .length = sizeof(opening_sw_commands) / sizeof(opening_sw_commands[0]),
+    .length   = sizeof(opening_sw_commands) / sizeof(opening_sw_commands[0]),
+    .repeat   = false,
 };
 
 static const controller_command_t opening_swn_commands[] = {
@@ -92,7 +101,8 @@ static const controller_command_t opening_swn_commands[] = {
 };
 static const controller_sequence_t opening_swn_sequence = {
     .commands = opening_swn_commands,
-    .length = sizeof(opening_sw_commands) / sizeof(opening_swn_commands[0]),
+    .length   = sizeof(opening_sw_commands) / sizeof(opening_swn_commands[0]),
+    .repeat   = false,
 };
 
 static opening_handler_t opening_handler = {

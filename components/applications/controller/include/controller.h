@@ -9,6 +9,7 @@
 #pragma once
 
 #include "pwm.h"
+#include <stdbool.h>
 #include <stdint.h>
 
 /**
@@ -45,6 +46,7 @@ typedef struct controller_command {
 typedef struct controller_sequence {
     const controller_command_t *commands;   /**< Array of commands. */
     uint8_t length;                         /**< Number of commands. */
+    bool repeat;                            /**< Repeats sequence after the last command. */
 } controller_sequence_t;
 
 /**

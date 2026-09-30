@@ -142,7 +142,21 @@ void controller_step(void) {
 
     // current command has finished
     controller.command_current++;
+
     if (controller.command_current >= controller.sequence->length) {
+        if (controller.sequence->repeat) {
+            controller.command_current = 0;
+            controller.command_start_us = now_us;
+
+            controller_set_command(
+                &controller.sequence->commands[
+                    controller.command_current
+                ]
+            );
+
+            return;
+        }
+
         controller_stop();
         return;
     }
