@@ -73,9 +73,9 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_SEARCH] = {
         .name       = "SEARCH",
         .color      = LED_COLOR_PURPLE,
-        .on_entry   = NULL,
+        .on_entry   = search_entry,
         .on_run     = search_run,
-        .on_exit    = NULL
+        .on_exit    = search_exit
     },
     [STATE_SURVIVE] = {
         .name       = "SURVIVE",

@@ -1,12 +1,27 @@
 /**
  * @file search.h
- * @brief STATE_SEARCH definition of the FSM callback functions `on_run()`.
+ * @brief STATE_SEARCH definition of the FSM callback functions ``on_entry()``
+ * , ``on_exit()`` and ``on_run()``
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
  */
 
 #pragma once
+
+/**
+ * @brief Entry handler for @ref STATE_SEARCH.
+ *
+ * Calls @ref controller_stop .
+ */
+void search_entry(void);
+
+/**
+ * @brief Exit handler for @ref STATE_SEARCH.
+ *
+ * Calls @ref controller_stop .
+ */
+void search_exit(void);
 
 /**
  * @brief Run handler for @ref STATE_SEARCH.
