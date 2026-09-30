@@ -80,9 +80,9 @@ static const fsm_table_t fsm_table[NUMBER_OF_STATES] = {
     [STATE_SURVIVE] = {
         .name       = "SURVIVE",
         .color      = LED_COLOR_CYAN,
-        .on_entry   = NULL,
+        .on_entry   = survive_entry,
         .on_run     = survive_run,
-        .on_exit    = NULL
+        .on_exit    = survive_exit
     }
 };
 
