@@ -1,6 +1,5 @@
 #include "attack.h"
 #include "controller.h"
-#include "config.h"
 #include "fsm.h"
 #include "ir.h"
 #include "sensor.h"
@@ -8,15 +7,15 @@
 static const controller_command_t attack_commands[] = {
     {
         .duration_us = 50000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +100
     },
 };
 
 static const controller_sequence_t attack_sequence = {
     .commands = attack_commands,
-    .length = sizeof(attack_commands) / sizeof(attack_commands[0]),
-    .repeat = true,
+    .length   = sizeof(attack_commands) / sizeof(attack_commands[0]),
+    .repeat   = true,
 };
 
 void attack_entry(void) {
