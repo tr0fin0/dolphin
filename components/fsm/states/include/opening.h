@@ -1,7 +1,7 @@
 /**
  * @file opening.h
- * @brief STATE_OPENING definition of the FSM callback functions ``on_entry()``
- * and ``on_run()``.
+ * @brief ``STATE_OPENING`` definition of the FSM callback functions
+ * ``on_entry()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -15,8 +15,8 @@
 /**
  * @brief Opening strategies.
  *
- * Each strategy is identified by a unique sequence of @ref opening_code_t
- * values, as described below.
+ * Each strategy is identified by a unique sequence of ``opening_code`` values,
+ * as described below.
  */
 typedef enum opening {
     /**
@@ -24,11 +24,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_N``
      */
     OPENING_STATIC = 0,
     /**
@@ -36,11 +36,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_N``
      */
     OPENING_DRAW,
     /**
@@ -48,11 +48,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_H``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_N``
      */
     OPENING_N,
     /**
@@ -60,11 +60,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_H``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_H``
      */
     OPENING_NE,
     /**
@@ -72,11 +72,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_H``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_H``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_L``
      */
     OPENING_NW,
     /**
@@ -84,11 +84,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_N``
      */
     OPENING_S,
     /**
@@ -96,11 +96,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_H``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_H``
      */
     OPENING_SE,
     /**
@@ -108,11 +108,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_H
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_H``
      */
     OPENING_SEN,
     /**
@@ -120,11 +120,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_L``
      */
     OPENING_SW,
     /**
@@ -132,11 +132,11 @@ typedef enum opening {
      *
      * Selected by the following code sequence:
      *
-     * - @ref OPENING_STEP_0 : @ref OPENING_CODE_N
+     * - ``OPENING_STEP_0``: ``OPENING_CODE_N``
      *
-     * - @ref OPENING_STEP_1 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_1``: ``OPENING_CODE_L``
      *
-     * - @ref OPENING_STEP_2 : @ref OPENING_CODE_L
+     * - ``OPENING_STEP_2``: ``OPENING_CODE_L``
      */
     OPENING_SWN,
     NUMBER_OF_OPENINGS  /**< Number of openings positions. */
@@ -145,13 +145,13 @@ typedef enum opening {
 /**
  * @brief Opening strategy code.
  *
- * Uses @ref radio_t signals from 2 channels to determine the opening code.
+ * Uses ``radio`` signals from 2 channels to determine the opening code.
  * Typically, the throttle channel value is measured when the button channel is
  * pressed.
  */
 typedef enum opening_code {
     /**
-     * @brief Represents the high @ref pwm_norm_t level.
+     * @brief Represents the high ``pwm_norm_t`` level.
      *
      * Selected when the radio receiver channel value is greater than:
      *
@@ -159,7 +159,7 @@ typedef enum opening_code {
      */
     OPENING_CODE_H = 0,
     /**
-     * @brief Represents the low @ref pwm_norm_t level.
+     * @brief Represents the low ``pwm_norm_t`` level.
      *
      * Selected when the radio receiver channel value is less than:
      *
@@ -167,7 +167,7 @@ typedef enum opening_code {
      */
     OPENING_CODE_L,
     /**
-     * @brief Represents the neutral @ref pwm_norm_t level.
+     * @brief Represents the neutral ``pwm_norm_t`` level.
      *
      * Selected when the radio receiver channel value is between inclusive:
      *
@@ -182,7 +182,8 @@ typedef enum opening_code {
 /**
  * @brief Opening Finite State Machine states.
  *
- * The opening strategy is executed regardless of the selected @ref config_control_mode_t.
+ * The opening strategy is executed regardless of the selected
+ * ``config_control_mode``.
  */
 typedef enum opening_state {
     OPENING_STATE_EXECUTION = 0,    /**< The selected opening strategy is being executed. */
@@ -195,7 +196,7 @@ typedef enum opening_state {
 /**
  * @brief Opening strategy selection step.
  *
- * The opening strategy is selected by sequentially measuring the @ref radio_t
+ * The opening strategy is selected by sequentially measuring the ``radio``
  * channel values.
  */
 typedef enum opening_step {
@@ -215,17 +216,17 @@ typedef struct opening_config {
 } opening_config_t;
 
 /**
- * @brief Handler for the opening FSM.
+ * @brief Opening state handler.
  */
 typedef struct opening_handler {
-    const char *name;                                   /**< Human-readable null-terminated opening handler name. */
+    const char *name;                                   /**< Human-readable, null-terminated name of the opening handler. */
     opening_t strategy;                                 /**< Currently selected opening strategy. */
     opening_config_t strategies[NUMBER_OF_OPENINGS];    /**< Configurations for all available opening strategies. */
     opening_code_t code[NUMBER_OF_OPENING_STEPS];       /**< Code sequence of the currently selected opening strategy. */
-    const char *codes_names[NUMBER_OF_OPENING_CODES];   /**< Human-readable, null-terminated names of the opening codes. */
+    const char *codes_names[NUMBER_OF_OPENING_CODES];   /**< Array of human-readable, null-terminated names of the opening codes. */
     opening_step_t step;                                /**< Opening handler strategy selection step. */
     opening_state_t state;                              /**< Opening handler state. */
-    const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Human-readable, null-terminated names of the opening FSM states. */
+    const char *states_names[NUMBER_OF_OPENING_STATES]; /**< Array of human-readable, null-terminated names of the opening states. */
     pwm_norm_t last_button;                             /**< Last measured button-channel value. */
 } opening_handler_t;
 
@@ -238,28 +239,30 @@ typedef struct opening_handler {
 #define OPENING_INITIAL_BUTTON 0
 
 /**
- * @brief Entry handler for @ref STATE_OPENING.
+ * @brief Entry handler for ``STATE_OPENING``.
  *
- * Calls @ref controller_stop and captures current @ref radio_t button value.
+ * Calls ``controller_stop()`` and captures current ``radio`` button value.
  */
 void opening_entry(void);
 
 /**
  * @brief Returns the opening code name.
  *
+ * @param[in] code Opening code.
+ *
  * @return Human-readable null-terminated string representing the code name.
  */
 const char *opening_get_code_name(opening_code_t code);
 
 /**
- * @brief Gets the current opening FSM state.
+ * @brief Gets the current ``opening_handler`` state.
  *
- * @return The current @ref opening_state_t.
+ * @return The current ``opening_state``.
  */
 opening_state_t opening_get_state(void);
 
 /**
- * @brief Returns the current opening FSM state name.
+ * @brief Returns the current ``opening_handler`` state name.
  *
  * @return Human-readable null-terminated string representing the state name.
  */
@@ -268,12 +271,30 @@ const char *opening_get_state_name(void);
 /**
  * @brief Returns the opening strategy name.
  *
+ * @param[in] strategy Opening strategy.
+ *
  * @return Human-readable null-terminated string representing the strategy name.
  * @retval NULL If strategy is invalid.
  */
 const char *opening_get_strategy_name(opening_t strategy);
 
 /**
- * @brief Run callback for @ref STATE_OPENING.
+ * @brief Run callback for ``STATE_OPENING``.
+ *
+ * While the ``radio`` is ``RADIO_STATUS_CONNECTED``, reads the button channel
+ * and decodes opening strategy.
+ *
+ * @note Transition to ``STATE_SAFE`` when:
+ * - ``RADIO_STATUS_DISCONNECTED``
+ *
+ * @note Transition to ``STATE_AUTONOMOUS`` when:
+ * - ``CONFIG_CONTROL_AUTONOMOUS``
+ *
+ * - ``IR_STATE_START``
+ *
+ * @note Transition to ``STATE_MANUAL`` when:
+ * - ``CONFIG_CONTROL_RADIO``
+ *
+ * - ``RADIO_STATUS_CONNECTED``
  */
 void opening_run(void);

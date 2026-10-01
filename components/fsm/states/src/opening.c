@@ -17,8 +17,8 @@ static const controller_sequence_t opening_static_sequence = {
 static const controller_command_t opening_draw_commands[] = {
     {
         .duration_us =  80000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +90
     },
 };
 static const controller_sequence_t opening_draw_sequence = {
@@ -30,8 +30,8 @@ static const controller_sequence_t opening_draw_sequence = {
 static const controller_command_t opening_n_commands[] = {
     {
         .duration_us = 140000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +90
     },
 };
 static const controller_sequence_t opening_n_sequence = {
@@ -43,18 +43,18 @@ static const controller_sequence_t opening_n_sequence = {
 static const controller_command_t opening_ne_commands[] = {
     {
         .duration_us =  25000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +90
     },
     {
         .duration_us = 140000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +90
     },
     {
         .duration_us =  65000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
 };
 static const controller_sequence_t opening_ne_sequence = {
@@ -66,18 +66,18 @@ static const controller_sequence_t opening_ne_sequence = {
 static const controller_command_t opening_nw_commands[] = {
     {
         .duration_us =  25000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
     {
         .duration_us = 140000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +90
     },
     {
         .duration_us =  65000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +90
     },
 };
 static const controller_sequence_t opening_nw_sequence = {
@@ -89,8 +89,8 @@ static const controller_sequence_t opening_nw_sequence = {
 static const controller_command_t opening_s_commands[] = {
     {
         .duration_us = 120000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -90
     },
 };
 static const controller_sequence_t opening_s_sequence = {
@@ -102,18 +102,18 @@ static const controller_sequence_t opening_s_sequence = {
 static const controller_command_t opening_se_commands[] = {
     {
         .duration_us =  25000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
     {
         .duration_us = 120000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -90
     },
     {
         .duration_us =  60000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +90
     },
 };
 static const controller_sequence_t opening_se_sequence = {
@@ -125,13 +125,13 @@ static const controller_sequence_t opening_se_sequence = {
 static const controller_command_t opening_sen_commands[] = {
     {
         .duration_us =  25000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
     {
         .duration_us = 120000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -90
     },
 };
 static const controller_sequence_t opening_sen_sequence = {
@@ -143,18 +143,18 @@ static const controller_sequence_t opening_sen_sequence = {
 static const controller_command_t opening_sw_commands[] = {
     {
         .duration_us =  30000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +90
     },
     {
         .duration_us = 120000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -90
     },
     {
         .duration_us =  60000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
 };
 static const controller_sequence_t opening_sw_sequence = {
@@ -166,13 +166,13 @@ static const controller_sequence_t opening_sw_sequence = {
 static const controller_command_t opening_swn_commands[] = {
     {
         .duration_us =  30000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -90
     },
     {
         .duration_us = 120000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -90
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -90
     },
 };
 static const controller_sequence_t opening_swn_sequence = {
@@ -181,7 +181,7 @@ static const controller_sequence_t opening_swn_sequence = {
     .repeat   = false,
 };
 
-static opening_handler_t opening_handler = {
+static opening_handler_t opening = {
     .name = "Opening Handler",
     .codes_names = {
         [OPENING_CODE_H] = "CODE_H",
@@ -293,15 +293,15 @@ static opening_handler_t opening_handler = {
 };
 
 /**
- * @brief Decodes sequence of @ref opening_code_t into @ref opening_t.
+ * @brief Decodes sequence of @ref opening_code into @ref opening.
  */
 static void opening_decode_strategy(void) {
     for (opening_t strategy = 0; strategy < NUMBER_OF_OPENINGS; strategy++) {
         bool strategy_match = true;
         for (opening_step_t step = 0; step < NUMBER_OF_OPENING_STEPS; step++) {
             if (
-                opening_handler.code[step] !=
-                opening_handler.strategies[strategy].code[step]
+                opening.code[step] !=
+                opening.strategies[strategy].code[step]
             ) {
                 strategy_match = false;
                 break;
@@ -309,11 +309,11 @@ static void opening_decode_strategy(void) {
         }
 
         if (strategy_match) {
-            opening_handler.strategy = strategy;
+            opening.strategy = strategy;
 
             LOG_I(
                 "opening strategy selected is %s",
-                opening_get_strategy_name(opening_handler.strategy)
+                opening_get_strategy_name(opening.strategy)
             );
 
             break;
@@ -322,11 +322,11 @@ static void opening_decode_strategy(void) {
 }
 
 /**
- * @brief Opening strategy execution.
+ * @brief Execute opening strategy.
  */
 static void opening_execution(void) {
-    const controller_sequence_t *sequence = opening_handler.strategies[
-        opening_handler.strategy
+    const controller_sequence_t *sequence = opening.strategies[
+        opening.strategy
     ].sequence;
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {
@@ -338,7 +338,7 @@ static void opening_execution(void) {
     controller_step();
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {
-        opening_handler.state = OPENING_STATE_FINISHED;
+        opening.state = OPENING_STATE_FINISHED;
     }
 }
 
@@ -355,15 +355,15 @@ static void opening_release(void) {
     switch (CONFIG_CONTROL_MODE) {
         case CONFIG_CONTROL_AUTONOMOUS:
             if (ir_get_state() == IR_STATE_START) {
-                opening_handler.state = OPENING_STATE_EXECUTION;
+                opening.state = OPENING_STATE_EXECUTION;
             }
             break;
 
         case CONFIG_CONTROL_RADIO:
             pwm_norm_t button = radio_read_channel(RADIO_CHANNEL_3);
 
-            if (opening_handler.last_button != button) {
-                opening_handler.state = OPENING_STATE_EXECUTION;
+            if (opening.last_button != button) {
+                opening.state = OPENING_STATE_EXECUTION;
             }
             break;
 
@@ -386,29 +386,29 @@ static void opening_selection(void) {
     // ensure initial button value is not PWM_NEUTRAL_US
     if (
         (button != PWM_NEUTRAL_US) &&
-        (opening_handler.last_button == PWM_NEUTRAL_US)
+        (opening.last_button == PWM_NEUTRAL_US)
     ) {
-        opening_handler.last_button = button;
+        opening.last_button = button;
     }
 
     // opening selection via sequential throttle value measures
-    if (opening_handler.last_button != button) {
-        opening_handler.last_button  = button;
+    if (opening.last_button != button) {
+        opening.last_button  = button;
         led_set_toggle(LED_STATE, 100);
 
         opening_code_t code = OPENING_CODE_N;
         if (throttle > (PWM_NEUTRAL_US+PWM_MAXIMUM_US)/2) code = OPENING_CODE_H;
         if (throttle < (PWM_NEUTRAL_US+PWM_MINIMUM_US)/2) code = OPENING_CODE_L;
 
-        opening_handler.code[opening_handler.step] = code;
+        opening.code[opening.step] = code;
         LOG_I("received opening %s", opening_get_code_name(code));
 
-        opening_handler.step++;
+        opening.step++;
     }
 
-    if (opening_handler.step == NUMBER_OF_OPENING_STEPS) {
+    if (opening.step == NUMBER_OF_OPENING_STEPS) {
         opening_decode_strategy();
-        opening_handler.state = OPENING_STATE_RELEASE;
+        opening.state = OPENING_STATE_RELEASE;
 
         led_set_color(LED_STATE, LED_COLOR_BLUE_LIGHT);
     }
@@ -417,7 +417,7 @@ static void opening_selection(void) {
 void opening_entry(void) {
     controller_stop();
 
-    opening_handler.last_button = radio_read_channel(RADIO_CHANNEL_3);
+    opening.last_button = radio_read_channel(RADIO_CHANNEL_3);
 
 }
 
@@ -426,15 +426,15 @@ const char *opening_get_code_name(opening_code_t code) {
         return NULL;
     }
 
-    return opening_handler.codes_names[code];
+    return opening.codes_names[code];
 }
 
 opening_state_t opening_get_state(void) {
-    return opening_handler.state;
+    return opening.state;
 }
 
 const char *opening_get_state_name(void) {
-    return opening_handler.states_names[opening_handler.state];
+    return opening.states_names[opening.state];
 }
 
 const char *opening_get_strategy_name(opening_t strategy) {
@@ -442,7 +442,7 @@ const char *opening_get_strategy_name(opening_t strategy) {
         return NULL;
     }
 
-    return opening_handler.strategies[strategy].name;
+    return opening.strategies[strategy].name;
 }
 
 void opening_run(void) {
@@ -450,7 +450,7 @@ void opening_run(void) {
         return fsm_transition(STATE_SAFE);
     }
 
-    switch (opening_handler.state) {
+    switch (opening.state) {
         case OPENING_STATE_EXECUTION:
             opening_execution();
             break;
