@@ -18,7 +18,7 @@ void safe_run(void) {
                     fsm_transition(STATE_AUTONOMOUS);
                 }
             } else {
-                if (radio_get_status() == RADIO_CONNECTED) {
+                if (radio_get_status() == RADIO_STATUS_CONNECTED) {
                     if (ir_get_state() == IR_STATE_STANDBY) {
                         fsm_transition(STATE_OPENING);
                     }
@@ -27,7 +27,7 @@ void safe_run(void) {
             break;
 
         case CONFIG_CONTROL_RADIO:
-            if (radio_get_status() == RADIO_CONNECTED) {
+            if (radio_get_status() == RADIO_STATUS_CONNECTED) {
                 if (opening_get_state() == OPENING_STATE_FINISHED) {
                     fsm_transition(STATE_MANUAL);
                 } else {

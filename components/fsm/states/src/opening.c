@@ -446,7 +446,7 @@ const char *opening_get_strategy_name(opening_t strategy) {
 }
 
 void opening_run(void) {
-    if (radio_get_status() == RADIO_DISCONNECTED) {
+    if (radio_get_status() == RADIO_STATUS_DISCONNECTED) {
         return fsm_transition(STATE_SAFE);
     }
 
@@ -464,7 +464,7 @@ void opening_run(void) {
                     break;
 
                 case CONFIG_CONTROL_RADIO:
-                    if (radio_get_status() == RADIO_CONNECTED) {
+                    if (radio_get_status() == RADIO_STATUS_CONNECTED) {
                         fsm_transition(STATE_MANUAL);
                     }
                     break;

@@ -13,25 +13,25 @@
 #include "pinout.h"
 
 /**
- * @brief Radio Receiver receiver channels.
+ * @brief Radio channels.
  */
 typedef enum radio_channel {
-    RADIO_CHANNEL_1 = 0,        /**< Radio Receiver channel 1. */
-    RADIO_CHANNEL_2,            /**< Radio Receiver channel 2. */
-    RADIO_CHANNEL_3,            /**< Radio Receiver channel 3. */
-    RADIO_CHANNEL_4,            /**< Radio Receiver channel 4. */
-    RADIO_CHANNEL_5,            /**< Radio Receiver channel 5. */
-    RADIO_CHANNEL_6,            /**< Radio Receiver channel 6. */
-    NUMBER_OF_RADIO_CHANNELS    /**< Number of Radio Channels. */
+    RADIO_CHANNEL_1 = 0,        /**< Radio channel 1. */
+    RADIO_CHANNEL_2,            /**< Radio channel 2. */
+    RADIO_CHANNEL_3,            /**< Radio channel 3. */
+    RADIO_CHANNEL_4,            /**< Radio channel 4. */
+    RADIO_CHANNEL_5,            /**< Radio channel 5. */
+    RADIO_CHANNEL_6,            /**< Radio channel 6. */
+    NUMBER_OF_RADIO_CHANNELS    /**< Number of radio channels. */
 } radio_channel_t;
 
 /**
- * @brief Radio Receiver connection status.
+ * @brief Radio connection status.
  */
 typedef enum radio_status {
-    RADIO_DISCONNECTED = 0, /**< Radio Receiver disconnected after timeout. */
-    RADIO_CONNECTED,        /**< Radio Receiver connected. */
-    NUMBER_OF_RADIO_STATUS  /**< Number of Radio Status. */
+    RADIO_STATUS_DISCONNECTED = 0,  /**< All channels disconnected after timeout. */
+    RADIO_STATUS_CONNECTED,         /**< All channels receiving. */
+    NUMBER_OF_RADIO_STATUS          /**< Number of radio status. */
 } radio_status_t;
 
 /**
@@ -57,46 +57,45 @@ typedef struct radio {
 
 /**
  * @def RADIO_TIMEOUT_US
- * @brief Radio Receiver disconnection timeout interval in microseconds.
+ * @brief Radio disconnection timeout interval in microseconds.
  *
  * **Default Value:** 25 us
  */
 #define RADIO_TIMEOUT_US 25000
 
 /**
- * @brief Returns the current Radio Receiver connection name.
+ * @brief Returns the current radio channel name.
  *
- * @return Human-readable null-terminated string representing the name.
+ * @return Human-readable null-terminated string representing the channel name.
  */
 const char *radio_get_channel_name(radio_channel_t channel);
 
 /**
- * @brief Returns the current Radio Receiver name.
+ * @brief Returns the current radio name.
  *
- * @return Human-readable null-terminated string representing the name.
+ * @return Human-readable null-terminated string representing the radio name.
  */
 const char *radio_get_name(void);
 
 /**
- * @brief Returns the latest Radio Receiver status.
+ * @brief Returns the latest radio status.
  *
  * @return Current connection status
  */
 radio_status_t radio_get_status(void);
 
 /**
- * @brief Returns the current Radio Receiver status name.
+ * @brief Returns the current radio status name.
  *
- * @return Human-readable null-terminated string representing the status.
+ * @return Human-readable null-terminated string representing the status name.
  */
 const char *radio_get_status_name(void);
 
 /**
- * @brief Initialize Radio Receiver interrupts.
+ * @brief Initialize radio interrupts.
  *
- * @note
- * After initialization, channels start at @ref PWM_NEUTRAL_US until pulses are
- * received.
+ * @note After initialization, channels start at @ref PWM_NEUTRAL_US until
+ * pulses are received.
  */
 void radio_init(void);
 
@@ -105,7 +104,8 @@ void radio_init(void);
  *
  * @note Interruptions briefly disabled while copying values.
  *
- * @param[in] channel Radio Receiver channel.
+ * @param[in] channel Radio channel.
+ *
  * @return Normalized pulse width in microseconds.
  */
 pwm_norm_t radio_read_channel(radio_channel_t channel);
@@ -115,7 +115,8 @@ pwm_norm_t radio_read_channel(radio_channel_t channel);
  *
  * @note Interruptions briefly disabled while copying values.
  *
- * @param[in] pwms Array of Radio Receiver channels.
+ * @param[in] pwms Array of radio channels.
+ *
  * @return Normalized array of pulses width in microseconds.
  */
 void radio_read_channels(pwm_norm_t *pwms);

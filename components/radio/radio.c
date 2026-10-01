@@ -23,6 +23,10 @@ static volatile radio_t radio = {
         [RADIO_CHANNEL_5] = { .name = "CHANNEL_5",  .pin = PIN_RC_CH5 },
         [RADIO_CHANNEL_6] = { .name = "CHANNEL_6",  .pin = PIN_RC_CH6 },
     },
+    .status_names = {
+        [RADIO_STATUS_CONNECTED]    = "CONNECTED",
+        [RADIO_STATUS_DISCONNECTED] = "DISCONNECTED",
+    }   
 };
 
 /**
@@ -81,9 +85,9 @@ radio_status_t radio_get_status() {
 
     radio_status_t new_status;
     if (steering_dead || throttle_dead) {
-        new_status = RADIO_DISCONNECTED;
+        new_status = RADIO_STATUS_DISCONNECTED;
     } else {
-        new_status = RADIO_CONNECTED;
+        new_status = RADIO_STATUS_CONNECTED;
     }
 
     if (new_status != radio.status) {
@@ -154,7 +158,7 @@ void radio_init() {
         );
     }
 
-    radio.status = RADIO_DISCONNECTED;
+    radio.status = RADIO_STATUS_DISCONNECTED;
 }
 
 pwm_norm_t radio_read_channel(radio_channel_t channel) {

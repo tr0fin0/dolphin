@@ -8,10 +8,8 @@ void manual_exit(void) {
 }
 
 void manual_run(void) {
-    if (radio_get_status() == RADIO_DISCONNECTED) {
-        fsm_transition(STATE_SAFE);
-
-        return;
+    if (radio_get_status() == RADIO_STATUS_DISCONNECTED) {
+        return fsm_transition(STATE_SAFE);
     }
 
     pwm_norm_t pulses_us[NUMBER_OF_ESCS] = {
