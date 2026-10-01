@@ -1,7 +1,7 @@
 /**
  * @file survive.h
- * @brief STATE_SURVIVE definition of the FSM callback functions ``on_entry()``
- * , ``on_exit()`` and ``on_run()``.
+ * @brief ``STATE_SURVIVE`` definition of the FSM callback functions
+ * ``on_entry()``, ``on_exit()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -13,57 +13,179 @@
 #include "sensor.h"
 
 /**
- * @brief
+ * @brief Survive moves.
+ *
+ * Each move is triggered by an unique combination of sensors states as
+ * describled below.
  */
 typedef enum survive_move {
-    SURVIVE_MOVE_STATIC = 0,    /**< . */
-    SURVIVE_MOVE_B,             /**< . */
-    SURVIVE_MOVE_BL,            /**< . */
-    SURVIVE_MOVE_BR,            /**< . */
-    SURVIVE_MOVE_F,             /**< . */
-    SURVIVE_MOVE_FL,            /**< . */
-    SURVIVE_MOVE_FR,            /**< . */
-    SURVIVE_MOVE_L,             /**< . */
-    SURVIVE_MOVE_R,             /**< . */
-    NUMBER_OF_SURVIVE_MOVES     /**< . */
+    /**
+     * @brief Maintains the current position and rotation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MAX_VALUE``
+     */
+    SURVIVE_MOVE_STATIC = 0,
+    /**
+     * @brief Moves forwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MIN_VALUE``
+     */
+    SURVIVE_MOVE_B,
+    /**
+     * @brief Moves forwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MIN_VALUE``
+     */
+    SURVIVE_MOVE_BL,
+    /**
+     * @brief Moves forwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MIN_VALUE``
+     */
+    SURVIVE_MOVE_BR,
+    /**
+     * @brief Moves backwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MAX_VALUE``
+     */
+    SURVIVE_MOVE_F,
+    /**
+     * @brief Moves backwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MIN_VALUE``
+     */
+    SURVIVE_MOVE_FL,
+    /**
+     * @brief Moves backwards with a translation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MAX_VALUE``
+     */
+    SURVIVE_MOVE_FR,
+    /**
+     * @brief Moves clockwise with a rotation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MIN_VALUE``
+     */
+    SURVIVE_MOVE_L,
+    /**
+     * @brief Moves counter-clockwise with a rotation.
+     *
+     * Happens in the following sensor state:
+     *
+     * - ``SENSOR_QRE_BL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_BR``: ``SENSOR_MAX_VALUE``
+     *
+     * - ``SENSOR_QRE_FL``: ``SENSOR_MIN_VALUE``
+     *
+     * - ``SENSOR_QRE_FR``: ``SENSOR_MAX_VALUE``
+     */
+    SURVIVE_MOVE_R,
+    NUMBER_OF_SURVIVE_MOVES     /**< Number of survive moves. */
 } survive_move_t;
 
 /**
- * @brief
+ * @brief Configuration of a survive move.
  */
 typedef struct survive_config {
-    const char *name;                           /**< . */
-    const controller_sequence_t *sequence;      /**< . */
-    float sensors_states[NUMBER_OF_SENSORS];    /**< . */
+    const char *name;                           /**< Human-readable, null-terminated name of the move. */
+    const controller_sequence_t *sequence;      /**< Controller command sequence. */
+    float sensors_states[NUMBER_OF_SENSORS];    /**< Survive move sensor states. */
 } survive_config_t;
 
 /**
- * @brief
+ * @brief Survive state handler.
  */
-typedef struct survive {
-    const char *name;                                   /**< . */
-    bool sensors_active[NUMBER_OF_SENSORS];             /**< . */
-    float sensors_values[NUMBER_OF_SENSORS];            /**< . */
-    survive_move_t move;                                /**< . */
-    survive_config_t moves[NUMBER_OF_SURVIVE_MOVES];    /**< . */
-} survive_t;
+typedef struct survive_handler {
+    const char *name;                                   /**< Human-readable, null-terminated name of the survive handler. */
+    bool sensors_active[NUMBER_OF_SENSORS];             /**< Array of sensors active considered for survive moves conditions. */
+    float sensors_values[NUMBER_OF_SENSORS];            /**< Array of sensors values. */
+    survive_move_t move;                                /**< Currently matched survive movement. */
+    survive_config_t moves[NUMBER_OF_SURVIVE_MOVES];    /**< Configurations for all available survive movements. */
+} survive_handler_t;
 
 /**
- * @brief Entry handler for @ref STATE_SURVIVE.
+ * @brief Entry handler for ``STATE_SURVIVE``.
  *
- * Calls @ref controller_stop .
+ * Calls ``controller_stop()``.
  */
 void survive_entry(void);
 
 /**
- * @brief Exit handler for @ref STATE_SURVIVE.
+ * @brief Exit handler for ``STATE_SURVIVE``.
  *
- * Calls @ref controller_stop .
+ * Calls ``controller_stop()``.
  */
 void survive_exit(void);
 
 /**
  * @brief Returns the survive move name.
+ *
+ * @param[in] move Survive move.
  *
  * @return Human-readable null-terminated string representing the move name.
  * @retval NULL If strategy is invalid.
@@ -71,15 +193,14 @@ void survive_exit(void);
 const char *survive_get_move_name(survive_move_t move);
 
 /**
- * @brief Run handler for @ref STATE_SURVIVE.
+ * @brief Run handler for ``STATE_SURVIVE``.
  *
- * While the Radio Controller is connected, autonomous avoid leaving the dojo.
+ * While the ``ir_t`` is ``IR_STATE_START``, autonomous avoid leaving the dojo.
  *
- * @note
- * - Transition to @ref STATE_ATTACK if the adversary is aligned with the front.
+ * @note Transition to ``STATE_SAFE`` when:
+ * - **not** ``IR_STATE_START``
  *
- * - Transition to @ref STATE_SAFE if the Radio Controller is disconnected.
- *
- * - Transition to @ref STATE_SEARCH if the adversary is lost.
+ * @note Transition to ``STATE_AUTONOMOUS`` when:
+ * - **not** ``sensor_detected_line()``
  */
 void survive_run(void);

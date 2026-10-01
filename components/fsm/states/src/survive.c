@@ -14,8 +14,8 @@ static const controller_sequence_t survive_sequence_static = {
 static const controller_command_t survive_commands_b[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +100
     },
 };
 static const controller_sequence_t survive_sequence_b = {
@@ -27,8 +27,8 @@ static const controller_sequence_t survive_sequence_b = {
 static const controller_command_t survive_commands_bl[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +100
     },
 };
 static const controller_sequence_t survive_sequence_bl = {
@@ -40,8 +40,8 @@ static const controller_sequence_t survive_sequence_bl = {
 static const controller_command_t survive_commands_br[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = +100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +100
     },
 };
 static const controller_sequence_t survive_sequence_br = {
@@ -53,8 +53,8 @@ static const controller_sequence_t survive_sequence_br = {
 static const controller_command_t survive_commands_f[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -100
     },
 };
 static const controller_sequence_t survive_sequence_f = {
@@ -66,8 +66,8 @@ static const controller_sequence_t survive_sequence_f = {
 static const controller_command_t survive_commands_fl[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -100
     },
 };
 static const controller_sequence_t survive_sequence_fl = {
@@ -79,8 +79,8 @@ static const controller_sequence_t survive_sequence_fl = {
 static const controller_command_t survive_commands_fr[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_TRANSLATION,
-        .power = -100
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = -100
     },
 };
 static const controller_sequence_t survive_sequence_fr = {
@@ -92,8 +92,8 @@ static const controller_sequence_t survive_sequence_fr = {
 static const controller_command_t survive_commands_l[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +100
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +100
     },
 };
 static const controller_sequence_t survive_sequence_l = {
@@ -105,8 +105,8 @@ static const controller_sequence_t survive_sequence_l = {
 static const controller_command_t survive_commands_r[] = {
     {
         .duration_us = 1000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -100
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -100
     },
 };
 static const controller_sequence_t survive_sequence_r = {
@@ -115,7 +115,7 @@ static const controller_sequence_t survive_sequence_r = {
     .repeat   = false
 };
 
-static survive_t survive = {
+static survive_handler_t survive = {
     .name = "STATE_SURVIVE",
     .move = SURVIVE_MOVE_STATIC,
     .moves = {
