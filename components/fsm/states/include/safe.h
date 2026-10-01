@@ -25,23 +25,23 @@ void safe_entry(void);
  * - ``CONFIG_CONTROL_AUTONOMOUS``
  *
  * - ``OPENING_STATE_FINISHED``
- * 
+ *
  * - ``IR_STATE_START``
  *
  * @note Transition to ``STATE_MANUAL`` when:
  * - ``CONFIG_CONTROL_RADIO``
  *
  * - ``OPENING_STATE_FINISHED``
- * 
+ *
  * - ``RADIO_STATUS_CONNECTED``
  *
  * @note Transition to ``STATE_OPENING`` when:
- * - ``CONFIG_CONTROL_AUTONOMOUS`` 
+ * - ``CONFIG_CONTROL_AUTONOMOUS``
  *
  *   - **not** ``OPENING_STATE_FINISHED``
  *
  *   - ``RADIO_STATUS_CONNECTED``
- * 
+ *
  *   - ``IR_STATE_STANDBY``
  *
  * - ``CONFIG_CONTROL_RADIO``
