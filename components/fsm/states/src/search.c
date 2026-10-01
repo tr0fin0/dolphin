@@ -7,25 +7,25 @@
 static const controller_command_t search_commands[] = {
     {
         .duration_us = 30000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +60,
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +60,
     },
     {
         .duration_us = 60000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = -60,
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = -60,
     },
     {
         .duration_us = 30000,
-        .motion = CONTROLLER_MOTION_ROTATION,
-        .power = +60,
+        .motion      = CONTROLLER_MOTION_ROTATION,
+        .power       = +60,
     },
 };
 
 static const controller_sequence_t search_sequence = {
     .commands = search_commands,
-    .length = sizeof(search_commands) / sizeof(search_commands[0]),
-    .repeat = true,
+    .length   = sizeof(search_commands) / sizeof(search_commands[0]),
+    .repeat   = true,
 };
 
 void search_entry(void) {
