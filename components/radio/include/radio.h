@@ -35,24 +35,24 @@ typedef enum radio_status {
 } radio_status_t;
 
 /**
- * @brief Radio Receiver connection.
+ * @brief Radio channel configuration.
  */
-typedef struct radio_connection {
-    const char *name;       /**< Human-readable null-terminated connection name. */
-    pin_t pin;              /**< Radio Connection channel pin. */
-    pwm_norm_t pwm;         /**< Radio Connection channel latest normalized PWM pulse width. */
-    int64_t rise_time_us;   /**< Radio Connection last rising time in microseconds. */
-    int64_t last_time_us;   /**< Radio Connection last update time in microseconds. */
-} radio_connection_t;
+typedef struct radio_config {
+    const char *name;       /**< Human-readable null-terminated string representing channel name. */
+    pin_t pin;              /**< Channel pin. */
+    pwm_norm_t pwm;         /**< Latest normalized PWM pulse width capture via interruptions. */
+    int64_t rise_time_us;   /**< Last rising time in microseconds. */
+    int64_t last_time_us;   /**< Last update time in microseconds. */
+} radio_config_t;
 
 /**
- * @brief Radio Receiver PWM pulse width capture via interruptions.
+ * @brief Radio receiver.
  */
 typedef struct radio {
-    const char *name;                                           /**< Human-readable null-terminated Radio name. */
-    radio_status_t status;                                      /**< Radio Receiver current connection status. */
-    const char *status_names[NUMBER_OF_RADIO_STATUS];           /**< Human-readable null-terminated Radio status. */
-    radio_connection_t connections[NUMBER_OF_RADIO_CHANNELS];   /**< Radio Connections. */
+    const char *name;                                   /**< Human-readable, null-terminated name of the radio. */
+    radio_config_t channels[NUMBER_OF_RADIO_CHANNELS];  /**< Channels configurations. */
+    radio_status_t status;                              /**< Current connection status. */
+    const char *status_names[NUMBER_OF_RADIO_STATUS];   /**< Array of human-readable, null-terminated names of the radio status. */
 } radio_t;
 
 /**
