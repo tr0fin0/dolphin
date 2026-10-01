@@ -1,7 +1,7 @@
 /**
  * @file safe.h
- * @brief STATE_SAFE definition of the FSM callback functions `on_entry()` and
- * `on_run()`.
+ * @brief ``STATE_SAFE`` definition of the FSM callback functions
+ * ``on_entry()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -10,25 +10,44 @@
 #pragma once
 
 /**
- * @brief Entry handler for @ref STATE_SAFE.
+ * @brief Entry handler for ``STATE_SAFE``.
  *
- * Set @ref LED_STATE to @ref LED_COLOR_RED and ensures both motors are driven
- * to @ref PWM_NEUTRAL_US.
+ * Calls ``controller_stop()``.
  */
 void safe_entry(void);
 
 /**
- * @brief Run handler for @ref STATE_SAFE.
+ * @brief Run handler for ``STATE_SAFE``.
  *
- * When Radio Controller is connected, transition to @ref STATE_COUNTDOWN if in
- * @ref CONFIG_CONTROL_AUTONOMOUS and to @ref STATE_MANUAL or @ref STATE_OPENING
- * if in CONFIG_CONTROL_RADIO.
+ * Keeps system in a safe to manipulate state.
  *
- * @note
- * - If Radio Controller is disconnected during opening selection,
- * `opening_step` remains unchanged.
+ * @note Transition to ``STATE_AUTONOMOUS`` when:
+ * - ``CONFIG_CONTROL_AUTONOMOUS``
  *
- * - Once an opening is executed, the @ref STATE_OPENING stays unreachable
- * until system reset.
+ * - ``OPENING_STATE_FINISHED``
+ * 
+ * - ``IR_STATE_START``
+ *
+ * @note Transition to ``STATE_MANUAL`` when:
+ * - ``CONFIG_CONTROL_RADIO``
+ *
+ * - ``OPENING_STATE_FINISHED``
+ * 
+ * - ``RADIO_STATUS_CONNECTED``
+ *
+ * @note Transition to ``STATE_OPENING`` when:
+ * - ``CONFIG_CONTROL_AUTONOMOUS`` 
+ *
+ *   - **not** ``OPENING_STATE_FINISHED``
+ *
+ *   - ``RADIO_STATUS_CONNECTED``
+ * 
+ *   - ``IR_STATE_STANDBY``
+ *
+ * - ``CONFIG_CONTROL_RADIO``
+ *
+ *   - **not** ``OPENING_STATE_FINISHED``
+ *
+ *   - ``RADIO_STATUS_CONNECTED``
  */
 void safe_run(void);
