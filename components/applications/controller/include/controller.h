@@ -53,9 +53,9 @@ typedef struct controller_sequence {
  * @brief Controller abstraction.
  */
 typedef struct controller {
-    const char *name;                                       /**< Human-readable, null-terminated name of the controller name. */
+    const char *name;                                       /**< Human-readable, null-terminated name of the controller. */
     controller_state_t state;                               /**< Current controller state. */
-    const char *states_names[NUMBER_OF_CONTROLLER_STATES];  /**< Human-readable, null-terminated name of the controller states names. */
+    const char *states_names[NUMBER_OF_CONTROLLER_STATES];  /**< Array of human-readable, null-terminated names of the controller states. */
     const controller_sequence_t *sequence;                  /**< Current sequence of controller commands. */
     uint8_t command_current;                                /**< Current controller command. */
     int64_t command_start_us;                               /**< Current controller command start time in microseconds. */

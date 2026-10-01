@@ -4,7 +4,7 @@
 #include "logging.h"
 
 static controller_t controller = {
-    .name = "Controller",
+    .name = "controller",
     .states_names = {
         [CONTROLLER_STATE_ACTIVE] = "ACTIVE",
         [CONTROLLER_STATE_IDLE]   = "IDLE",
@@ -116,7 +116,7 @@ bool controller_start(const controller_sequence_t *sequence) {
         return false;
     }
 
-    controller.state            = CONTROLLER_STATE_ACTIVE;
+    controller.state = CONTROLLER_STATE_ACTIVE;
 
     controller_set_command(
         &controller.sequence->commands[controller.command_current]
@@ -142,7 +142,6 @@ void controller_step(void) {
 
     // current command has finished
     controller.command_current++;
-
     if (controller.command_current >= controller.sequence->length) {
         if (controller.sequence->repeat) {
             controller.command_current = 0;
@@ -172,6 +171,6 @@ void controller_stop(void) {
     esc_set_pwm_mix_neutral();
 
     controller.command_current  = 0;
-    controller.state            = CONTROLLER_STATE_IDLE;
     controller.sequence         = NULL;
+    controller.state            = CONTROLLER_STATE_IDLE;
 }
