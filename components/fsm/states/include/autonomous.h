@@ -1,7 +1,7 @@
 /**
  * @file autonomous.h
- * @brief STATE_AUTONOMOUS definition of the FSM callback functions ``on_entry()``
- * , ``on_exit()`` and ``on_run()``.
+ * @brief ``STATE_AUTONOMOUS`` definition of the FSM callback functions
+ * ``on_entry()``, ``on_exit()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-09-22
@@ -13,38 +13,45 @@
 #include <stdint.h>
 
 /**
- * @brief Autonous state.
+ * @brief Autonous state handler.
  */
-typedef struct autonomous {
-    const char *name;                       /**< Human-readable, null-terminated name of the autonomous state. */
-    int64_t interval_us;                    /**< . */
-    int64_t last_time_us;                   /**< . */
-} autonomous_t;
+typedef struct autonomous_handler {
+    const char *name;                       /**< Human-readable, null-terminated name of the autonomous handler. */
+    const controller_sequence_t *movement;  /**< Minimal movement sequence to avoid static condition. */
+    int64_t interval_us;                    /**< Maximum interval between each movement in microseconds. */
+    int64_t last_time_us;                   /**< Last movement time in microseconds. */
+} autonomous_handler_t;
 
 /**
- * @brief Entry handler for @ref STATE_AUTONOMOUS.
+ * @brief Entry handler for ``STATE_AUTONOMOUS``.
  *
- * Calls @ref controller_stop and initialize time measurements.
+ * Calls ``controller_stop()`` and initialize time measurements.
  */
 void autonomous_entry(void);
 
 /**
- * @brief Exit handler for @ref STATE_AUTONOMOUS.
+ * @brief Exit handler for ``STATE_AUTONOMOUS``.
  *
- * Calls @ref controller_stop .
+ * Calls ``controller_stop()`` .
  */
 void autonomous_exit(void);
 
 /**
- * @brief Run handler for @ref STATE_AUTONOMOUS.
+ * @brief Run handler for ``STATE_AUTONOMOUS``.
  *
- * @note
- * - Transition to @ref STATE_ATTACK if the adversary is aligned with the front.
+ * While the ``ir_t`` is ``IR_STATE_START``, performs a minimal movement
+ * sequence to avoid static condition.
  *
- * - Transition to @ref STATE_SEARCH if the adversary is lost.
+ * @note Transition to ``STATE_SAFE`` when:
+ * - **not** ``IR_STATE_START``
  *
- * - Transition to @ref STATE_SAFE if the IR receiver is at @ref IR_STATE_STOP.
+ * @note Transition to ``STATE_SURVIVE`` when:
+ * - ``sensor_detected_line()``
  *
- * - Transition to @ref STATE_SURVIVE if the dojo edge is detected.
+ * @note Transition to ``STATE_ATTACK`` when:
+ * - ``sensor_detected_obstacle_front()``
+ *
+ * @note Transition to ``STATE_SEARCH`` when:
+ * - ``sensor_detected_obstacle_sides()``
  */
 void autonomous_run(void);

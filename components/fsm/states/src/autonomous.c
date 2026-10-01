@@ -1,18 +1,25 @@
 #include "autonomous.h"
+#include "controller.h"
 #include "fsm.h"
 #include "ir.h"
 #include "sensor.h"
 
 static const controller_command_t autonomous_commands[] = {
-    {.duration_us = 1000, .motion = CONTROLLER_MOTION_TRANSLATION, .power = +100},
-};
-static const controller_sequence_t autonomous_sequence = {
-    .commands = autonomous_commands,
-    .length = sizeof(autonomous_commands) / sizeof(autonomous_commands[0]),
+    {
+        .duration_us = 1000,
+        .motion      = CONTROLLER_MOTION_TRANSLATION,
+        .power       = +100
+    },
 };
 
-static autonomous_t autonomous = {
-    .name = "STATE_AUTONOMOUS",
+static const controller_sequence_t autonomous_sequence = {
+    .commands = autonomous_commands,
+    .length   = sizeof(autonomous_commands) / sizeof(autonomous_commands[0]),
+};
+
+static autonomous_handler_t autonomous = {
+    .name         = "AUTONOMOUS_HANDLER",
+    .movement     = &autonomous_sequence,
     .interval_us  = 1000000,
     .last_time_us = 0,
 };
@@ -50,7 +57,7 @@ void autonomous_run(void) {
     }
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {
-        if (!controller_start(&autonomous_sequence)) {
+        if (!controller_start(autonomous.movement)) {
             return;
         }
     }
