@@ -1,28 +1,34 @@
 #include "config.h"
-#include "esc.h"
+#include "controller.h"
 #include "fsm.h"
 #include "ir.h"
 #include "opening.h"
 #include "radio.h"
 #include "safe.h"
 
-extern uint8_t opening_step;
-
 void safe_entry(void) {
-    esc_set_pwm_mix_neutral();
+    controller_stop();
 }
 
 void safe_run(void) {
     switch (CONFIG_CONTROL_MODE) {
         case CONFIG_CONTROL_AUTONOMOUS:
-            if (ir_get_state() == IR_STATE_START) {
-                fsm_transition(STATE_SEARCH);
+            if (opening_get_state() == OPENING_STATE_FINISHED) {
+                if (ir_get_state() == IR_STATE_START) {
+                    fsm_transition(STATE_AUTONOMOUS);
+                }
+            } else {
+                if (radio_get_status() == RADIO_STATUS_CONNECTED) {
+                    if (ir_get_state() == IR_STATE_STANDBY) {
+                        fsm_transition(STATE_OPENING);
+                    }
+                }
             }
             break;
 
         case CONFIG_CONTROL_RADIO:
-            if (radio_get_status() == RADIO_CONNECTED) {
-                if (opening_step == OPENING_ITERATIONS) {
+            if (radio_get_status() == RADIO_STATUS_CONNECTED) {
+                if (opening_get_state() == OPENING_STATE_FINISHED) {
                     fsm_transition(STATE_MANUAL);
                 } else {
                     fsm_transition(STATE_OPENING);

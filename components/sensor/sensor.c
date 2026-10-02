@@ -63,6 +63,35 @@ static sensor_config_t sensors[NUMBER_OF_SENSORS] = {
     },
 };
 
+bool sensor_detected_line(void) {
+    return (
+        (sensor_get_value(SENSOR_QRE_FL) == SENSOR_MAX_VALUE) ||
+        (sensor_get_value(SENSOR_QRE_FR) == SENSOR_MAX_VALUE) ||
+        (sensor_get_value(SENSOR_QRE_BR) == SENSOR_MAX_VALUE) ||
+        (sensor_get_value(SENSOR_QRE_BL) == SENSOR_MAX_VALUE)
+    );
+}
+
+bool sensor_detected_obstacle_front(void) {
+    return (
+        (sensor_get_value(SENSOR_JS2_FL) == SENSOR_MAX_VALUE) ||
+        (sensor_get_value(SENSOR_JS2_FR) == SENSOR_MAX_VALUE)
+    );
+}
+
+bool sensor_detected_obstacle_sides(void) {
+    return (
+        (sensor_get_value(SENSOR_JS2_FL) == SENSOR_MIN_VALUE) &&
+        (sensor_get_value(SENSOR_JS2_FR) == SENSOR_MIN_VALUE) &&
+        (
+            (sensor_get_value(SENSOR_JS2_LL) == SENSOR_MAX_VALUE) ||
+            (sensor_get_value(SENSOR_JS2_DL) == SENSOR_MAX_VALUE) ||
+            (sensor_get_value(SENSOR_JS2_DR) == SENSOR_MAX_VALUE) ||
+            (sensor_get_value(SENSOR_JS2_LR) == SENSOR_MAX_VALUE)
+        )
+    );
+}
+
 const char *sensor_get_name(sensor_t sensor) {
     return sensors[sensor].name;
 }
