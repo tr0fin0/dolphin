@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Dolphin Project'
-copyright = '2026, Guilherme Nunes Trofino'
 author = 'Guilherme Nunes Trofino'
+copyright = '2026-%Y, Equipe Paralela'
+project = 'Dolphin Project'
 release = 'v1.4.0'
 
 # -- General configuration ---------------------------------------------------
@@ -37,6 +37,8 @@ exhale_args = {
 }
 
 primary_domain = 'c'
+
+highlight_language = 'c'
 
 templates_path = ['_templates']
 exclude_patterns = []
