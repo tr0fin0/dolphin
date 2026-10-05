@@ -85,11 +85,7 @@ controller_state_t controller_get_state(void) {
 }
 
 void controller_init(void) {
-    esc_set_pwm_mix_neutral();
-
-    controller.command_current  = 0;
-    controller.state            = CONTROLLER_STATE_IDLE;
-    controller.sequence         = NULL;
+    controller_stop();
 }
 
 bool controller_start(const controller_sequence_t *sequence) {

@@ -1,6 +1,6 @@
 /**
  * @file controller.h
- * @brief Motion controller functions.
+ * @brief Motion controller engine.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-09-25
@@ -50,7 +50,7 @@ typedef struct controller_sequence {
 } controller_sequence_t;
 
 /**
- * @brief Controller abstraction.
+ * @brief Controller engine.
  */
 typedef struct controller {
     const char *name;                                       /**< Human-readable, null-terminated name of the controller. */
@@ -63,16 +63,28 @@ typedef struct controller {
 
 /**
  * @brief Returns current controller state.
+ *
+ * @return Current controller state.
  */
 controller_state_t controller_get_state(void);
 
 /**
  * @brief Controller initialization.
+ *
+ * Calls ``controller_stop()``.
  */
 void controller_init(void);
 
 /**
  * @brief Controller start a command sequence.
+ *
+ * Initialize a sequence of motion commands.
+ *
+ * @param[in] sequence Pointer to sequence of controller commands.
+ *
+ * @return True if sequence of commands **is not** ``null`` and the current
+ * controller state is ``CONTROLLER_STATE_IDLE``. Otherwise, returns false and
+ * no motion is performed.
  */
 bool controller_start(const controller_sequence_t *sequence);
 
@@ -83,5 +95,8 @@ void controller_step(void);
 
 /**
  * @brief Controller stop a command sequence.
+ *
+ * Calls ``esc_set_pwm_mix_neutral()``, reinitialize the current command
+ * sequence, and sets the current controller state to ``CONTROLLER_STATE_IDLE``.
  */
 void controller_stop(void);
