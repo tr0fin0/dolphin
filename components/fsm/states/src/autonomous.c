@@ -36,19 +36,19 @@ void autonomous_exit(void) {
 
 void autonomous_run(void) {
     if (ir_get_state() != IR_STATE_START) {
-        return fsm_transition(STATE_SAFE);
+        return fsm_transition(FSM_STATE_SAFE);
     }
 
     if (sensor_detected_line()) {
-        return fsm_transition(STATE_SURVIVE);
+        return fsm_transition(FSM_STATE_SURVIVE);
     }
 
     if (sensor_detected_obstacle_front()) {
-        return fsm_transition(STATE_ATTACK);
+        return fsm_transition(FSM_STATE_ATTACK);
     }
 
     if (sensor_detected_obstacle_sides()) {
-        return fsm_transition(STATE_SEARCH);
+        return fsm_transition(FSM_STATE_SEARCH);
     }
 
     const int64_t now_us = esp_timer_get_time();

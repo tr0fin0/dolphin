@@ -17,58 +17,58 @@
 
 static fsm_t fsm = {
     .name = "FSM",
-    .state = STATE_BOOT,
+    .state = FSM_STATE_BOOT,
     .states = {
-        [STATE_ATTACK] = {
+        [FSM_STATE_ATTACK] = {
             .name       = "ATTACK",
             .color      = LED_COLOR_SCARLET,
             .on_entry   = attack_entry,
             .on_run     = attack_run,
             .on_exit    = attack_exit
         },
-        [STATE_AUTONOMOUS] = {
+        [FSM_STATE_AUTONOMOUS] = {
             .name       = "AUTONOMOUS",
             .color      = LED_COLOR_ORANGE_DARK,
             .on_entry   = autonomous_entry,
             .on_run     = autonomous_run,
             .on_exit    = autonomous_exit
         },
-        [STATE_BOOT] = {
+        [FSM_STATE_BOOT] = {
             .name       = "BOOT",
             .color      = LED_COLOR_WHITE,
             .on_entry   = NULL,
             .on_run     = boot_run,
             .on_exit    = NULL
         },
-        [STATE_MANUAL] = {
+        [FSM_STATE_MANUAL] = {
             .name       = "MANUAL",
             .color      = LED_COLOR_RED,
             .on_entry   = NULL,
             .on_run     = manual_run,
             .on_exit    = manual_exit
         },
-        [STATE_OPENING] = {
+        [FSM_STATE_OPENING] = {
             .name       = "OPENING",
             .color      = LED_COLOR_BLUE,
             .on_entry   = opening_entry,
             .on_run     = opening_run,
             .on_exit    = NULL,
         },
-        [STATE_SAFE] = {
+        [FSM_STATE_SAFE] = {
             .name       = "SAFE",
             .color      = LED_COLOR_GREEN,
             .on_entry   = safe_entry,
             .on_run     = safe_run,
             .on_exit    = NULL
         },
-        [STATE_SEARCH] = {
+        [FSM_STATE_SEARCH] = {
             .name       = "SEARCH",
             .color      = LED_COLOR_PURPLE,
             .on_entry   = search_entry,
             .on_run     = search_run,
             .on_exit    = search_exit
         },
-        [STATE_SURVIVE] = {
+        [FSM_STATE_SURVIVE] = {
             .name       = "SURVIVE",
             .color      = LED_COLOR_CYAN,
             .on_entry   = survive_entry,
@@ -98,7 +98,7 @@ void fsm_init(void) {
     radio_init();
     sensor_init();
 
-    fsm.state = STATE_BOOT;
+    fsm.state = FSM_STATE_BOOT;
 }
 
 void fsm_step(void) {
@@ -113,7 +113,7 @@ void fsm_step(void) {
 
 void fsm_transition(fsm_state_t new_state) {
     // 0. skip invalid transitions or self-transitions
-    if (fsm.state == new_state || new_state >= NUMBER_OF_STATES) {
+    if (fsm.state == new_state || new_state >= NUMBER_OF_FSM_STATES) {
         LOG_W("unknown state %02d", new_state);
 
         return;

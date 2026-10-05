@@ -28,15 +28,15 @@ void attack_exit(void) {
 
 void attack_run(void) {
     if (ir_get_state() != IR_STATE_START) {
-        return fsm_transition(STATE_SAFE);
+        return fsm_transition(FSM_STATE_SAFE);
     }
 
     if (sensor_detected_line()) {
-        return fsm_transition(STATE_SURVIVE);
+        return fsm_transition(FSM_STATE_SURVIVE);
     }
 
     if (!sensor_detected_obstacle_front()) {
-        return fsm_transition(STATE_AUTONOMOUS);
+        return fsm_transition(FSM_STATE_AUTONOMOUS);
     }
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {

@@ -1,6 +1,6 @@
 /**
  * @file survive.h
- * @brief ``STATE_SURVIVE`` definition of the FSM callback functions
+ * @brief ``FSM_STATE_SURVIVE`` definition of the FSM callback functions
  * ``on_entry()``, ``on_exit()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
@@ -169,14 +169,14 @@ typedef struct survive_handler {
 } survive_handler_t;
 
 /**
- * @brief Entry handler for ``STATE_SURVIVE``.
+ * @brief Entry handler for ``FSM_STATE_SURVIVE``.
  *
  * Calls ``controller_stop()``.
  */
 void survive_entry(void);
 
 /**
- * @brief Exit handler for ``STATE_SURVIVE``.
+ * @brief Exit handler for ``FSM_STATE_SURVIVE``.
  *
  * Calls ``controller_stop()``.
  */
@@ -193,14 +193,14 @@ void survive_exit(void);
 const char *survive_get_move_name(survive_move_t move);
 
 /**
- * @brief Run handler for ``STATE_SURVIVE``.
+ * @brief Run handler for ``FSM_STATE_SURVIVE``.
  *
  * While the ``ir_t`` is ``IR_STATE_START``, autonomous avoid leaving the dojo.
  *
- * @note Transition to ``STATE_SAFE`` when:
+ * @note Transition to ``FSM_STATE_SAFE`` when:
  * - **not** ``IR_STATE_START``
  *
- * @note Transition to ``STATE_AUTONOMOUS`` when:
+ * @note Transition to ``FSM_STATE_AUTONOMOUS`` when:
  * - **not** ``sensor_detected_line()``
  */
 void survive_run(void);

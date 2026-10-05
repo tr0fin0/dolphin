@@ -280,11 +280,11 @@ const char *survive_get_move_name(survive_move_t move) {
 
 void survive_run(void) {
     if (ir_get_state() != IR_STATE_START) {
-        return fsm_transition(STATE_SAFE);
+        return fsm_transition(FSM_STATE_SAFE);
     }
 
     if (!sensor_detected_line()) {
-        return fsm_transition(STATE_AUTONOMOUS);
+        return fsm_transition(FSM_STATE_AUTONOMOUS);
     }
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {

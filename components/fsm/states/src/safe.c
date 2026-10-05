@@ -15,12 +15,12 @@ void safe_run(void) {
         case CONFIG_CONTROL_AUTONOMOUS:
             if (opening_get_state() == OPENING_STATE_FINISHED) {
                 if (ir_get_state() == IR_STATE_START) {
-                    fsm_transition(STATE_AUTONOMOUS);
+                    fsm_transition(FSM_STATE_AUTONOMOUS);
                 }
             } else {
                 if (radio_get_status() == RADIO_STATUS_CONNECTED) {
                     if (ir_get_state() == IR_STATE_STANDBY) {
-                        fsm_transition(STATE_OPENING);
+                        fsm_transition(FSM_STATE_OPENING);
                     }
                 }
             }
@@ -29,9 +29,9 @@ void safe_run(void) {
         case CONFIG_CONTROL_RADIO:
             if (radio_get_status() == RADIO_STATUS_CONNECTED) {
                 if (opening_get_state() == OPENING_STATE_FINISHED) {
-                    fsm_transition(STATE_MANUAL);
+                    fsm_transition(FSM_STATE_MANUAL);
                 } else {
-                    fsm_transition(STATE_OPENING);
+                    fsm_transition(FSM_STATE_OPENING);
                 }
             }
             break;

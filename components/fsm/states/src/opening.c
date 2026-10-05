@@ -447,7 +447,7 @@ const char *opening_get_strategy_name(opening_t strategy) {
 
 void opening_run(void) {
     if (radio_get_status() == RADIO_STATUS_DISCONNECTED) {
-        return fsm_transition(STATE_SAFE);
+        return fsm_transition(FSM_STATE_SAFE);
     }
 
     switch (opening.state) {
@@ -459,13 +459,13 @@ void opening_run(void) {
             switch (CONFIG_CONTROL_MODE) {
                 case CONFIG_CONTROL_AUTONOMOUS:
                     if (ir_get_state() == IR_STATE_START) {
-                        fsm_transition(STATE_AUTONOMOUS);
+                        fsm_transition(FSM_STATE_AUTONOMOUS);
                     }
                     break;
 
                 case CONFIG_CONTROL_RADIO:
                     if (radio_get_status() == RADIO_STATUS_CONNECTED) {
-                        fsm_transition(STATE_MANUAL);
+                        fsm_transition(FSM_STATE_MANUAL);
                     }
                     break;
 

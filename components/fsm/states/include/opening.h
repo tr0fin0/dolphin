@@ -1,6 +1,6 @@
 /**
  * @file opening.h
- * @brief ``STATE_OPENING`` definition of the FSM callback functions
+ * @brief ``FSM_STATE_OPENING`` definition of the FSM callback functions
  * ``on_entry()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
@@ -239,7 +239,7 @@ typedef struct opening_handler {
 #define OPENING_INITIAL_BUTTON 0
 
 /**
- * @brief Entry handler for ``STATE_OPENING``.
+ * @brief Entry handler for ``FSM_STATE_OPENING``.
  *
  * Calls ``controller_stop()`` and captures current ``radio`` button value.
  */
@@ -279,20 +279,20 @@ const char *opening_get_state_name(void);
 const char *opening_get_strategy_name(opening_t strategy);
 
 /**
- * @brief Run callback for ``STATE_OPENING``.
+ * @brief Run callback for ``FSM_STATE_OPENING``.
  *
  * While the ``radio`` is ``RADIO_STATUS_CONNECTED``, reads the button channel
  * and decodes opening strategy.
  *
- * @note Transition to ``STATE_SAFE`` when:
+ * @note Transition to ``FSM_STATE_SAFE`` when:
  * - ``RADIO_STATUS_DISCONNECTED``
  *
- * @note Transition to ``STATE_AUTONOMOUS`` when:
+ * @note Transition to ``FSM_STATE_AUTONOMOUS`` when:
  * - ``CONFIG_CONTROL_AUTONOMOUS``
  *
  * - ``IR_STATE_START``
  *
- * @note Transition to ``STATE_MANUAL`` when:
+ * @note Transition to ``FSM_STATE_MANUAL`` when:
  * - ``CONFIG_CONTROL_RADIO``
  *
  * - ``RADIO_STATUS_CONNECTED``

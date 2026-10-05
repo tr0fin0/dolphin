@@ -19,15 +19,15 @@
  * and ``.h`` files under the states folder.
  */
 typedef enum fsm_state {
-    STATE_ATTACK = 0,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, attacks adversary. */
-    STATE_AUTONOMOUS,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, manage the autonomous strategy. */
-    STATE_BOOT,         /**< FSM entry point. */
-    STATE_MANUAL,       /**< In the @ref CONFIG_CONTROL_RADIO, receives radio signals and control motors. */
-    STATE_OPENING,      /**< In either @ref config_control_mode , selects and execute an opening strategy. */
-    STATE_SAFE,         /**< In either @ref config_control_mode , freezes the system for safety handle. */
-    STATE_SEARCH,       /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, aligns with adversary. */
-    STATE_SURVIVE,      /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, avoid leaving the dojo. */
-    NUMBER_OF_STATES    /**< Number of FSM states currently implemented. */
+    FSM_STATE_ATTACK = 0,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, attacks adversary. */
+    FSM_STATE_AUTONOMOUS,   /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, manage the autonomous strategy. */
+    FSM_STATE_BOOT,         /**< FSM entry point. */
+    FSM_STATE_MANUAL,       /**< In the @ref CONFIG_CONTROL_RADIO, receives radio signals and control motors. */
+    FSM_STATE_OPENING,      /**< In either @ref config_control_mode , selects and execute an opening strategy. */
+    FSM_STATE_SAFE,         /**< In either @ref config_control_mode , freezes the system for safety handle. */
+    FSM_STATE_SEARCH,       /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, aligns with adversary. */
+    FSM_STATE_SURVIVE,      /**< In the @ref CONFIG_CONTROL_AUTONOMOUS, avoid leaving the dojo. */
+    NUMBER_OF_FSM_STATES    /**< Number of FSM states currently implemented. */
 } fsm_state_t;
 
 /**
@@ -65,7 +65,7 @@ typedef struct fsm_table {
 typedef struct fsm {
     const char *name;                       /**< Human-readable, null-terminated name of the FSM. */
     fsm_state_t state;                      /**< Currently active state. */
-    fsm_table_t states[NUMBER_OF_STATES];   /**< States behaviour definitions. */
+    fsm_table_t states[NUMBER_OF_FSM_STATES];   /**< States behaviour definitions. */
 } fsm_t;
 
 /**

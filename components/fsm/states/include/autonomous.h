@@ -1,6 +1,6 @@
 /**
  * @file autonomous.h
- * @brief ``STATE_AUTONOMOUS`` definition of the FSM callback functions
+ * @brief ``FSM_STATE_AUTONOMOUS`` definition of the FSM callback functions
  * ``on_entry()``, ``on_exit()``, and ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
@@ -23,35 +23,35 @@ typedef struct autonomous_handler {
 } autonomous_handler_t;
 
 /**
- * @brief Entry handler for ``STATE_AUTONOMOUS``.
+ * @brief Entry handler for ``FSM_STATE_AUTONOMOUS``.
  *
  * Calls ``controller_stop()`` and initialize time measurements.
  */
 void autonomous_entry(void);
 
 /**
- * @brief Exit handler for ``STATE_AUTONOMOUS``.
+ * @brief Exit handler for ``FSM_STATE_AUTONOMOUS``.
  *
  * Calls ``controller_stop()`` .
  */
 void autonomous_exit(void);
 
 /**
- * @brief Run handler for ``STATE_AUTONOMOUS``.
+ * @brief Run handler for ``FSM_STATE_AUTONOMOUS``.
  *
  * While the ``ir_t`` is ``IR_STATE_START``, performs a minimal movement
  * sequence to avoid static condition.
  *
- * @note Transition to ``STATE_SAFE`` when:
+ * @note Transition to ``FSM_STATE_SAFE`` when:
  * - **not** ``IR_STATE_START``
  *
- * @note Transition to ``STATE_SURVIVE`` when:
+ * @note Transition to ``FSM_STATE_SURVIVE`` when:
  * - ``sensor_detected_line()``
  *
- * @note Transition to ``STATE_ATTACK`` when:
+ * @note Transition to ``FSM_STATE_ATTACK`` when:
  * - ``sensor_detected_obstacle_front()``
  *
- * @note Transition to ``STATE_SEARCH`` when:
+ * @note Transition to ``FSM_STATE_SEARCH`` when:
  * - ``sensor_detected_obstacle_sides()``
  */
 void autonomous_run(void);
