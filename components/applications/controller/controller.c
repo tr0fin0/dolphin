@@ -36,6 +36,12 @@ static void controller_set_movement(
  * @param[in] command Command passed by reference.
  */
 static void controller_set_command(const controller_command_t *command) {
+    if (command == NULL) {
+        LOG_E("controller *command is NULL");
+
+        return;
+    }
+
     switch (command->motion) {
         case CONTROLLER_MOTION_ROTATION:
             if (command->power > 0) {
@@ -96,30 +102,51 @@ void controller_init(void) {
 }
 
 bool controller_start(const controller_sequence_t *sequence) {
-    if (sequence == NULL) {
-        LOG_E("invalid controller sequence");
+    if (controller.state != CONTROLLER_STATE_IDLE) {
+        LOG_E("%s invalid controller state", controller_get_state_name());
+
         return false;
     }
 
-    if (controller.state != CONTROLLER_STATE_IDLE) {
-        LOG_E("invalid controller state");
+    if (sequence == NULL) {
+        LOG_E("controller *sequence is NULL");
+
+        return false;
+    }
+
+    if (sequence->length > 0 && sequence->commands == NULL) {
+        LOG_E(
+            "controller *sequence=%p of length %u with *commands NULL",
+            (void *)sequence,
+            sequence->length
+        );
+
         return false;
     }
 
     controller.command_current  = 0;
-    controller.command_start_us = esp_timer_get_time();
-    controller.sequence         = sequence;
 
     if (sequence->length == 0) {
+        LOG_I(
+            "controller *sequence=%p of length %u with *commands empty",
+            (void *)sequence,
+            sequence->length
+        );
+        controller.sequence = NULL;
+
         return true;
     }
 
-    if (sequence->commands == NULL) {
-        LOG_E("controller sequence has no commands");
-        return false;
-    }
+    LOG_I(
+        "starting controller *sequence=%p of length %u with *commands=%p",
+        (void *)sequence,
+        sequence->length,
+        (void *)sequence->commands
+    );
 
-    controller.state = CONTROLLER_STATE_ACTIVE;
+    controller.command_start_us = esp_timer_get_time();
+    controller.sequence         = sequence;
+    controller.state            = CONTROLLER_STATE_ACTIVE;
 
     controller_set_command(
         &controller.sequence->commands[controller.command_current]
@@ -130,6 +157,24 @@ bool controller_start(const controller_sequence_t *sequence) {
 
 void controller_step(void) {
     if (controller.state != CONTROLLER_STATE_ACTIVE) {
+        LOG_E("%s invalid controller state", controller_get_state_name());
+
+        return;
+    }
+
+    if (controller.sequence == NULL) {
+        LOG_E("controller *sequence is NULL");
+
+        return;
+    }
+
+    if (controller.sequence->commands == NULL) {
+        LOG_E(
+            "controller *sequence=%p of length %u with *commands NULL",
+            (void *)controller.sequence,
+            controller.sequence->length
+        );
+
         return;
     }
 
@@ -147,6 +192,13 @@ void controller_step(void) {
     controller.command_current++;
     if (controller.command_current >= controller.sequence->length) {
         if (controller.sequence->repeat) {
+            LOG_I(
+                "repeating controller *sequence=%p of length %u with *commands=%p",
+                (void *)controller.sequence,
+                controller.sequence->length,
+                (void *)controller.sequence->commands
+            );
+
             controller.command_current = 0;
             controller.command_start_us = now_us;
 
@@ -156,11 +208,18 @@ void controller_step(void) {
                 ]
             );
 
+            LOG_I(
+                "command=%p sequence=%p commands=%p index=%u",
+                (void *)command,
+                (void *)controller.sequence,
+                (void *)controller.sequence->commands,
+                controller.command_current
+            );
+
             return;
         }
 
-        controller_stop();
-        return;
+        return controller_stop();
     }
 
     // start next command
@@ -171,6 +230,8 @@ void controller_step(void) {
 }
 
 void controller_stop(void) {
+    LOG_I("stopping controller");
+
     esc_set_pwm_mix_neutral();
 
     controller.command_current  = 0;
