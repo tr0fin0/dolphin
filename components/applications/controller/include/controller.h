@@ -69,6 +69,15 @@ typedef struct controller {
 controller_state_t controller_get_state(void);
 
 /**
+ * @brief Returns current controller state name.
+ *
+ * @return Human-readable null-terminated string representing the current
+ * controller state name.
+ * @retval NULL If current controller state is invalid.
+ */
+const char *controller_get_state_name(void);
+
+/**
  * @brief Controller initialization.
  *
  * Calls ``controller_stop()``.

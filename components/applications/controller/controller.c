@@ -6,8 +6,8 @@
 static controller_t controller = {
     .name = "controller",
     .states_names = {
-        [CONTROLLER_STATE_ACTIVE] = "ACTIVE",
-        [CONTROLLER_STATE_IDLE]   = "IDLE",
+        [CONTROLLER_STATE_ACTIVE] = "CONTROLLER_ACTIVE",
+        [CONTROLLER_STATE_IDLE]   = "CONTROLLER_IDLE",
     },
 };
 
@@ -82,6 +82,14 @@ static void controller_set_command(const controller_command_t *command) {
 
 controller_state_t controller_get_state(void) {
     return controller.state;
+}
+
+const char *controller_get_state_name(void) {
+    if (controller.state >= NUMBER_OF_CONTROLLER_STATES) {
+        return NULL;
+    }
+
+    return controller.states_names[controller.state];
 }
 
 void controller_init(void) {
