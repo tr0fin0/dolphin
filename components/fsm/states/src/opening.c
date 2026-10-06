@@ -177,7 +177,7 @@ static const controller_command_t opening_swn_commands[] = {
 };
 static const controller_sequence_t opening_swn_sequence = {
     .commands = opening_swn_commands,
-    .length   = sizeof(opening_sw_commands) / sizeof(opening_swn_commands[0]),
+    .length   = sizeof(opening_swn_commands) / sizeof(opening_swn_commands[0]),
     .repeat   = false,
 };
 
