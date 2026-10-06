@@ -30,7 +30,11 @@ static ir_t ir = {
  */
 static void IRAM_ATTR ir_isr(void *arg) {
     pin_t pin = (pin_t) (uintptr_t) arg;
+#if defined(CONFIG_MAINBOARD_V1)
+    uint32_t signal_start = (REG_READ(GPIO_IN1_REG) >> (pin)) & 0x1;
+#elif defined(CONFIG_MAINBOARD_V2)
     uint32_t signal_start = (REG_READ(GPIO_IN_REG) >> (pin)) & 0x1;
+#endif
 
     switch (ir.state) {
         case IR_STATE_STANDBY:
@@ -62,7 +66,7 @@ const char *ir_get_state_name(void) {
 };
 
 void ir_init(void) {
-    ESP_ERROR_CHECK(gpio_install_isr_service(ESP_INTR_FLAG_IRAM));
+    ESP_ERROR_CHECK_WITHOUT_ABORT(gpio_install_isr_service(ESP_INTR_FLAG_IRAM));
 
     gpio_config_t pin_config = {
         .pin_bit_mask   = (1ULL << ir.pin),

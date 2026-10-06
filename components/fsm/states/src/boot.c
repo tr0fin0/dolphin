@@ -2,5 +2,5 @@
 #include "fsm.h"
 
 void boot_run(void) {
-    fsm_transition(STATE_SAFE);
+    return fsm_transition(FSM_STATE_SAFE);
 }

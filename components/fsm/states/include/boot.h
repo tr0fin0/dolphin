@@ -1,6 +1,7 @@
 /**
  * @file boot.h
- * @brief STATE_BOOT definition of the FSM callback functions `on_run()`.
+ * @brief ``FSM_STATE_BOOT`` definition of the FSM callback functions
+ * ``on_run()``.
  *
  * @author Guilherme Nunes Trofino
  * @date 2026-05-13
@@ -9,10 +10,10 @@
 #pragma once
 
 /**
- * @brief Run handler for @ref STATE_BOOT.
+ * @brief Run handler for ``FSM_STATE_BOOT``.
  *
- * Unconditionally transitions to @ref STATE_SAFE.
+ * Used as the ``fsm`` entry point.
  *
- * @note @ref STATE_BOOT is used as the FSM entry point.
+ * @note Transition to ``FSM_STATE_BOOT`` unconditionally.
  */
 void boot_run(void);
