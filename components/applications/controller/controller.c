@@ -16,19 +16,18 @@ static controller_t controller = {
  *
  * The power signals determine the movement type:
  *
- * - ``rotation``: if powers have the same signs
+ * - ``rotation``: if powers have **equal** signs
  *
- * - ``translation``: if powers have different signs
+ * - ``translation``: if powers have **different** signs
  *
- * @param[in] power_left PWM percentage for @ref ESC_L.
- * @param[in] power_right PWM percentage for @ref ESC_R.
+ * @param[in] power_l PWM percentage for @ref ESC_L.
+ * @param[in] power_r PWM percentage for @ref ESC_R.
  */
 static void controller_set_movement(
-    pwm_percentage_t power_left,
-    pwm_percentage_t power_right
+    pwm_percentage_t power_l, pwm_percentage_t power_r
 ) {
-    esc_set_pwm(pwm_percentage(power_left),  ESC_L);
-    esc_set_pwm(pwm_percentage(power_right), ESC_R);
+    esc_set_pwm(ESC_L, pwm_percentage(power_l));
+    esc_set_pwm(ESC_R, pwm_percentage(power_r));
 }
 
 /**
