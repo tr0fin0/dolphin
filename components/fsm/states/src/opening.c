@@ -312,7 +312,7 @@ static void opening_decode_strategy(void) {
             opening.strategy = strategy;
 
             LOG_I(
-                "opening strategy selected is %s",
+                "%s opening strategy selected",
                 opening_get_strategy_name(opening.strategy)
             );
 
@@ -331,8 +331,18 @@ static void opening_execution(void) {
 
     if (controller_get_state() == CONTROLLER_STATE_IDLE) {
         if (!controller_start(sequence)) {
+            LOG_E(
+                "%s opening strategy starting failed",
+                opening_get_strategy_name(opening.strategy)
+            );
+
             return;
         }
+
+        LOG_I(
+            "%s opening strategy starting",
+            opening_get_strategy_name(opening.strategy)
+        );
     }
 
     controller_step();
