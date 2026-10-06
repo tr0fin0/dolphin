@@ -126,7 +126,7 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 1. execute Exit Action of current state
     if (fsm.states[fsm.state].on_exit != NULL) {
-        LOG_D("exiting of %s", fsm_get_state_name(fsm.state));
+        LOG_I("exiting of %s", fsm_get_state_name(fsm.state));
 
         fsm.states[fsm.state].on_exit();
     }
@@ -136,7 +136,7 @@ void fsm_transition(fsm_state_t new_state) {
 
     // 3. execute Entry Action of new state
     if (fsm.states[fsm.state].on_entry != NULL) {
-        LOG_D("entrying of %s", fsm_get_state_name(fsm.state));
+        LOG_I("entrying of %s", fsm_get_state_name(fsm.state));
 
         fsm.states[fsm.state].on_entry();
     }
